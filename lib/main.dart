@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:giys_frontend/screens/default_view.dart';
 import 'package:giys_frontend/screens/login_view.dart';
-import 'package:giys_frontend/screens/payment_method_view.dart';
+import 'package:giys_frontend/screens/settings/payment_method_view.dart';
 import 'package:go_router/go_router.dart';
 
 import 'const/route.dart';
