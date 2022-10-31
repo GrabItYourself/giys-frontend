@@ -21,13 +21,12 @@ class AuthService {
 
     final code = Uri.parse(result).queryParameters['code'];
 
-    final queryParameters = {
-      'code': code,
-    };
-    final serverUrl = Uri.https(
-        Config.serverURL, '/api/v1/auth/google/verify', queryParameters);
+    // TODO: check clientType in case of android
+    final queryParameters = {'code': code, 'clientType': 'IOS'};
+    final serverOrigin = Uri.http(
+        Config.serverOrigin, '/api/v1/auth/google/verify', queryParameters);
 
-    await http.get(serverUrl, headers: {
+    await http.post(serverOrigin, headers: {
       HttpHeaders.contentTypeHeader: 'application/json',
     });
   }
