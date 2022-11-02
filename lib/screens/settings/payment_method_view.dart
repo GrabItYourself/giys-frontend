@@ -16,6 +16,7 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
   @override
   void initState() {
     // TODO: implement get creditCardList
+    //TODO get current user from existing backend
     creditCardList = [];
     super.initState();
   }
