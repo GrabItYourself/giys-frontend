@@ -46,6 +46,7 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
                   onPressed: () {
                     //TODO delete from database
                     creditCardList.remove(creditCard);
+                    setState(() {});
                   },
                   icon: const Icon(Icons.delete),
                 ),
@@ -55,7 +56,7 @@ class _PaymentMethodViewState extends State<PaymentMethodView> {
           TextButton(
             onPressed: () {
               MaterialPageRoute(
-                builder: (context) => CreditCardView(),
+                builder: (context) => const CreditCardView(),
               );
             },
             child: const Text("Add Credit Card"),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:giys_frontend/const/route.dart';
 import 'package:giys_frontend/screens/settings/payment_method_view.dart';
+import 'package:go_router/go_router.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
@@ -28,14 +30,19 @@ class _SettingsViewState extends State<SettingsView> {
             ),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              //TODO check if haveShop ? navigateTo shop : push error popup
+            },
             child: const Align(
               alignment: Alignment.centerLeft,
               child: Text("My Shop"),
             ),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              //TODO logout logic
+              GoRouter.of(context).go(loginViewRoute);
+            },
             child: const Align(
               alignment: Alignment.centerLeft,
               child: Text("Logout"),

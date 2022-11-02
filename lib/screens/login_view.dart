@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:giys_frontend/const/route.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -17,8 +19,7 @@ class _LoginViewState extends State<LoginView> {
           children: [
             TextButton(
               onPressed: () async {
-                final url =
-                    Uri.http('192.168.1.44:8080', '/api/v1/auth/google');
+                GoRouter.of(context).go(defaultViewRoute);
               },
               child: const Text("Login"),
             ),
