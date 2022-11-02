@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:giys_frontend/data/shop_item.dart';
 import 'package:giys_frontend/screens/home/shop_detail_view.dart';
+import 'package:giys_frontend/utilitties/generic_dialog.dart';
 
 import '../../data/shop.dart';
 
@@ -65,8 +66,32 @@ class _ShopMenuViewState extends State<ShopMenuView> {
             },
           ),
           TextButton(
-              onPressed: () {
+              onPressed: () async {
                 //TODO show popup for order
+                final bool order;
+                order = await showGenericDialog(
+                  context: context,
+                  title: "Confirm Order",
+                  content: "", //TODO should be itemCart
+                  optionsBuilder: () => {
+                    "Order": true,
+                    "Cancel": false,
+                  },
+                );
+                if (order) {
+                  //TODO check if user has credit card
+                  final bool userHasCreditCard = true;
+                  if (userHasCreditCard) {
+                    //TODO user has credit card, send order
+                  } else {
+                    await showGenericDialog(
+                      context: context,
+                      title: "No Payment Method",
+                      content: "You have to add payment.",
+                      optionsBuilder: () => {"OK": null},
+                    );
+                  }
+                }
               },
               child: const Text("Checkout"))
         ],

@@ -16,7 +16,7 @@ class _CreditCardViewState extends State<CreditCardView> {
   late final TextEditingController _cardHolderNameController;
   late final TextEditingController _cVVController;
 
-  Future<Null> _selectDate(BuildContext context) async {
+  Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
@@ -52,6 +52,14 @@ class _CreditCardViewState extends State<CreditCardView> {
   }
 
   @override
+  void dispose() {
+    _cardHolderNameController.dispose();
+    _cardNumberController.dispose();
+    _cVVController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -59,7 +67,8 @@ class _CreditCardViewState extends State<CreditCardView> {
         actions: [
           IconButton(
             onPressed: () async {
-              //TODO save to database
+              //TODO save to database and check if this pop works
+              Navigator.of(context).pop();
             },
             icon: const Icon(Icons.save),
           ),
