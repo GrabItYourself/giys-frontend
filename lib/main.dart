@@ -4,31 +4,38 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:giys_frontend/config/route.dart';
 import 'package:giys_frontend/views/login_view.dart';
+import 'controllers/auth.dart';
 import 'views/home_view.dart';
 
 void main() async {
   await GetStorage.init();
   await Future.delayed(const Duration(seconds: 2));
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class MyApp extends StatelessWidget {
+  MyApp({super.key});
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
+  _handleAuthGaurd(Routing routing) async {
+    try {
+      final authController = Get.find<AuthController>();
+      await authController.getUserInfo();
+    } catch (err) {
+      Get.toNamed(RoutePath.loginPath);
+    }
+  }
 
-class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialRoute: '/',
+      initialRoute: RoutePath.defaultPath,
       getPages: [
-        GetPage(name: '/', page: () => const HomeView()),
-        GetPage(name: '/login', page: () => LoginView()),
+        GetPage(name: RoutePath.defaultPath, page: () => const HomeView()),
+        GetPage(name: RoutePath.loginPath, page: () => LoginView()),
       ],
+      routingCallback: (routing) async => _handleAuthGaurd,
     );
   }
 }

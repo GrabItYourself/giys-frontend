@@ -16,7 +16,7 @@ class LoginView extends StatelessWidget {
         child: Column(
           children: [
             LoginWidget(onLogin: authController.authenticate),
-            Text(authController.isAuthenticated.value
+            Text(authController.id.value != ''
                 ? 'Authenticated'
                 : 'Not Authenticated'),
           ],

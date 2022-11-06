@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:giys_frontend/config/route.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -22,7 +23,7 @@ class HomeView extends StatelessWidget {
                 children: [
                   ListTile(
                     title: const Text("Go to Login Page"),
-                    onTap: () => Get.toNamed("/login"),
+                    onTap: () => Get.toNamed(RoutePath.loginPath),
                   ),
                 ],
               ),
