@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:giys_frontend/const/route.dart';
-import 'package:giys_frontend/screens/settings/payment_method_view.dart';
-import 'package:giys_frontend/screens/settings/show_detail_owner_view.dart';
 import 'package:giys_frontend/utilitties/generic_dialog.dart';
 import 'package:go_router/go_router.dart';
 
@@ -31,8 +29,8 @@ class _SettingsViewState extends State<SettingsView> {
         children: [
           TextButton(
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const PaymentMethodView()));
+              // Navigator.of(context).push(MaterialPageRoute(
+              //     builder: (context) => const PaymentMethodView()));
             },
             child: const Align(
               alignment: Alignment.centerLeft,
@@ -42,18 +40,18 @@ class _SettingsViewState extends State<SettingsView> {
           TextButton(
             onPressed: () async {
               //TODO check if haveShop ? navigateTo shop : push error popup
-              final bool userHasShop = true;
-              if (userHasShop) {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const ShopDetailOwnerView()));
-              } else {
-                await showGenericDialog(
-                  context: context,
-                  title: "No Shop",
-                  content: "You do not have shop",
-                  optionsBuilder: (() => {"OK": null}),
-                );
-              }
+              // final bool userHasShop = true;
+              // if (userHasShop) {
+              //   Navigator.of(context).push(MaterialPageRoute(
+              //       builder: (context) => const ShopDetailOwnerView()));
+              // } else {
+              //   await showGenericDialog(
+              //     context: context,
+              //     title: "No Shop",
+              //     content: "You do not have shop",
+              //     optionsBuilder: (() => {"OK": null}),
+              //   );
+              // }
             },
             child: const Align(
               alignment: Alignment.centerLeft,
