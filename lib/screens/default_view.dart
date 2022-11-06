@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:giys_frontend/screens/settings_view.dart';
+import 'package:giys_frontend/screens/settings/settings_view.dart';
 import 'package:giys_frontend/screens/shop_orders_view.dart';
 
-import 'home_view.dart';
+import 'home/home_view.dart';
 import 'orders_view.dart';
 
 class DefaultView extends StatefulWidget {

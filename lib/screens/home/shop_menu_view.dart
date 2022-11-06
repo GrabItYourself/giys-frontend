@@ -20,39 +20,41 @@ class ShopMenuView extends StatefulWidget {
 
 class _ShopMenuViewState extends State<ShopMenuView> {
   //TODO complete this function
-  Future<List<ShopItem>> getAllShopItem(int shopId) async {
-    String token = await getToken();
-    List<ShopItem> allShopItem = [];
-    final response = await http.get(
-      Uri.http(
-        "localhost:8080",
-        "/api/v1/shops/$shopId/items",
-      ),
-      headers: {
-        HttpHeaders.contentTypeHeader: "application/json",
-        HttpHeaders.authorizationHeader: "Bearer $token"
-      },
-    );
-    log(response.toString());
-    for (var shopItem in jsonDecode(response.body)) {
-      allShopItem.add(ShopItem.fromJson(shopItem));
-    }
+  // Future<List<ShopItem>> getAllShopItem(int shopId) async {
+  //   String token = await getToken();
+  //   List<ShopItem> allShopItem = [];
+  //   final response = await http.get(
+  //     Uri.http(
+  //       "localhost:8080",
+  //       "/api/v1/shops/$shopId/items",
+  //     ),
+  //     headers: {
+  //       HttpHeaders.contentTypeHeader: "application/json",
+  //       HttpHeaders.authorizationHeader: "Bearer $token"
+  //     },
+  //   );
+  //   log(response.toString());
+  //   for (var shopItem in jsonDecode(response.body)) {
+  //     allShopItem.add(ShopItem.fromJson(shopItem));
+  //   }
 
-    return allShopItem;
-  }
+  //   return allShopItem;
+  // }
 
-  late final List<ShopItem> shopItemsList;
-  late final Map<ShopItem, int> shopCart;
+  late final List<ShopItem> shopItemsList = [
+    ShopItem(id: 1, shopId: 2, name: "Item1", price: 3),
+    ShopItem(id: 2, shopId: 2, name: "Item2", price: 4)
+  ];
+  late final Map<ShopItem, int> shopCart = {};
   @override
   void initState() {
     // TODO: get all shop items
-    final shopId = widget.shop.id;
-    getAllShopItem(shopId).then((value) {
-      shopItemsList = value;
-      for (ShopItem shopItem in shopItemsList) {
-        shopCart[shopItem] = 0;
-      }
-    });
+    // final shopId = widget.shop.id;
+    // shopItemsList = await getAllShopItem(shopId);
+    for (ShopItem shopItem in shopItemsList) {
+      shopCart[shopItem] = 0;
+    }
+
     super.initState();
   }
 
