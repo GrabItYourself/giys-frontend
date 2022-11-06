@@ -43,6 +43,8 @@ dependencies:
   uni_links: ^0.5.1
   fluttertoast: ^8.1.1
   flutter_web_auth: ^0.4.1
+  requests: ^4.7.0
+  get_storage: ^2.0.3
 
 dev_dependencies:
   flutter_test:
