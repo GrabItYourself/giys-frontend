@@ -16,31 +16,30 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   //TODO complete this function
-  // Future<List<Shop>> getAllShop() async {
-  //   List<Shop> allShop = [];
-  //   String token = await getToken();
-  //   final response = await http.get(
-  //     Uri.http("localhost:8080", "/api/v1/shops"),
-  //     headers: {
-  //       HttpHeaders.contentTypeHeader: 'application/json',
-  //       HttpHeaders.authorizationHeader: "Bearer $token",
-  //     },
-  //   );
-  //   log(response.toString());
-  //   for (var shop in jsonDecode(response.body)) {
-  //     allShop.add(Shop.fromJson(shop));
-  //   }
-  //   return allShop;
-  // }
+  Future<List<Shop>> getAllShop() async {
+    List<Shop> allShop = [];
+    String token = await getToken();
+    final response = await http.get(
+      Uri.http("localhost:8080", "/api/v1/shops"),
+      headers: {
+        HttpHeaders.contentTypeHeader: 'application/json',
+        HttpHeaders.authorizationHeader: "Bearer $token",
+      },
+    );
+    log(response.toString());
+    for (var shop in jsonDecode(response.body)) {
+      allShop.add(Shop.fromJson(shop));
+    }
+    return allShop;
+  }
 
-  late final List<Shop> shopList = [
-    Shop(id: 1, name: "shop1"),
-    Shop(id: 2, name: "shop2")
-  ];
+  late final List<Shop> shopList;
   @override
   void initState() {
     // TODO: implement get shopList
-    // shopList = await getAllShop();
+    getAllShop().then((value) {
+      shopList = value;
+    });
     super.initState();
   }
 
