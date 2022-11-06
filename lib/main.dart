@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:giys_frontend/views/edit_shop_view.dart';
 import 'package:giys_frontend/views/login_view.dart';
+import 'package:giys_frontend/views/shop_owner_view.dart';
 import 'views/home_view.dart';
 
 void main() async {
@@ -28,6 +30,8 @@ class _MyAppState extends State<MyApp> {
       getPages: [
         GetPage(name: '/', page: () => const HomeView()),
         GetPage(name: '/login', page: () => LoginView()),
+        GetPage(name: '/my-shop', page: () => const ShopOwnerView()),
+        GetPage(name: '/edit-shop', page: () => const EditShopView())
       ],
     );
   }
