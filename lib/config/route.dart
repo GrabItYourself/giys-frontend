@@ -7,7 +7,7 @@ class RoutePath {
 
   static const paymentPath = '/payment';
 
-  static const protectedPaths = [
-    paymentPath,
-  ];
+  static const settingsPath = '/settings';
+
+  static const protectedPaths = [paymentPath, settingsPath];
 }
