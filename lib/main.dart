@@ -12,11 +12,11 @@ import 'views/home_view.dart';
 void main() async {
   await GetStorage.init();
   await Future.delayed(const Duration(seconds: 2));
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   _handleAuthGaurd(Routing routing) async {
     try {
