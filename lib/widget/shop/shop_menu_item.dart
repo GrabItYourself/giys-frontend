@@ -30,7 +30,12 @@ class ShopMenuItem extends StatelessWidget {
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               Text("${price.toString()}THB")
-            ])
+            ]),
+            const Spacer(),
+            OutlinedButton.icon(
+                onPressed: null,
+                icon: const Icon(Icons.delete),
+                label: const Text("Delete"))
           ],
         ));
   }
