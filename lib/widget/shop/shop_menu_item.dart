@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../config/route.dart';
 
 class ShopMenuItem extends StatelessWidget {
   final String name;
@@ -32,10 +35,10 @@ class ShopMenuItem extends StatelessWidget {
               Text("${price.toString()}THB")
             ]),
             const Spacer(),
-            OutlinedButton.icon(
-                onPressed: null,
-                icon: const Icon(Icons.delete),
-                label: const Text("Delete"))
+            IconButton(
+                onPressed: () => Get.toNamed(RoutePath.editMenuPath),
+                icon: const Icon(Icons.edit)),
+            const IconButton(onPressed: null, icon: Icon(Icons.delete))
           ],
         ));
   }

@@ -15,7 +15,7 @@ class MenuOwnerView extends StatelessWidget {
           Padding(
               padding: const EdgeInsets.only(right: 20.0),
               child: GestureDetector(
-                onTap: () => Get.toNamed(RoutePath.editMenuPath),
+                onTap: null,
                 child: const Icon(Icons.add),
               ))
         ],
