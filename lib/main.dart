@@ -20,8 +20,10 @@ class MyApp extends StatelessWidget {
 
   _handleAuthGaurd(Routing routing) async {
     try {
-      final authController = Get.find<AuthController>();
-      await authController.getUserInfo();
+      if (RoutePath.protectedPaths.contains(routing.current)) {
+        final authController = Get.find<AuthController>();
+        await authController.getUserInfo();
+      }
     } catch (err) {
       Get.toNamed(RoutePath.loginPath);
     }
