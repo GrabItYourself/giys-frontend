@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:giys_frontend/views/edit_menu_view.dart';
 import 'package:giys_frontend/views/edit_shop_view.dart';
 import 'package:giys_frontend/views/login_view.dart';
+import 'package:giys_frontend/views/manage_shop_view.dart';
 import 'package:giys_frontend/views/menu_owner_view.dart';
 import 'package:giys_frontend/views/shop_owner_view.dart';
 import 'package:giys_frontend/config/route.dart';
@@ -50,6 +51,8 @@ class MyApp extends StatelessWidget {
             page: () => const MenuOwnerView()),
         GetPage(name: RoutePath.editMenuPath, page: () => const EditMenuView()),
         GetPage(name: RoutePath.settingsPath, page: () => const SettingsView()),
+        GetPage(
+            name: RoutePath.manageShopPath, page: () => const ManageShopView()),
       ],
       routingCallback: (routing) async => _handleAuthGaurd,
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:giys_frontend/config/route.dart';
 
 import '../widget/scaffold.dart';
 
@@ -21,7 +22,7 @@ class SettingsView extends StatelessWidget {
         ),
         ListTile(
           title: const Center(child: Text('Manage Shop')),
-          onTap: () => {Get.snackbar("TODO MANAGE", "MANAGE")},
+          onTap: () => {Get.toNamed(RoutePath.manageShopPath)},
         ),
         ListTile(
           title: const Center(child: Text('Logout')),
