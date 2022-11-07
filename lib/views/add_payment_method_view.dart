@@ -87,20 +87,36 @@ class AddPaymentMethodView extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 50),
-                        child: OutlinedButton(
-                          onPressed: () {
-                            if (addPaymentMethodController.validate()) {
-                              final req = addPaymentMethodController
-                                  .createAddPaymentMethodRequest();
-                              paymentMethodController.addPaymentMethods(req);
-                              Get.toNamed(RoutePath.paymentMethodPath);
-                            }
-                          },
-                          child: const Text("Confirm"),
-                        ),
-                      )
+                      const Spacer(),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: OutlinedButton(
+                              onPressed: () {
+                                Get.toNamed(RoutePath.paymentMethodPath);
+                                Get.delete<AddPaymentMethodController>();
+                              },
+                              child: const Text("Cancel"),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (addPaymentMethodController.validate()) {
+                                  final req = addPaymentMethodController
+                                      .createAddPaymentMethodRequest();
+                                  paymentMethodController
+                                      .addPaymentMethods(req);
+                                  Get.toNamed(RoutePath.paymentMethodPath);
+                                  Get.delete<AddPaymentMethodController>();
+                                }
+                              },
+                              child: const Text("Confirm"),
+                            ),
+                          )
+                        ],
+                      ),
                     ],
                   ),
                 ),
