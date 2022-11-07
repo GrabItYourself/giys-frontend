@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:giys_frontend/controllers/auth.dart';
 import 'package:giys_frontend/widget/login_widget.dart';
 
+import '../widget/scaffold.dart';
+
 class LoginView extends StatelessWidget {
   final authController = Get.put(AuthController());
 
@@ -10,13 +12,13 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MainScaffold(
         body: SafeArea(
       child: Center(
         child: Column(
           children: [
             LoginWidget(onLogin: authController.authenticate),
-            Text(authController.isAuthenticated.value
+            Text(authController.id.value != ''
                 ? 'Authenticated'
                 : 'Not Authenticated'),
           ],

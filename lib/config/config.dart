@@ -1,5 +1,5 @@
 class Config {
-  static const String appName = 'Flutter Demo';
+  static const String appName = 'GrabItYourself';
   static const String appVersion = '1.0.0';
   static const String serverUrl = 'http://localhost:8080';
   static const String googleClientId =

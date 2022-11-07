@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:giys_frontend/config/route.dart';
+
+import '../widget/scaffold.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MainScaffold(
         body: SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -22,7 +25,7 @@ class HomeView extends StatelessWidget {
                 children: [
                   ListTile(
                     title: const Text("Go to Login Page"),
-                    onTap: () => Get.toNamed("/login"),
+                    onTap: () => Get.toNamed(RoutePath.loginPath),
                   ),
                   ListTile(
                     title: const Text("Go to My Shop"),
