@@ -2,33 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giys_frontend/config/route.dart';
 
-class EditShopView extends StatelessWidget {
-  const EditShopView({super.key});
+class EditMenuView extends StatelessWidget {
+  const EditMenuView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Edit Shop")),
+      appBar: AppBar(title: const Text("Edit Menu Item")),
       body: const SafeArea(
           child: Padding(
         padding: EdgeInsets.all(16),
-        child: EditShopForm(),
+        child: EditMenuForm(),
       )),
     );
   }
 }
 
-class EditShopForm extends StatefulWidget {
-  const EditShopForm({super.key});
+class EditMenuForm extends StatefulWidget {
+  const EditMenuForm({super.key});
 
   @override
   State<StatefulWidget> createState() {
-    return _EditShopFormState();
+    return _EditMenuFormState();
   }
 }
 
 // TODO image form field
-class _EditShopFormState extends State<StatefulWidget> {
+class _EditMenuFormState extends State<StatefulWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -37,30 +37,31 @@ class _EditShopFormState extends State<StatefulWidget> {
         key: _formKey,
         child: Column(children: [
           TextFormField(
-            decoration: const InputDecoration(labelText: "Shop Name"),
+            decoration: const InputDecoration(labelText: "Item Name"),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Shop name is required';
+                return 'Item name is required';
               }
               return null;
             },
           ),
           TextFormField(
-            decoration: const InputDecoration(labelText: "Description"),
-            maxLines: 3,
-          ),
-          TextFormField(
-            decoration: const InputDecoration(labelText: "Location"),
-          ),
-          TextFormField(
-            decoration: const InputDecoration(labelText: "Contact"),
-          ),
+              decoration: const InputDecoration(labelText: "Price"),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Price is required';
+                }
+                if (!value.isNumericOnly) {
+                  return 'Price has to be an integer';
+                }
+                return null;
+              }),
           const Spacer(),
           Row(
             children: [
               Expanded(
                 child: OutlinedButton(
-                    onPressed: () => Get.toNamed(RoutePath.shopOwnerPath),
+                    onPressed: () => Get.toNamed(RoutePath.shopOwnerMenuPath),
                     child: const Text("Cancel")),
               ),
               const SizedBox(

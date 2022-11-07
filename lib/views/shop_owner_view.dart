@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:giys_frontend/config/route.dart';
 
 class ShopOwnerView extends StatelessWidget {
   const ShopOwnerView({super.key});
@@ -62,7 +63,8 @@ class ShopOwnerView extends StatelessWidget {
                     children: [
                       Expanded(
                         child: OutlinedButton.icon(
-                            onPressed: () => Get.toNamed("/edit-shop"),
+                            onPressed: () =>
+                                Get.toNamed(RoutePath.editShopPath),
                             icon: const Icon(Icons.edit),
                             label: const Text("Edit Details")),
                       ),
@@ -71,7 +73,8 @@ class ShopOwnerView extends StatelessWidget {
                       ),
                       Expanded(
                           child: OutlinedButton.icon(
-                              onPressed: null,
+                              onPressed: () =>
+                                  Get.toNamed(RoutePath.shopOwnerMenuPath),
                               icon: const Icon(Icons.food_bank),
                               label: const Text("Edit Menu")))
                     ],
