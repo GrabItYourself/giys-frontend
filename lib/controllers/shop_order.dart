@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:giys_frontend/models/order.dart';
 
-class OrderController extends GetxController {
+class ShopOrderController extends GetxController {
   final orders = <Order>[].obs;
 
   @override

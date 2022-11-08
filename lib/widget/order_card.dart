@@ -68,7 +68,7 @@ class OrderCard extends StatelessWidget {
             children: [
               if (order.status == "IN_QUEUE") ...[
                 Padding(
-                  padding: const EdgeInsets.only(right: 10),
+                  padding: const EdgeInsets.all(10),
                   child: OutlinedButton(
                     onPressed: () => showAlertDialog(),
                     child: const Text("Cancel"),
