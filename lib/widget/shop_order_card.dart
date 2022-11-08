@@ -100,62 +100,84 @@ class ShopOrderCard extends StatelessWidget {
     Get.dialog(alert);
   }
 
+  showOrderItemsDialog() {
+    Widget closeButton = TextButton(
+      child: const Text("Close"),
+      onPressed: () {
+        Get.back();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text(order.id.toString()),
+      content: const Text("Order details"),
+      actions: [
+        closeButton,
+      ],
+    );
+
+    Get.dialog(alert);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.all(2),
-      child: Row(
-        children: [
-          Image.network(
-            "https://picsum.photos/200",
-            fit: BoxFit.cover,
-            width: 100,
-          ),
-          const SizedBox(width: 8),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                order.id.toString(),
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              Text(order.status),
-            ],
-          ),
-          const Spacer(),
-          Column(
-            children: [
-              if (order.status == "Ready") ...[
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: ElevatedButton(
-                    onPressed: () => showCompleteAlertDialog(),
-                    child: const Text("Complete"),
-                  ),
+    return GestureDetector(
+      onTap: () => showOrderItemsDialog(),
+      child: Card(
+        margin: const EdgeInsets.all(2),
+        child: Row(
+          children: [
+            Image.network(
+              "https://picsum.photos/200",
+              fit: BoxFit.cover,
+              width: 100,
+            ),
+            const SizedBox(width: 8),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  order.id.toString(),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
+                const SizedBox(height: 8),
+                Text(order.status),
               ],
-              if (order.status == "IN_QUEUE") ...[
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: ElevatedButton(
-                    onPressed: () => showReadyAlertDialog(),
-                    child: const Text("Ready"),
+            ),
+            const Spacer(),
+            Column(
+              children: [
+                if (order.status == "Ready") ...[
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: ElevatedButton(
+                      onPressed: () => showCompleteAlertDialog(),
+                      child: const Text("Complete"),
+                    ),
                   ),
-                ),
-              ],
-              if (order.status == "IN_QUEUE") ...[
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: OutlinedButton(
-                    onPressed: () => showCancelAlertDialog(),
-                    child: const Text("Cancel"),
+                ],
+                if (order.status == "IN_QUEUE") ...[
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: ElevatedButton(
+                      onPressed: () => showReadyAlertDialog(),
+                      child: const Text("Ready"),
+                    ),
                   ),
-                ),
+                ],
+                if (order.status == "IN_QUEUE") ...[
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: OutlinedButton(
+                      onPressed: () => showCancelAlertDialog(),
+                      child: const Text("Cancel"),
+                    ),
+                  ),
+                ],
               ],
-            ],
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
