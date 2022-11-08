@@ -3,12 +3,14 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:giys_frontend/data/shop_item.dart';
-import 'package:giys_frontend/screens/home/shop_detail_view.dart';
+import 'package:get/get.dart';
+import 'package:giys_frontend/controllers/auth.dart';
+import 'package:giys_frontend/models/shop_item.dart';
+import 'package:giys_frontend/views/home/shop_detail_view.dart';
 import 'package:giys_frontend/utilitties/generic_dialog.dart';
 import 'package:http/http.dart' as http;
 
-import '../../data/shop.dart';
+import '../../models/shop.dart';
 
 class ShopMenuView extends StatefulWidget {
   final Shop shop;
@@ -21,7 +23,6 @@ class ShopMenuView extends StatefulWidget {
 class _ShopMenuViewState extends State<ShopMenuView> {
   //TODO complete this function
   Future<List<ShopItem>> getAllShopItem(int shopId) async {
-    String token = await getToken();
     List<ShopItem> allShopItem = [];
     final response = await http.get(
       Uri.http(
@@ -30,7 +31,6 @@ class _ShopMenuViewState extends State<ShopMenuView> {
       ),
       headers: {
         HttpHeaders.contentTypeHeader: "application/json",
-        HttpHeaders.authorizationHeader: "Bearer $token"
       },
     );
     log(response.toString());
@@ -105,7 +105,6 @@ class _ShopMenuViewState extends State<ShopMenuView> {
                   subtitle: Text(shopItem.price.toString()),
                   trailing: Wrap(
                     children: [
-                      //TODO add, show, remove item from cart
                       IconButton(
                           onPressed: () {
                             setState(() {
@@ -135,7 +134,7 @@ class _ShopMenuViewState extends State<ShopMenuView> {
                 order = await showGenericDialog(
                   context: context,
                   title: "Confirm Order",
-                  content: shopCart.toString(), //TODO should be shopCart
+                  content: shopCart.toString(),
                   optionsBuilder: () => {
                     "Order": true,
                     "Cancel": false,

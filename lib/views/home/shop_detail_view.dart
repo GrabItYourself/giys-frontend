@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:giys_frontend/data/shop.dart';
+import 'package:giys_frontend/models/shop.dart';
 
 class ShopDetailView extends StatefulWidget {
   final Shop shop;

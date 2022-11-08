@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:giys_frontend/const/route.dart';
 import 'package:giys_frontend/utilitties/generic_dialog.dart';
-import 'package:go_router/go_router.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
@@ -61,7 +59,6 @@ class _SettingsViewState extends State<SettingsView> {
           TextButton(
             onPressed: () {
               //TODO logout logic
-              GoRouter.of(context).go(loginViewRoute);
             },
             child: const Align(
               alignment: Alignment.centerLeft,

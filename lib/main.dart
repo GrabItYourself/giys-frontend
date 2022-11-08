@@ -1,48 +1,34 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:giys_frontend/screens/default_view.dart';
-import 'package:giys_frontend/screens/login_view.dart';
-import 'package:go_router/go_router.dart';
 
-import 'const/route.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:giys_frontend/views/default_view.dart';
+import 'package:giys_frontend/views/login_view.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  await GetStorage.init();
+  await Future.delayed(const Duration(seconds: 2));
+  runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  MyApp({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'App',
-      routerConfig: _router,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+    return GetMaterialApp(
+      initialRoute: '/login',
+      getPages: [
+        GetPage(name: '/', page: () => DefaultView()),
+        GetPage(name: '/login', page: () => LoginView()),
+      ],
     );
   }
-
-  final GoRouter _router = GoRouter(
-    routes: <GoRoute>[
-      GoRoute(
-        path: defaultViewRoute,
-        builder: (BuildContext context, GoRouterState state) {
-          return DefaultView();
-        },
-      ),
-      GoRoute(
-        path: loginViewRoute,
-        builder: (BuildContext context, GoRouterState state) {
-          return const LoginView();
-        },
-      ),
-      // GoRoute(
-      //   path: paymentMethodRoute,
-      //   builder: (BuildContext context, GoRouterState state) {
-      //     return const PaymentMethodView();
-      //   },
-      // ),
-    ],
-  );
 }

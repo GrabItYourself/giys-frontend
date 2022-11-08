@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:giys_frontend/screens/settings/settings_view.dart';
-import 'package:giys_frontend/screens/shop_orders_view.dart';
+import 'package:giys_frontend/views/settings/settings_view.dart';
+import 'package:giys_frontend/views/shop_orders_view.dart';
 
 import 'home/home_view.dart';
 import 'orders_view.dart';
