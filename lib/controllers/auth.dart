@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:giys_frontend/config/route.dart';
+import 'package:giys_frontend/models/auth.dart';
 import 'package:requests/requests.dart';
 
 import '../config/config.dart';
@@ -15,20 +16,38 @@ final googleAuthUrl = Uri.https('accounts.google.com', '/o/oauth2/v2/auth', {
 });
 
 class AuthController extends GetxController {
-  final _accessToken = ''.obs;
-  final _refreshToken = ''.obs;
-  var isAuthenticated = false.obs;
-  var storage = GetStorage();
+  // final _accessToken = ''.obs;
+  // final _refreshToken = ''.obs;
+  // final _storage = GetStorage();
+  final id = ''.obs;
+  final name = ''.obs;
+  final email = ''.obs;
 
   @override
-  void onInit() {
-    _accessToken.listen((p0) {
-      storage.write('accessToken', p0);
-    });
-    _refreshToken.listen((p0) {
-      storage.write('refreshToken', p0);
-    });
+  void onInit() async {
+    // _accessToken.listen((p0) {
+    //   _storage.write('accessToken', p0);
+    // });
+    // _refreshToken.listen((p0) {
+    //   _storage.write('refreshToken', p0);
+    // });
+    // if (_storage.hasData('accessToken')) {
+    //   _accessToken.value = _storage.read('accessToken');
+    //   isAuthenticated.value = true;
+    // }
+    // if (_storage.hasData('refreshToken')) {
+    //   _refreshToken.value = _storage.read('refreshToken');
+    // }
     super.onInit();
+    try {
+      final userInfo = await getUserInfo();
+      id.value = userInfo.id;
+      name.value = userInfo.name;
+      email.value = userInfo.email;
+    } catch (err) {
+      Get.toNamed(RoutePath.loginPath);
+      return Future.error(err);
+    }
   }
 
   Future<void> authenticate() async {
@@ -51,12 +70,21 @@ class AuthController extends GetxController {
             },
             queryParameters: queryParameters);
     response.raiseForStatus();
-    final jsonResponse = response.json();
+    // final jsonResponse = response.json();
 
     // Set access token and refresh token in controller
-    _accessToken.value = jsonResponse['access_token'];
-    _refreshToken.value = jsonResponse['refresh_token'];
+    // _accessToken.value = jsonResponse['access_token'];
+    // _refreshToken.value = jsonResponse['refresh_token'];
   }
 
-  void refresh() {}
+  Future<MeResponse> getUserInfo() async {
+    final response = await Requests.get(
+      '${Config.serverUrl}/api/v1/user/me',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+    response.raiseForStatus();
+    return MeResponse.fromJson(response.json());
+  }
 }

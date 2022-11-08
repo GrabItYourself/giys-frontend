@@ -4,8 +4,16 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:giys_frontend/views/default_view.dart';
+import 'package:giys_frontend/views/edit_menu_view.dart';
+import 'package:giys_frontend/views/edit_shop_view.dart';
 import 'package:giys_frontend/views/login_view.dart';
+import 'package:giys_frontend/views/menu_owner_view.dart';
+import 'package:giys_frontend/views/shop_owner_view.dart';
+import 'package:giys_frontend/config/route.dart';
+import 'package:giys_frontend/views/settings_view.dart';
+
+import 'controllers/auth.dart';
+import 'views/home_view.dart';
 
 void main() async {
   await GetStorage.init();
@@ -13,22 +21,37 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
+  _handleAuthGaurd(Routing routing) async {
+    try {
+      if (RoutePath.protectedPaths.contains(routing.current)) {
+        final authController = Get.find<AuthController>();
+        await authController.getUserInfo();
+      }
+    } catch (err) {
+      Get.toNamed(RoutePath.loginPath);
+    }
+  }
 
-class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialRoute: '/login',
+      initialRoute: RoutePath.defaultPath,
       getPages: [
-        GetPage(name: '/', page: () => DefaultView()),
-        GetPage(name: '/login', page: () => LoginView()),
+        GetPage(name: RoutePath.defaultPath, page: () => const HomeView()),
+        GetPage(name: RoutePath.loginPath, page: () => LoginView()),
+        GetPage(
+            name: RoutePath.shopOwnerPath, page: () => const ShopOwnerView()),
+        GetPage(name: RoutePath.editShopPath, page: () => const EditShopView()),
+        GetPage(
+            name: RoutePath.shopOwnerMenuPath,
+            page: () => const MenuOwnerView()),
+        GetPage(name: RoutePath.editMenuPath, page: () => const EditMenuView()),
+        GetPage(name: RoutePath.settingsPath, page: () => const SettingsView()),
       ],
+      routingCallback: (routing) async => _handleAuthGaurd,
     );
   }
 }

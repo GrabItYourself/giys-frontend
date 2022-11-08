@@ -48,6 +48,15 @@
             </intent-filter>
 
         </activity>
+
+        <activity android:name="com.linusu.flutter_web_auth.CallbackActivity" android:exported="true">
+            <intent-filter android:label="flutter_web_auth">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="com.googleusercontent.apps.964375831805-ptcf2kf7uuee47g7dhoj2ghhbvq5t9c1" />
+            </intent-filter>
+        </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
