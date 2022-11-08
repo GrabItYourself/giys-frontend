@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:giys_frontend/config/route.dart';
 import 'package:giys_frontend/views/login_view.dart';
+import 'package:giys_frontend/views/settings_view.dart';
 import 'controllers/auth.dart';
 import 'views/home_view.dart';
 
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: RoutePath.defaultPath, page: () => const HomeView()),
         GetPage(name: RoutePath.loginPath, page: () => LoginView()),
+        GetPage(name: RoutePath.settingsPath, page: () => const SettingsView()),
       ],
       routingCallback: (routing) async => _handleAuthGaurd,
     );
