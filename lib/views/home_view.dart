@@ -27,6 +27,10 @@ class HomeView extends StatelessWidget {
                     title: const Text("Go to Login Page"),
                     onTap: () => Get.toNamed(RoutePath.loginPath),
                   ),
+                  ListTile(
+                    title: const Text("Go to My Shop"),
+                    onTap: () => Get.toNamed("/my-shop"),
+                  ),
                 ],
               ),
             )

@@ -4,9 +4,14 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:giys_frontend/config/route.dart';
+import 'package:giys_frontend/views/edit_menu_view.dart';
+import 'package:giys_frontend/views/edit_shop_view.dart';
 import 'package:giys_frontend/views/login_view.dart';
+import 'package:giys_frontend/views/menu_owner_view.dart';
+import 'package:giys_frontend/views/shop_owner_view.dart';
+import 'package:giys_frontend/config/route.dart';
 import 'package:giys_frontend/views/settings_view.dart';
+
 import 'controllers/auth.dart';
 import 'views/home_view.dart';
 
@@ -37,7 +42,15 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: RoutePath.defaultPath, page: () => const HomeView()),
         GetPage(name: RoutePath.loginPath, page: () => LoginView()),
+        GetPage(
+            name: RoutePath.shopOwnerPath, page: () => const ShopOwnerView()),
+        GetPage(name: RoutePath.editShopPath, page: () => const EditShopView()),
+        GetPage(
+            name: RoutePath.shopOwnerMenuPath,
+            page: () => const MenuOwnerView()),
+        GetPage(name: RoutePath.editMenuPath, page: () => const EditMenuView())
         GetPage(name: RoutePath.settingsPath, page: () => const SettingsView()),
+
       ],
       routingCallback: (routing) async => _handleAuthGaurd,
     );
