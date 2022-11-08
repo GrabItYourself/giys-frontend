@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:requests/requests.dart';
 
 import '../config/config.dart';
@@ -12,6 +15,7 @@ class CreateShopController extends GetxController {
   final shopContactController = TextEditingController();
   final bankAccountController = TextEditingController();
   final authController = Get.put(AuthController());
+  final selectedImagePath = "".obs;
 
   @override
   void onInit() {
@@ -25,6 +29,15 @@ class CreateShopController extends GetxController {
       return errorMsg;
     }
     return null;
+  }
+
+  // TODO BUG!
+  Future<void> pickImage() async {
+    final picker = ImagePicker();
+    XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      selectedImagePath.value = pickedFile.path;
+    }
   }
 
   Future<void> submitForm() async {

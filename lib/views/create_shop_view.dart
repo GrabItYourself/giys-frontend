@@ -1,6 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:giys_frontend/config/route.dart';
 import 'package:giys_frontend/widget/scaffold.dart';
 
 import '../controllers/create_shop.dart';
@@ -32,6 +33,23 @@ class CreateShopForm extends StatelessWidget {
     return Form(
         key: _loginFormKey,
         child: Column(children: [
+          GestureDetector(
+            onTap: createShopController.pickImage,
+            child: Container(
+              alignment: Alignment.center,
+              width: double.infinity,
+              height: 200,
+              color: Colors.grey[300],
+              child: createShopController.selectedImagePath.value.isEmpty
+                  ? const Text("")
+                  : Image.file(
+                      File(createShopController.selectedImagePath.value),
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                    ),
+            ),
+          ),
           TextFormField(
             controller: createShopController.shopNameController,
             decoration: const InputDecoration(labelText: "Shop name"),
