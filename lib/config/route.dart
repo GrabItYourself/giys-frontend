@@ -7,7 +7,7 @@ class RoutePath {
   static const shopOwnerMenuPath = '$shopOwnerPath/menu';
   static const editShopPath = '/edit/shop/:shopId';
   static const editMenuPath = '/edit/shop/:shopId/item/:shopItemId';
-  static const protectedPaths = [
-    paymentPath,
-  ];
+  static const settingsPath = '/settings';
+
+  static const protectedPaths = [paymentPath, settingsPath];
 }
