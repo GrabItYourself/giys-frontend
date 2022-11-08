@@ -20,8 +20,9 @@ class AuthController extends GetxController {
   // final _refreshToken = ''.obs;
   // final _storage = GetStorage();
   final id = ''.obs;
-  final name = ''.obs;
+  final role = ''.obs;
   final email = ''.obs;
+  final googleId = ''.obs;
 
   @override
   void onInit() async {
@@ -40,10 +41,7 @@ class AuthController extends GetxController {
     // }
     super.onInit();
     try {
-      final userInfo = await getUserInfo();
-      id.value = userInfo.id;
-      name.value = userInfo.name;
-      email.value = userInfo.email;
+      await getUserInfo();
     } catch (err) {
       Get.toNamed(RoutePath.loginPath);
       return Future.error(err);
@@ -63,18 +61,18 @@ class AuthController extends GetxController {
       'clientType': Platform.operatingSystem
     };
 
-    final response =
-        await Requests.get('${Config.serverUrl}/api/v1/auth/google/verify',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            queryParameters: queryParameters);
-    response.raiseForStatus();
-    // final jsonResponse = response.json();
-
-    // Set access token and refresh token in controller
-    // _accessToken.value = jsonResponse['access_token'];
-    // _refreshToken.value = jsonResponse['refresh_token'];
+    try {
+      final response =
+          await Requests.post('${Config.serverUrl}/api/v1/auth/google/verify',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              queryParameters: queryParameters);
+      response.raiseForStatus();
+      await getUserInfo();
+    } catch (err) {
+      return Future.error(err);
+    }
   }
 
   Future<MeResponse> getUserInfo() async {
@@ -85,6 +83,11 @@ class AuthController extends GetxController {
       },
     );
     response.raiseForStatus();
-    return MeResponse.fromJson(response.json());
+    print(response.json());
+    var me = MeResponse.fromJson(response.json());
+    id.value = me.id;
+    role.value = me.role;
+    email.value = me.email;
+    return me;
   }
 }

@@ -1,19 +1,22 @@
 class MeResponse {
   final String id;
-  final String name;
+  final String role;
   final String email;
+  final String googleId;
 
   MeResponse({
     required this.id,
-    required this.name,
+    required this.role,
     required this.email,
+    required this.googleId,
   });
 
   factory MeResponse.fromJson(Map<String, dynamic> json) {
     return MeResponse(
       id: json['id'],
-      name: json['name'],
+      role: json['role'],
       email: json['email'],
+      googleId: json['google_id'],
     );
   }
 }

@@ -48,9 +48,8 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: RoutePath.shopOwnerMenuPath,
             page: () => const MenuOwnerView()),
-        GetPage(name: RoutePath.editMenuPath, page: () => const EditMenuView())
+        GetPage(name: RoutePath.editMenuPath, page: () => const EditMenuView()),
         GetPage(name: RoutePath.settingsPath, page: () => const SettingsView()),
-
       ],
       routingCallback: (routing) async => _handleAuthGaurd,
     );
