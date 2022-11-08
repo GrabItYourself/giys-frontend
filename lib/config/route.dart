@@ -10,6 +10,12 @@ class RoutePath {
   static const settingsPath = '/settings';
 
   static const manageShopPath = '/shop/manage';
+  static const createShopPath = '/shop/create';
 
-  static const protectedPaths = [paymentPath, settingsPath, manageShopPath];
+  static const protectedPaths = [
+    paymentPath,
+    settingsPath,
+    // manageShopPath,
+    // createShopPath
+  ];
 }

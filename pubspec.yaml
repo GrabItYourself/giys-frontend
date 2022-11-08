@@ -45,6 +45,7 @@ dependencies:
   flutter_web_auth: ^0.4.1
   requests: ^4.7.0
   get_storage: ^2.0.3
+  image_picker: ^0.8.6
 
 dev_dependencies:
   flutter_test:
