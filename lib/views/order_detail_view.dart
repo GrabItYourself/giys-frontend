@@ -72,6 +72,7 @@ class OrderDetailView extends StatelessWidget {
                       Text("SHOP ${orderDetailController.order.value.shopId}"),
                       const Spacer(),
                       IconButton(
+                        // TODO: navigate to shop
                         onPressed: () => print("to shop"),
                         icon: const Icon(Icons.arrow_forward_ios),
                       ),

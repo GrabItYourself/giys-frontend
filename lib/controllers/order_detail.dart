@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:giys_frontend/models/order.dart';
+import 'dart:convert';
 
 class OrderDetailController extends GetxController {
   final order =
@@ -13,12 +14,35 @@ class OrderDetailController extends GetxController {
     order.value = await getOrder(shopId, orderId);
   }
 
-  Future<int> getShop(int shopId) async {
+  Future<String> getShop(int shopId) async {
+    // final response = await Requests.get(
+    //   '${Config.serverUrl}/api/v1/shop/${shopId}',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // );
+    // response.raiseForStatus();
+
+    // TODO: convert response to shop model
+
     await Future.delayed(const Duration(seconds: 1));
-    return shopId;
+    return shopId.toString();
   }
 
   Future<Order> getOrder(int shopId, int orderId) async {
+    // final response = await Requests.get(
+    //   '${Config.serverUrl}/api/v1/shops/${shopId}/orders',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // );
+    // response.raiseForStatus();
+
+    // final order = Order.fromJson(jsonDecode(response.body));
+    // return order;
+
+    // TODO: add shop to order, add shop items to order items
+
     await Future.delayed(const Duration(seconds: 1));
     return Order(
       id: orderId,
@@ -26,22 +50,30 @@ class OrderDetailController extends GetxController {
       shopId: shopId,
       status: '',
       items: <OrderItem>[
-        OrderItem(orderId: 1, shopId: 1, shopItemId: 1, quantity: 10, note: ''),
+        OrderItem(shopItemId: 1, quantity: 10, note: ''),
         OrderItem(
-          orderId: 1,
-          shopId: 1,
           shopItemId: 2222222222,
           quantity: 20,
           note: 'helelelelejlelelelel',
         ),
-        OrderItem(orderId: 1, shopId: 1, shopItemId: 3, quantity: 30, note: ''),
-        OrderItem(orderId: 1, shopId: 1, shopItemId: 4, quantity: 40, note: ''),
-        OrderItem(orderId: 1, shopId: 1, shopItemId: 5, quantity: 50, note: ''),
+        OrderItem(shopItemId: 3, quantity: 30, note: ''),
+        OrderItem(shopItemId: 4, quantity: 40, note: ''),
+        OrderItem(shopItemId: 5, quantity: 50, note: ''),
       ],
     );
   }
 
   Future<String> getShopItem(int shopId, int shopItemId) async {
+    // final response = await Requests.get(
+    //   '${Config.serverUrl}/api/v1/shops/${shopId}/shopItems/${shopItemId}',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // );
+    // response.raiseForStatus();
+
+    // TODO: convert response to shop item
+
     await Future.delayed(const Duration(seconds: 1));
     return 'shopItem $shopId $shopItemId';
   }

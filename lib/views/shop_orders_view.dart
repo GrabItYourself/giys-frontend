@@ -22,8 +22,8 @@ class ShopOrdersView extends StatelessWidget {
               itemBuilder: (context, index) => OrderCard(
                 isOwner: true,
                 order: controller.orders[index],
-                onReady: (() => controller.cancelOrder(index)),
-                onComplete: (() => controller.cancelOrder(index)),
+                onReady: (() => controller.readyOrder(index)),
+                onComplete: (() => controller.completeOrder(index)),
                 onCancel: (() => controller.cancelOrder(index)),
               ),
             ),
