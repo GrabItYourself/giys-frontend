@@ -37,11 +37,16 @@ class MainDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            child: Text(
-              Config.getAppName(),
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 24,
+            decoration: const BoxDecoration(
+              color: Colors.blue,
+            ),
+            child: Center(
+              child: Text(
+                Config.getAppName(),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
               ),
             ),
           ),
