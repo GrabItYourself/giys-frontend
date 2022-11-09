@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giys_frontend/controllers/shop_order.dart';
-import 'package:giys_frontend/widget/login_widget.dart';
 import 'package:giys_frontend/widget/order_card.dart';
-import 'package:giys_frontend/widget/shop_order_card.dart';
 
 import '../widget/scaffold.dart';
 
@@ -20,7 +18,8 @@ class ShopOrdersView extends StatelessWidget {
           child: GetX<ShopOrderController>(
             builder: (controller) => ListView.builder(
               itemCount: controller.orders.length,
-              itemBuilder: (context, index) => ShopOrderCard(
+              itemBuilder: (context, index) => OrderCard(
+                isOwner: true,
                 order: controller.orders[index],
                 onReady: (() => controller.cancelOrder(index)),
                 onComplete: (() => controller.cancelOrder(index)),

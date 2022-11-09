@@ -35,7 +35,7 @@ class ShopOrderController extends GetxController {
       id: 3,
       userId: "3",
       shopId: 1,
-      status: "COMPLETED",
+      status: "READY",
       items: <OrderItem>[],
     ));
     orders.add(Order(
