@@ -7,10 +7,6 @@ class OrderController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    fetchOrders();
-  }
-
-  Future<void> fetchOrders() async {
     orders.value = await getOrders();
   }
 
@@ -46,10 +42,10 @@ class OrderController extends GetxController {
       items: <OrderItem>[],
     ));
 
-    var shops = await Future.wait(orders.map(((order) => getShop(order))));
-    shops.asMap().forEach((idx, shop) {
-      orders[idx].shop = shop;
-    });
+    // var shops = await Future.wait(orders.map(((order) => getShop(order))));
+    // shops.asMap().forEach((idx, shop) {
+    //   orders[idx].shop = shop;
+    // });
     return orders;
   }
 

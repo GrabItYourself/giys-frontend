@@ -3,6 +3,8 @@ import 'package:giys_frontend/models/order.dart';
 import 'package:get/get.dart';
 import 'package:giys_frontend/widget/order_alert_dialog.dart';
 
+import '../config/route.dart';
+
 class OrderCard extends StatelessWidget {
   const OrderCard({
     super.key,
@@ -22,9 +24,11 @@ class OrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => print("order details"),
+      onTap: () => Get.toNamed(RoutePath.orderDetailPath
+          .replaceFirst(':shopId', order.shopId.toString())
+          .replaceFirst(':orderId', order.id.toString())),
       child: Card(
-        margin: const EdgeInsets.all(2),
+        margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
         child: Row(
           children: [
             Image.network(

@@ -46,10 +46,10 @@ class ShopOrderController extends GetxController {
       items: <OrderItem>[],
     ));
 
-    var shops = await Future.wait(orders.map(((order) => getShop(order))));
-    shops.asMap().forEach((idx, shop) {
-      orders[idx].shop = shop;
-    });
+    // var shops = await Future.wait(orders.map(((order) => getShop(order))));
+    // shops.asMap().forEach((idx, shop) {
+    //   orders[idx].shop = shop;
+    // });
     return orders;
   }
 

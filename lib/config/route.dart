@@ -10,6 +10,7 @@ class RoutePath {
   static const settingsPath = '/settings';
   static const ordersPath = '/orders';
   static const shopOrdersPath = '/my-shop/orders';
+  static const orderDetailPath = '/shops/:shopId/orders/:orderId';
 
   static const shopManagePath = '/shop/manage';
   static const shopCreatePath = '/shop/create';

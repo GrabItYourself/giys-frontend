@@ -5,8 +5,6 @@ class Order {
   String status;
   List<OrderItem> items;
 
-  String? shop;
-
   Order({
     required this.id,
     required this.userId,
