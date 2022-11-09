@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:giys_frontend/config/route.dart';
 import 'package:giys_frontend/controllers/payment_method.dart';
 import 'package:giys_frontend/controllers/add_payment_method.dart';
 import 'package:giys_frontend/utilitties/payment_method_input_formatter.dart';
@@ -9,7 +8,7 @@ import 'package:giys_frontend/utilitties/payment_method_input_formatter.dart';
 import '../widget/scaffold.dart';
 
 class AddPaymentMethodView extends StatelessWidget {
-  final paymentMethodController = Get.put(PaymentMethodController());
+  final paymentMethodController = Get.find<PaymentMethodController>();
   final addPaymentMethodController = Get.put(AddPaymentMethodController());
 
   AddPaymentMethodView({super.key});
@@ -92,10 +91,7 @@ class AddPaymentMethodView extends StatelessWidget {
                         children: [
                           Expanded(
                             child: OutlinedButton(
-                              onPressed: () {
-                                Get.toNamed(RoutePath.paymentMethodPath);
-                                Get.delete<AddPaymentMethodController>();
-                              },
+                              onPressed: (() => Get.back()),
                               child: const Text("Cancel"),
                             ),
                           ),
@@ -108,8 +104,7 @@ class AddPaymentMethodView extends StatelessWidget {
                                       .createAddPaymentMethodRequest();
                                   paymentMethodController
                                       .addPaymentMethods(req);
-                                  Get.toNamed(RoutePath.paymentMethodPath);
-                                  Get.delete<AddPaymentMethodController>();
+                                  Get.back();
                                 }
                               },
                               child: const Text("Confirm"),
