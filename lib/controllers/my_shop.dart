@@ -29,7 +29,7 @@ class MyShopController extends GetxController {
   // TODO get shop id from user credentials
   Future<ShopResponse> getMyShop(int id) async {
     final response = await Requests.get(
-      '${Config.serverUrl}/api/v1/shops/$id',
+      '${Config.getServerUrl()}/api/v1/shops/$id',
       headers: {
         'Content-Type': 'application/json',
       },
