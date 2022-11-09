@@ -14,6 +14,7 @@ class PaymentMethodView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MainScaffold(
+      title: "Payment Methods",
       body: SafeArea(
         child: Center(
           child: GetX<PaymentMethodController>(
