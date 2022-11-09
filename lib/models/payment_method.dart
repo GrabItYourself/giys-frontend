@@ -32,4 +32,14 @@ class AddPaymentMethodRequest {
     required this.expirationMonth,
     required this.expirationYear,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      "name": name,
+      "card_number": cardNumber,
+      "cvv": cvv,
+      "expiration_month": expirationMonth,
+      "expiration_year": expirationYear,
+    };
+  }
 }

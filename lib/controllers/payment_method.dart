@@ -1,5 +1,9 @@
 import 'package:get/get.dart';
 import 'package:giys_frontend/models/payment_method.dart';
+import 'package:requests/requests.dart';
+import 'dart:convert';
+
+import '../config/config.dart';
 
 class PaymentMethodController extends GetxController {
   final paymentMethods = <PaymentMethod>[].obs;
@@ -19,6 +23,8 @@ class PaymentMethodController extends GetxController {
     //   '${Config.serverUrl}/api/v1/user/me/paymentMethods',
     //   headers: {
     //     'Content-Type': 'application/json',
+    //     'cookie':
+    //         'GIYS_ACCESS_TOKEN=88a218d8-43c9-4552-a3a5-513eeb8dbd1d; GIYS_REFRESH_TOKEN=d5ab33cc-7ad2-4d62-b0ce-21a6e6d63677'
     //   },
     // );
     // response.raiseForStatus();
@@ -29,6 +35,7 @@ class PaymentMethodController extends GetxController {
     // }
     // return paymentMethods;
 
+    await Future.delayed(const Duration(seconds: 1));
     final paymentMethods = <PaymentMethod>[];
     paymentMethods
         .add(PaymentMethod(id: 1, lastFourDigits: "1234", isDefault: false));
@@ -43,7 +50,17 @@ class PaymentMethodController extends GetxController {
   }
 
   Future<void> setDefaultPaymentMethods(int index) async {
-    // TODO: Call api
+    // final response = await Requests.patch(
+    //   '${Config.serverUrl}/api/v1/user/me/paymentMethods/${paymentMethods[index].id}/setDefault',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'cookie':
+    //         'GIYS_ACCESS_TOKEN=88a218d8-43c9-4552-a3a5-513eeb8dbd1d; GIYS_REFRESH_TOKEN=d5ab33cc-7ad2-4d62-b0ce-21a6e6d63677'
+    //   },
+    // );
+    // response.raiseForStatus();
+
+    await Future.delayed(const Duration(seconds: 1));
     for (var paymentMethod in paymentMethods) {
       paymentMethod.isDefault = false;
     }
@@ -52,12 +69,23 @@ class PaymentMethodController extends GetxController {
   }
 
   Future<void> addPaymentMethods(AddPaymentMethodRequest req) async {
-    // TODO: Call api
-    paymentMethods.add(PaymentMethod(
-      id: 123,
-      lastFourDigits: req.cardNumber.substring(0, 4),
-      isDefault: false,
-    ));
+    // final response = await Requests.post(
+    //   '${Config.serverUrl}/api/v1/user/me/paymentMethods',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'cookie':
+    //         'GIYS_ACCESS_TOKEN=88a218d8-43c9-4552-a3a5-513eeb8dbd1d; GIYS_REFRESH_TOKEN=d5ab33cc-7ad2-4d62-b0ce-21a6e6d63677'
+    //   },
+    //   json: req.toJson(),
+    // );
+    // response.raiseForStatus();
+
+    // paymentMethods.add(PaymentMethod.fromJson(jsonDecode(response.body)));
+    // paymentMethods.refresh();
+
+    await Future.delayed(const Duration(seconds: 1));
+    paymentMethods
+        .add(PaymentMethod(id: 1, lastFourDigits: "1234", isDefault: false));
     paymentMethods.refresh();
   }
 }
