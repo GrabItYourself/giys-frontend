@@ -10,6 +10,8 @@ import 'package:giys_frontend/views/login_view.dart';
 import 'package:giys_frontend/views/menu_owner_view.dart';
 import 'package:giys_frontend/views/shop_owner_view.dart';
 import 'package:giys_frontend/config/route.dart';
+import 'package:giys_frontend/views/settings_view.dart';
+
 import 'controllers/auth.dart';
 import 'views/home_view.dart';
 
@@ -46,6 +48,8 @@ class MyApp extends StatelessWidget {
             name: RoutePath.shopOwnerMenuPath,
             page: () => const MenuOwnerView()),
         GetPage(name: RoutePath.editMenuPath, page: () => const EditMenuView())
+        GetPage(name: RoutePath.settingsPath, page: () => const SettingsView()),
+
       ],
       routingCallback: (routing) async => _handleAuthGaurd,
     );
