@@ -13,6 +13,7 @@ class ShopOrdersView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MainScaffold(
+      title: "Shop Orders",
       body: SafeArea(
         child: Center(
           child: GetX<ShopOrderController>(

@@ -13,6 +13,7 @@ class OrdersView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MainScaffold(
+      title: "Orders",
       body: SafeArea(
         child: Center(
           child: GetX<OrderController>(

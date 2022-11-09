@@ -28,7 +28,7 @@ class OrderCard extends StatelessWidget {
           .replaceFirst(':shopId', order.shopId.toString())
           .replaceFirst(':orderId', order.id.toString())),
       child: Card(
-        margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+        margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
         child: Row(
           children: [
             Image.network(

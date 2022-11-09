@@ -17,7 +17,7 @@ class MainDrawer extends StatelessWidget {
   final _routeConfigs = [
     _RouteConfig("Home", RoutePath.defaultPath, const Icon(Icons.home)),
     _RouteConfig("Shop", RoutePath.defaultPath, const Icon(Icons.shop)),
-    _RouteConfig("Order", RoutePath.defaultPath,
+    _RouteConfig("Order", RoutePath.ordersPath,
         const Icon(Icons.toc)), // TODO: find icons
     _RouteConfig("Setting", RoutePath.settingsPath, const Icon(Icons.settings)),
     _RouteConfig("Login", RoutePath.loginPath, const Icon(Icons.login))

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:giys_frontend/controllers/order.dart';
 import 'package:giys_frontend/controllers/order_detail.dart';
-import 'package:giys_frontend/widget/order_card.dart';
 
 import '../widget/scaffold.dart';
 
@@ -32,7 +30,7 @@ class OrderDetailView extends StatelessWidget {
                   : Padding(
                       padding: const EdgeInsets.all(10),
                       child: Text(
-                        "note: ${item.note}",
+                        item.note,
                         style: const TextStyle(
                             color: Color.fromARGB(255, 125, 125, 125)),
                       ),
@@ -43,9 +41,9 @@ class OrderDetailView extends StatelessWidget {
         .toList();
     return Table(
       columnWidths: const {
-        0: FractionColumnWidth(0.1),
+        0: FractionColumnWidth(0.2),
         1: FractionColumnWidth(0.4),
-        2: FractionColumnWidth(0.5),
+        2: FractionColumnWidth(0.4),
       },
       children: rows,
     );
@@ -54,6 +52,7 @@ class OrderDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MainScaffold(
+      title: "Order Details",
       body: SafeArea(
         child: Center(
           child: Obx(
@@ -70,13 +69,7 @@ class OrderDetailView extends StatelessWidget {
                         width: 100,
                       ),
                       const SizedBox(width: 8),
-                      Column(
-                        children: [
-                          const Text("shop card"),
-                          Text(orderDetailController.order.value.shopId
-                              .toString()),
-                        ],
-                      ),
+                      Text("SHOP ${orderDetailController.order.value.shopId}"),
                       const Spacer(),
                       IconButton(
                         onPressed: () => print("to shop"),
@@ -88,7 +81,7 @@ class OrderDetailView extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.only(top: 10, left: 10),
                   child: Text(
-                    "Order Detail",
+                    "Order Details",
                     textAlign: TextAlign.left,
                   ),
                 ),
