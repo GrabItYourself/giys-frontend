@@ -10,7 +10,7 @@ class MainScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text(Config.appName)),
+      appBar: AppBar(title: Text(Config.getAppName())),
       drawer: MainDrawer(),
       body: body,
     );
