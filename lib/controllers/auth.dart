@@ -16,15 +16,16 @@ final googleAuthUrl = Uri.https('accounts.google.com', '/o/oauth2/v2/auth', {
 });
 
 class AuthController extends GetxController {
-  final _id = ''.obs;
-  final _role = ''.obs;
-  final _email = ''.obs;
-  final _googleId = ''.obs;
+  final id = ''.obs;
+  final role = ''.obs;
+  final email = ''.obs;
+  final googleId = ''.obs;
 
   @override
   void onInit() async {
     super.onInit();
     try {
+      print("init");
       await getUserInfo();
     } catch (err) {
       Get.toNamed(RoutePath.loginPath);
@@ -68,17 +69,10 @@ class AuthController extends GetxController {
     );
     response.raiseForStatus();
     var me = MeResponse.fromJson(response.json());
-    _id.value = me.id;
-    _role.value = me.role;
-    _email.value = me.email;
-    _googleId.value = me.googleId;
+    id.value = me.id;
+    role.value = me.role;
+    email.value = me.email;
+    googleId.value = me.googleId;
     return me;
   }
-
-  MeResponse get me => MeResponse(
-        id: _id.value,
-        role: _role.value,
-        email: _email.value,
-        googleId: _googleId.value,
-      );
 }
