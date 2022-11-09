@@ -23,8 +23,6 @@ class PaymentMethodController extends GetxController {
     //   '${Config.serverUrl}/api/v1/user/me/paymentMethods',
     //   headers: {
     //     'Content-Type': 'application/json',
-    //     'cookie':
-    //         'GIYS_ACCESS_TOKEN=88a218d8-43c9-4552-a3a5-513eeb8dbd1d; GIYS_REFRESH_TOKEN=d5ab33cc-7ad2-4d62-b0ce-21a6e6d63677'
     //   },
     // );
     // response.raiseForStatus();
@@ -54,8 +52,6 @@ class PaymentMethodController extends GetxController {
     //   '${Config.serverUrl}/api/v1/user/me/paymentMethods/${paymentMethods[index].id}/setDefault',
     //   headers: {
     //     'Content-Type': 'application/json',
-    //     'cookie':
-    //         'GIYS_ACCESS_TOKEN=88a218d8-43c9-4552-a3a5-513eeb8dbd1d; GIYS_REFRESH_TOKEN=d5ab33cc-7ad2-4d62-b0ce-21a6e6d63677'
     //   },
     // );
     // response.raiseForStatus();
@@ -73,8 +69,6 @@ class PaymentMethodController extends GetxController {
     //   '${Config.serverUrl}/api/v1/user/me/paymentMethods',
     //   headers: {
     //     'Content-Type': 'application/json',
-    //     'cookie':
-    //         'GIYS_ACCESS_TOKEN=88a218d8-43c9-4552-a3a5-513eeb8dbd1d; GIYS_REFRESH_TOKEN=d5ab33cc-7ad2-4d62-b0ce-21a6e6d63677'
     //   },
     //   json: req.toJson(),
     // );
