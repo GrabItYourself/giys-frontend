@@ -21,7 +21,7 @@ class LoginView extends StatelessWidget {
                 LoginWidget(onLogin: authController.authenticate),
                 GetX<AuthController>(
                   builder: (controller) {
-                    return Text(authController.id.value != ''
+                    return Text(authController.me.id != ''
                         ? 'Authenticated'
                         : 'Not Authenticated');
                   },

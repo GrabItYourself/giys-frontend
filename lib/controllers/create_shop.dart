@@ -20,7 +20,7 @@ class CreateShopController extends GetxController {
   @override
   void onInit() {
     // Simulating obtaining the user name from some local storage
-    shopContactController.text = authController.id.value;
+    shopContactController.text = authController.me.id;
     super.onInit();
   }
 

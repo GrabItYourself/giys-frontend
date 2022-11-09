@@ -16,29 +16,13 @@ final googleAuthUrl = Uri.https('accounts.google.com', '/o/oauth2/v2/auth', {
 });
 
 class AuthController extends GetxController {
-  // final _accessToken = ''.obs;
-  // final _refreshToken = ''.obs;
-  // final _storage = GetStorage();
-  final id = ''.obs;
-  final role = ''.obs;
-  final email = ''.obs;
-  final googleId = ''.obs;
+  final _id = ''.obs;
+  final _role = ''.obs;
+  final _email = ''.obs;
+  final _googleId = ''.obs;
 
   @override
   void onInit() async {
-    // _accessToken.listen((p0) {
-    //   _storage.write('accessToken', p0);
-    // });
-    // _refreshToken.listen((p0) {
-    //   _storage.write('refreshToken', p0);
-    // });
-    // if (_storage.hasData('accessToken')) {
-    //   _accessToken.value = _storage.read('accessToken');
-    //   isAuthenticated.value = true;
-    // }
-    // if (_storage.hasData('refreshToken')) {
-    //   _refreshToken.value = _storage.read('refreshToken');
-    // }
     super.onInit();
     try {
       await getUserInfo();
@@ -83,11 +67,18 @@ class AuthController extends GetxController {
       },
     );
     response.raiseForStatus();
-    print(response.json());
     var me = MeResponse.fromJson(response.json());
-    id.value = me.id;
-    role.value = me.role;
-    email.value = me.email;
+    _id.value = me.id;
+    _role.value = me.role;
+    _email.value = me.email;
+    _googleId.value = me.googleId;
     return me;
   }
+
+  MeResponse get me => MeResponse(
+        id: _id.value,
+        role: _role.value,
+        email: _email.value,
+        googleId: _googleId.value,
+      );
 }
