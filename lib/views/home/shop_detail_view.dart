@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:giys_frontend/models/shop.dart';
 
 class ShopDetailView extends StatelessWidget {
-  final Shop shop;
-  const ShopDetailView({super.key, required this.shop});
+  final Shop shop = Get.arguments;
+  ShopDetailView({super.key});
 
   @override
   Widget build(BuildContext context) {

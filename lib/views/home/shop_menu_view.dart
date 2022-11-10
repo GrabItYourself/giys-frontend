@@ -4,17 +4,19 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:giys_frontend/config/route.dart';
 import 'package:giys_frontend/controllers/auth.dart';
 import 'package:giys_frontend/models/shop_item.dart';
 import 'package:giys_frontend/views/home/shop_detail_view.dart';
 import 'package:giys_frontend/utilitties/generic_dialog.dart';
+import 'package:giys_frontend/widget/scaffold.dart';
 import 'package:http/http.dart' as http;
 
 import '../../models/shop.dart';
 
 class ShopMenuView extends StatefulWidget {
-  final Shop shop;
-  const ShopMenuView({super.key, required this.shop});
+  final Shop shop = Get.arguments;
+  ShopMenuView({super.key});
 
   @override
   State<ShopMenuView> createState() => _ShopMenuViewState();
@@ -41,26 +43,31 @@ class _ShopMenuViewState extends State<ShopMenuView> {
     return allShopItem;
   }
 
-  late final List<ShopItem> shopItemsList;
-  late final Map<ShopItem, int> shopCart;
+  late final List<ShopItem> shopItemsList = [
+    ShopItem(id: 1, shopId: 1, name: "item1", price: 123),
+    ShopItem(id: 2, shopId: 1, name: "item2", price: 456),
+  ];
+  late final Map<ShopItem, int> shopCart = {};
   @override
   void initState() {
     // TODO: get all shop items
     final shopId = widget.shop.id;
-    getAllShopItem(shopId).then((value) {
-      shopItemsList = value;
-      for (ShopItem shopItem in shopItemsList) {
-        shopCart[shopItem] = 0;
-      }
-    });
-
+    // getAllShopItem(shopId).then((value) {
+    //   shopItemsList = value;
+    //   for (ShopItem shopItem in shopItemsList) {
+    //     shopCart[shopItem] = 0;
+    //   }
+    // });
+    for (ShopItem shopItem in shopItemsList) {
+      shopCart[shopItem] = 0;
+    }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Shop Menu")),
+    return MainScaffold(
+      title: "Shop Menu",
       body: Column(
         children: [
           widget.shop.image != null
@@ -78,9 +85,7 @@ class _ShopMenuViewState extends State<ShopMenuView> {
               Text(widget.shop.description ?? ""),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ShopDetailView(shop: widget.shop),
-                  ));
+                  Get.toNamed(RoutePath.shopDetailPath, arguments: widget.shop);
                 },
                 child: const Text("See More"),
               )

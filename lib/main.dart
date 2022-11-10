@@ -7,6 +7,9 @@ import 'package:get_storage/get_storage.dart';
 import 'package:giys_frontend/views/create_shop_view.dart';
 import 'package:giys_frontend/views/edit_menu_view.dart';
 import 'package:giys_frontend/views/edit_shop_view.dart';
+import 'package:giys_frontend/views/home/all_shop_view.dart';
+import 'package:giys_frontend/views/home/shop_detail_view.dart';
+import 'package:giys_frontend/views/home/shop_menu_view.dart';
 import 'package:giys_frontend/views/login_view.dart';
 import 'package:giys_frontend/views/manage_shop_view.dart';
 import 'package:giys_frontend/views/menu_owner_view.dart';
@@ -44,6 +47,12 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: RoutePath.defaultPath, page: () => const HomeView()),
         GetPage(name: RoutePath.loginPath, page: () => LoginView()),
+        GetPage(name: RoutePath.shopDetailPath, page: () => ShopDetailView()),
+        GetPage(name: RoutePath.allShopPath, page: () => const AllShopView()),
+        GetPage(
+          name: RoutePath.shopMenuPath,
+          page: () => ShopMenuView(),
+        ),
         GetPage(
             name: RoutePath.shopOwnerPath, page: () => const ShopOwnerView()),
         GetPage(name: RoutePath.editShopPath, page: () => const EditShopView()),

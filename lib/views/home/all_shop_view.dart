@@ -4,19 +4,20 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:giys_frontend/config/route.dart';
 import 'package:giys_frontend/controllers/auth.dart';
 import 'package:giys_frontend/models/shop.dart';
 import 'package:giys_frontend/views/home/shop_menu_view.dart';
 import 'package:http/http.dart' as http;
 
-class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+class AllShopView extends StatefulWidget {
+  const AllShopView({super.key});
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  State<AllShopView> createState() => _AllShopViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _AllShopViewState extends State<AllShopView> {
   //TODO complete this function
   Future<List<Shop>> getAllShop() async {
     List<Shop> allShop = [];
@@ -33,28 +34,54 @@ class _HomeViewState extends State<HomeView> {
     return allShop;
   }
 
-  late final List<Shop> shopList;
+  late final List<Shop> shopList = [
+    Shop(
+        id: 1,
+        name: "shop1",
+        contact: "none",
+        description: "desc",
+        location: "asdasdasd"),
+    Shop(id: 2, name: "shop2"),
+  ];
   @override
   void initState() {
     // TODO: implement get shopList
-    getAllShop().then((value) {
-      shopList = value;
-    });
+    // getAllShop().then((value) {
+    //   shopList = value;
+    // });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("debug"),
-      ),
-      body: TextButton(
-          onPressed: () async {
-            shopList = await getAllShop();
-            log(shopList.toString());
-          },
-          child: const Text("Send HTTP request")),
+      appBar: AppBar(title: const Text("Home")),
+      body: Column(children: [
+        Expanded(
+          child: ListView.builder(
+            itemCount: shopList.length,
+            itemBuilder: (context, index) {
+              final shop = shopList[index];
+              return ListTile(
+                leading: shop.image != null
+                    ? Image.network(
+                        shop.image!,
+                        fit: BoxFit.fitWidth,
+                      )
+                    : Image.network(
+                        "https://picsum.photos/200",
+                        fit: BoxFit.fitWidth,
+                      ),
+                title: Text(shop.name),
+                subtitle: Text(shop.description ?? ""),
+                onTap: () {
+                  Get.toNamed(RoutePath.shopMenuPath, arguments: shop);
+                },
+              );
+            },
+          ),
+        )
+      ]),
     );
   }
 }
