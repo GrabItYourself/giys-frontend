@@ -21,12 +21,6 @@ class LoginView extends StatelessWidget {
             Text(authController.id.value != ''
                 ? 'Authenticated'
                 : 'Not Authenticated'),
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil("/", (route) => false);
-                },
-                child: const Text("Debug (Go to Main Page)")),
           ],
         ),
       ),
