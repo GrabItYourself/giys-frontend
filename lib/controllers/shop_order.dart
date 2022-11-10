@@ -85,6 +85,7 @@ class ShopOrderController extends GetxController {
 
     await Future.delayed(const Duration(seconds: 1));
     orders[index].status = "CANCELED";
+    orders.refresh();
   }
 
   Future<void> readyOrder(int index) async {
@@ -98,6 +99,7 @@ class ShopOrderController extends GetxController {
 
     await Future.delayed(const Duration(seconds: 1));
     orders[index].status = "READY";
+    orders.refresh();
   }
 
   Future<void> completeOrder(int index) async {
@@ -111,5 +113,6 @@ class ShopOrderController extends GetxController {
 
     await Future.delayed(const Duration(seconds: 1));
     orders[index].status = "COMPLETED";
+    orders.refresh();
   }
 }

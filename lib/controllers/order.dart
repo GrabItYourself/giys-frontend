@@ -91,6 +91,7 @@ class OrderController extends GetxController {
     // response.raiseForStatus();
 
     await Future.delayed(const Duration(seconds: 1));
-    orders.removeAt(index);
+    orders[index].status = "CANCELED";
+    orders.refresh();
   }
 }
