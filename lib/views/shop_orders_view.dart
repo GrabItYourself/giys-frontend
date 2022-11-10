@@ -17,14 +17,17 @@ class ShopOrdersView extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: GetX<ShopOrderController>(
-            builder: (controller) => ListView.builder(
-              itemCount: controller.orders.length,
-              itemBuilder: (context, index) => OrderCard(
-                isOwner: true,
-                order: controller.orders[index],
-                onReady: (() => controller.readyOrder(index)),
-                onComplete: (() => controller.completeOrder(index)),
-                onCancel: (() => controller.cancelOrder(index)),
+            builder: (controller) => RefreshIndicator(
+              onRefresh: controller.updateShopOrders,
+              child: ListView.builder(
+                itemCount: controller.orders.length,
+                itemBuilder: (context, index) => OrderCard(
+                  isOwner: true,
+                  order: controller.orders[index],
+                  onReady: (() => controller.readyOrder(index)),
+                  onComplete: (() => controller.completeOrder(index)),
+                  onCancel: (() => controller.cancelOrder(index)),
+                ),
               ),
             ),
           ),

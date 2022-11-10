@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:giys_frontend/models/order.dart';
@@ -11,6 +12,10 @@ class OrderController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    await updateMyOrders();
+  }
+
+  Future<void> updateMyOrders() async {
     orders.value = await getMyOrders();
   }
 

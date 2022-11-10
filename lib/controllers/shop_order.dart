@@ -10,6 +10,10 @@ class ShopOrderController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    await updateShopOrders();
+  }
+
+  Future<void> updateShopOrders() async {
     orders.value = await getShopOrders();
   }
 
