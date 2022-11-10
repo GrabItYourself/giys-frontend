@@ -108,7 +108,8 @@ class _ShopMenuViewState extends State<ShopMenuView> {
                       IconButton(
                           onPressed: () {
                             setState(() {
-                              shopCart[shopItem] = shopCart[shopItem]! + 1;
+                              shopCart[shopItem] =
+                                  (shopCart[shopItem] ?? 0) + 1;
                             });
                           },
                           icon: const Icon(Icons.add)),
