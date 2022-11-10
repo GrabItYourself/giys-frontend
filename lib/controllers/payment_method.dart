@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:giys_frontend/models/payment_method.dart';
 import 'package:requests/requests.dart';
-import 'dart:convert';
 
 import '../config/config.dart';
+import '../config/route.dart';
 
 class PaymentMethodController extends GetxController {
   final paymentMethods = <PaymentMethod>[].obs;
@@ -11,7 +11,12 @@ class PaymentMethodController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    await updateMyPaymentMethods();
+    try {
+      await updateMyPaymentMethods();
+    } catch (err) {
+      Get.toNamed(RoutePath.loginPath);
+      return Future.error(err);
+    }
   }
 
   Future<void> updateMyPaymentMethods() async {
@@ -28,7 +33,7 @@ class PaymentMethodController extends GetxController {
     // response.raiseForStatus();
 
     // final paymentMethods = <PaymentMethod>[];
-    // for (var item in jsonDecode(response.body)) {
+    // for (var item in response.json()) {
     //   paymentMethods.add(PaymentMethod.fromJson(item));
     // }
     // return paymentMethods;
