@@ -9,5 +9,13 @@ class RoutePath {
   static const editMenuPath = '/edit/shop/:shopId/item/:shopItemId';
   static const settingsPath = '/settings';
 
-  static const protectedPaths = [paymentPath, settingsPath];
+  static const manageShopPath = '/shop/manage';
+  static const createShopPath = '/shop/create';
+
+  static const protectedPaths = [
+    paymentPath,
+    settingsPath,
+    // manageShopPath,
+    // createShopPath
+  ];
 }

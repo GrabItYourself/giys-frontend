@@ -13,17 +13,22 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MainScaffold(
+        title: "Login",
         body: SafeArea(
-      child: Center(
-        child: Column(
-          children: [
-            LoginWidget(onLogin: authController.authenticate),
-            Text(authController.id.value != ''
-                ? 'Authenticated'
-                : 'Not Authenticated'),
-          ],
-        ),
-      ),
-    ));
+          child: Center(
+            child: Column(
+              children: [
+                LoginWidget(onLogin: authController.authenticate),
+                GetX<AuthController>(
+                  builder: (controller) {
+                    return Text(authController.me.id != ''
+                        ? 'Authenticated'
+                        : 'Not Authenticated');
+                  },
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 }
