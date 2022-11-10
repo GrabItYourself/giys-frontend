@@ -18,34 +18,36 @@ class PaymentMethodView extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: GetX<PaymentMethodController>(
-            builder: (controller) => ListView.separated(
-              itemCount: controller.paymentMethods.length + 1,
-              itemBuilder: (context, index) {
-                if (index == controller.paymentMethods.length) {
-                  return ListTile(
-                    title: Row(
-                      children: const [
-                        Icon(Icons.add),
-                        SizedBox(width: 10),
-                        Text("Add New Payment Method"),
-                      ],
-                    ),
-                    onTap: () => Get.toNamed(RoutePath.addPaymentMethodPath),
-                  );
-                }
-                return PaymentMethodListTile(
-                  lastFourDigits:
-                      controller.paymentMethods[index].lastFourDigits,
-                  isDefault: controller.paymentMethods[index].isDefault,
-                  onTap: () =>
-                      paymentMethodController.setDefaultPaymentMethods(index),
-                );
-              },
-              separatorBuilder: (context, index) {
-                return const Divider();
-              },
-            ),
-          ),
+              builder: (controller) => RefreshIndicator(
+                  onRefresh: controller.updateMyPaymentMethods,
+                  child: ListView.separated(
+                    itemCount: controller.paymentMethods.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index == controller.paymentMethods.length) {
+                        return ListTile(
+                          title: Row(
+                            children: const [
+                              Icon(Icons.add),
+                              SizedBox(width: 10),
+                              Text("Add New Payment Method"),
+                            ],
+                          ),
+                          onTap: () =>
+                              Get.toNamed(RoutePath.addPaymentMethodPath),
+                        );
+                      }
+                      return PaymentMethodListTile(
+                        lastFourDigits:
+                            controller.paymentMethods[index].lastFourDigits,
+                        isDefault: controller.paymentMethods[index].isDefault,
+                        onTap: () => paymentMethodController
+                            .setDefaultPaymentMethods(index),
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const Divider();
+                    },
+                  ))),
         ),
       ),
     );

@@ -11,11 +11,11 @@ class PaymentMethodController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    try {
-      paymentMethods.value = await getMyPaymentMethods();
-    } catch (err) {
-      return Future.error(err);
-    }
+    await updateMyPaymentMethods();
+  }
+
+  Future<void> updateMyPaymentMethods() async {
+    paymentMethods.value = await getMyPaymentMethods();
   }
 
   Future<List<PaymentMethod>> getMyPaymentMethods() async {
