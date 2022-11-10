@@ -6,7 +6,7 @@ import 'package:giys_frontend/widget/login_widget.dart';
 import '../widget/scaffold.dart';
 
 class LoginView extends StatelessWidget {
-  final authController = Get.put(AuthController());
+  final authController = Get.find<AuthController>();
 
   LoginView({super.key});
 
@@ -21,8 +21,8 @@ class LoginView extends StatelessWidget {
                 LoginWidget(onLogin: authController.authenticate),
                 GetX<AuthController>(
                   builder: (controller) {
-                    return Text(authController.me.id != ''
-                        ? 'Authenticated'
+                    return Text(authController.email.value != ''
+                        ? authController.email.value
                         : 'Not Authenticated');
                   },
                 ),

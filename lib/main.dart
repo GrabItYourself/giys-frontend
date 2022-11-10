@@ -20,6 +20,7 @@ import 'views/home_view.dart';
 void main() async {
   await GetStorage.init();
   await Future.delayed(const Duration(seconds: 2));
+  Get.put(AuthController());
   runApp(const MyApp());
 }
 
