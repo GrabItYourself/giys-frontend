@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../config/config.dart';
 import 'drawer.dart';
 
 class MainScaffold extends StatelessWidget {
