@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:giys_frontend/views/create_shop_view.dart';
 import 'package:giys_frontend/views/edit_menu_view.dart';
 import 'package:giys_frontend/views/edit_shop_view.dart';
@@ -23,6 +24,8 @@ import 'views/home_view.dart';
 void main() async {
   await GetStorage.init();
   await Future.delayed(const Duration(seconds: 2));
+  await dotenv.load(fileName: ".env");
+  Get.put(AuthController());
   runApp(const MyApp());
 }
 
@@ -53,8 +56,7 @@ class MyApp extends StatelessWidget {
           name: RoutePath.shopMenuPath,
           page: () => ShopMenuView(),
         ),
-        GetPage(
-            name: RoutePath.shopOwnerPath, page: () => const ShopOwnerView()),
+        GetPage(name: RoutePath.shopOwnerPath, page: () => ShopOwnerView()),
         GetPage(name: RoutePath.editShopPath, page: () => const EditShopView()),
         GetPage(
             name: RoutePath.shopOwnerMenuPath,

@@ -10,21 +10,22 @@ import '../config/config.dart';
 
 final googleAuthUrl = Uri.https('accounts.google.com', '/o/oauth2/v2/auth', {
   'response_type': 'code',
-  'client_id': Config.googleClientId,
-  'redirect_uri': '${Config.callbackUrlScheme}:/',
+  'client_id': Config.getGoogleClientId(),
+  'redirect_uri': '${Config.getCallbackUrlScheme()}:/',
   'scope': 'email',
 });
 
 class AuthController extends GetxController {
-  final _id = ''.obs;
-  final _role = ''.obs;
-  final _email = ''.obs;
-  final _googleId = ''.obs;
+  final id = ''.obs;
+  final role = ''.obs;
+  final email = ''.obs;
+  final googleId = ''.obs;
 
   @override
   void onInit() async {
     super.onInit();
     try {
+      print("init");
       await getUserInfo();
     } catch (err) {
       Get.toNamed(RoutePath.loginPath);
@@ -35,7 +36,7 @@ class AuthController extends GetxController {
   Future<void> authenticate() async {
     final result = await FlutterWebAuth.authenticate(
         url: googleAuthUrl.toString(),
-        callbackUrlScheme: Config.callbackUrlScheme);
+        callbackUrlScheme: Config.getCallbackUrlScheme());
 
     final code = Uri.parse(result).queryParameters['code'];
 
@@ -46,12 +47,12 @@ class AuthController extends GetxController {
     };
 
     try {
-      final response =
-          await Requests.post('${Config.serverUrl}/api/v1/auth/google/verify',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              queryParameters: queryParameters);
+      final response = await Requests.post(
+          '${Config.getServerUrl()}/api/v1/auth/google/verify',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          queryParameters: queryParameters);
       response.raiseForStatus();
       await getUserInfo();
     } catch (err) {
@@ -61,24 +62,17 @@ class AuthController extends GetxController {
 
   Future<MeResponse> getUserInfo() async {
     final response = await Requests.get(
-      '${Config.serverUrl}/api/v1/user/me',
+      '${Config.getServerUrl()}/api/v1/user/me',
       headers: {
         'Content-Type': 'application/json',
       },
     );
     response.raiseForStatus();
     var me = MeResponse.fromJson(response.json());
-    _id.value = me.id;
-    _role.value = me.role;
-    _email.value = me.email;
-    _googleId.value = me.googleId;
+    id.value = me.id;
+    role.value = me.role;
+    email.value = me.email;
+    googleId.value = me.googleId;
     return me;
   }
-
-  MeResponse get me => MeResponse(
-        id: _id.value,
-        role: _role.value,
-        email: _email.value,
-        googleId: _googleId.value,
-      );
 }
