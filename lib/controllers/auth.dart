@@ -10,8 +10,8 @@ import '../config/config.dart';
 
 final googleAuthUrl = Uri.https('accounts.google.com', '/o/oauth2/v2/auth', {
   'response_type': 'code',
-  'client_id': Config.googleClientId,
-  'redirect_uri': '${Config.callbackUrlScheme}:/',
+  'client_id': Config.getGoogleClientId(),
+  'redirect_uri': '${Config.getCallbackUrlScheme()}:/',
   'scope': 'email',
 });
 
@@ -36,7 +36,7 @@ class AuthController extends GetxController {
   Future<void> authenticate() async {
     final result = await FlutterWebAuth.authenticate(
         url: googleAuthUrl.toString(),
-        callbackUrlScheme: Config.callbackUrlScheme);
+        callbackUrlScheme: Config.getCallbackUrlScheme());
 
     final code = Uri.parse(result).queryParameters['code'];
 
@@ -47,12 +47,12 @@ class AuthController extends GetxController {
     };
 
     try {
-      final response =
-          await Requests.post('${Config.serverUrl}/api/v1/auth/google/verify',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              queryParameters: queryParameters);
+      final response = await Requests.post(
+          '${Config.getServerUrl()}/api/v1/auth/google/verify',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          queryParameters: queryParameters);
       response.raiseForStatus();
       await getUserInfo();
     } catch (err) {
@@ -62,7 +62,7 @@ class AuthController extends GetxController {
 
   Future<MeResponse> getUserInfo() async {
     final response = await Requests.get(
-      '${Config.serverUrl}/api/v1/user/me',
+      '${Config.getServerUrl()}/api/v1/user/me',
       headers: {
         'Content-Type': 'application/json',
       },

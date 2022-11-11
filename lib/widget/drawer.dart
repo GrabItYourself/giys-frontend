@@ -36,14 +36,14 @@ class MainDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          const DrawerHeader(
-            decoration: BoxDecoration(
+          DrawerHeader(
+            decoration: const BoxDecoration(
               color: Colors.blue,
             ),
             child: Center(
               child: Text(
-                Config.appName,
-                style: TextStyle(
+                Config.getAppName(),
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 24,
                 ),

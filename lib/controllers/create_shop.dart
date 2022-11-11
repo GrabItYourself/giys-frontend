@@ -50,7 +50,7 @@ class CreateShopController extends GetxController {
     String imageBase64 = base64Encode(imageBytes);
 
     final response =
-        await Requests.post('${Config.serverUrl}/api/v1/shops', headers: {
+        await Requests.post('${Config.getServerUrl()}/api/v1/shops', headers: {
       'Content-Type': 'application/json',
     }, json: {
       'name': shopNameController.text,
