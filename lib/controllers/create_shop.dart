@@ -13,16 +13,19 @@ class CreateShopController extends GetxController {
   final authController = Get.find<AuthController>();
   final imagePickerController = Get.put(ImagePickerController());
 
+  final shopOwnerCounts = 1.obs;
+  final shopOwnerControllers = <TextEditingController>[].obs;
+
   final shopNameController = TextEditingController();
   final shopDescriptionController = TextEditingController();
   final shopLocationController = TextEditingController();
   final shopContactController = TextEditingController();
-  final shopOwnerController = TextEditingController();
   final bankAccountController = TextEditingController();
 
   @override
   void onInit() {
-    shopOwnerController.text = authController.email.value;
+    createShopOwnerTextFormField();
+    // shopOwnerControllers.last.text = authController.email.value;
     super.onInit();
   }
 
@@ -33,14 +36,16 @@ class CreateShopController extends GetxController {
     return null;
   }
 
+  void createShopOwnerTextFormField() {
+    shopOwnerControllers.add(TextEditingController());
+  }
+
+  void removeShopOwnerTextFormField(int index) {
+    shopOwnerControllers.removeAt(index);
+  }
+
   Future<void> submitForm() async {
-    if (shopNameController.text.isEmpty ||
-        shopDescriptionController.text.isEmpty ||
-        shopLocationController.text.isEmpty ||
-        shopContactController.text.isEmpty ||
-        shopOwnerController.text.isEmpty ||
-        // bankAccountController.text.isEmpty ||
-        imagePickerController.imagePath.value.isEmpty) {
+    if (imagePickerController.imagePath.value.isEmpty) {
       Get.snackbar('Error', 'Please fill all the fields');
       return;
     }
@@ -49,18 +54,23 @@ class CreateShopController extends GetxController {
     final imageBytes = image.readAsBytesSync();
     String imageBase64 = base64Encode(imageBytes);
 
-    final response =
-        await Requests.post('${Config.getServerUrl()}/api/v1/shops', headers: {
-      'Content-Type': 'application/json',
-    }, json: {
-      'name': shopNameController.text,
-      'image': imageBase64.substring(0, 100),
-      'description': shopDescriptionController.text,
-      'location': shopLocationController.text,
-      'contact': shopContactController.text,
-      'owner': shopOwnerController.text,
-      // 'account': bankAccountController.text,
-    });
-    response.raiseForStatus();
+    try {
+      final response = await Requests.post(
+          '${Config.getServerUrl()}/api/v1/shops',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          json: {
+            'name': shopNameController.text,
+            'image': imageBase64.substring(0, 100),
+            'description': shopDescriptionController.text,
+            'location': shopLocationController.text,
+            'contact': shopContactController.text,
+            'owner_emails': shopOwnerControllers.map((e) => e.text).toList(),
+          });
+      response.raiseForStatus();
+    } catch (err) {
+      return Future.error(err);
+    }
   }
 }

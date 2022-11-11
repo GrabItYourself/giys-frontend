@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:giys_frontend/controllers/create_shop.dart';
+import 'package:giys_frontend/middlewares/admin_binding.dart';
+import 'package:giys_frontend/middlewares/user_middleware.dart';
 import 'package:giys_frontend/views/create_shop_view.dart';
 import 'package:giys_frontend/views/edit_menu_view.dart';
 import 'package:giys_frontend/views/edit_shop_view.dart';
@@ -29,38 +32,48 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  _handleAuthGaurd(Routing routing) async {
-    try {
-      if (RoutePath.protectedPaths.contains(routing.current)) {
-        final authController = Get.find<AuthController>();
-        await authController.getUserInfo();
-      }
-    } catch (err) {
-      Get.toNamed(RoutePath.loginPath);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       initialRoute: RoutePath.defaultPath,
+      theme: ThemeData(useMaterial3: true),
       getPages: [
         GetPage(name: RoutePath.defaultPath, page: () => const HomeView()),
         GetPage(name: RoutePath.loginPath, page: () => LoginView()),
-        GetPage(name: RoutePath.shopOwnerPath, page: () => ShopOwnerView()),
-        GetPage(name: RoutePath.editShopPath, page: () => const EditShopView()),
+        // User related routes
+        GetPage(
+            name: RoutePath.shopOwnerPath,
+            page: () => ShopOwnerView(),
+            middlewares: [UserMiddleware()]),
+        GetPage(
+            name: RoutePath.editShopPath,
+            page: () => const EditShopView(),
+            middlewares: [UserMiddleware()]),
         GetPage(
             name: RoutePath.shopOwnerMenuPath,
-            page: () => const MenuOwnerView()),
-        GetPage(name: RoutePath.editMenuPath, page: () => const EditMenuView()),
-        GetPage(name: RoutePath.settingsPath, page: () => const SettingsView()),
-        // Admin related
+            page: () => const MenuOwnerView(),
+            middlewares: [UserMiddleware()]),
         GetPage(
-            name: RoutePath.manageShopPath, page: () => const ManageShopView()),
+            name: RoutePath.editMenuPath,
+            page: () => const EditMenuView(),
+            middlewares: [UserMiddleware()]),
         GetPage(
-            name: RoutePath.createShopPath, page: () => const CreateShopView()),
+            name: RoutePath.settingsPath,
+            page: () => const SettingsView(),
+            middlewares: [UserMiddleware()]),
+        // Admin related routes
+        GetPage(
+            name: RoutePath.manageShopPath,
+            page: () => const ManageShopView(),
+            middlewares: [AdminMiddleware()]),
+        GetPage(
+            name: RoutePath.createShopPath,
+            page: () => const CreateShopView(),
+            binding: BindingsBuilder(() {
+              Get.put(CreateShopController());
+            }),
+            middlewares: [AdminMiddleware()]),
       ],
-      routingCallback: (routing) async => _handleAuthGaurd,
     );
   }
 }
