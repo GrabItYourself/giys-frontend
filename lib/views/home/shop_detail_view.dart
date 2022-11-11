@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giys_frontend/models/shop.dart';
+import 'package:giys_frontend/widget/scaffold.dart';
 
 class ShopDetailView extends StatelessWidget {
   final Shop shop = Get.arguments;
@@ -8,8 +9,8 @@ class ShopDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Shop Detail")),
+    return MainScaffold(
+      title: "Shop Detail",
       body: Center(
         child: Column(
           children: [

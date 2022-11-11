@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: RoutePath.defaultPath, page: () => const HomeView()),
         GetPage(name: RoutePath.loginPath, page: () => LoginView()),
         GetPage(name: RoutePath.shopDetailPath, page: () => ShopDetailView()),
-        GetPage(name: RoutePath.allShopPath, page: () => const AllShopView()),
+        GetPage(name: RoutePath.allShopPath, page: () => AllShopView()),
         GetPage(
           name: RoutePath.shopMenuPath,
           page: () => ShopMenuView(),

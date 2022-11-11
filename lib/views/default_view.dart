@@ -14,7 +14,7 @@ class DefaultView extends StatefulWidget {
   /// pass the required items for the tabs and BottomNavigationBar
   late final List<PersistentTabItem> items = [
     PersistentTabItem(
-        tab: const AllShopView(),
+        tab: AllShopView(),
         title: "Home",
         icon: Icons.home,
         navigatorkey: _tab1navigatorKey),
