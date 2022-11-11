@@ -56,7 +56,9 @@ class MyApp extends StatelessWidget {
           name: RoutePath.shopMenuPath,
           page: () => ShopMenuView(),
         ),
-        GetPage(name: RoutePath.shopOwnerPath, page: () => ShopOwnerView()),
+        GetPage(
+            name: RoutePath.shopOwnerPath, page: () => const ShopOwnerView()),
+>>>>>>>>> Temporary merge branch 2
         GetPage(name: RoutePath.editShopPath, page: () => const EditShopView()),
         GetPage(
             name: RoutePath.shopOwnerMenuPath,
