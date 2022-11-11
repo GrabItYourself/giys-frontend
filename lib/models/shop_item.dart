@@ -15,7 +15,7 @@ class ShopItem {
   factory ShopItem.fromJson(Map<String, dynamic> json) {
     return ShopItem(
         id: json['id'],
-        shopId: json['shopId'],
+        shopId: json['shop_id'],
         name: json['name'],
         price: json['price'],
         image: json['image']);
@@ -24,7 +24,7 @@ class ShopItem {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = {};
     json['id'] = id;
-    json['shopId'] = shopId;
+    json['shop_id'] = shopId;
     json['name'] = name;
     json['price'] = price;
     json['image'] = image;

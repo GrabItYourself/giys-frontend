@@ -50,7 +50,7 @@ class CreateShopController extends GetxController {
       return;
     }
     final response = await Requests.post(
-      '${Config.serverUrl}/api/v1/shop',
+      '${Config.getServerUrl()}/api/v1/shop',
       headers: {
         'Content-Type': 'application/json',
       },
