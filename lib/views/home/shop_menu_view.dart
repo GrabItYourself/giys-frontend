@@ -1,17 +1,10 @@
-import 'dart:convert';
-import 'dart:developer';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giys_frontend/config/route.dart';
-import 'package:giys_frontend/controllers/auth.dart';
 import 'package:giys_frontend/controllers/shops_item.dart';
 import 'package:giys_frontend/models/shop_item.dart';
-import 'package:giys_frontend/views/home/shop_detail_view.dart';
 import 'package:giys_frontend/utilitties/generic_dialog.dart';
 import 'package:giys_frontend/widget/scaffold.dart';
-import 'package:http/http.dart' as http;
 
 import '../../models/shop.dart';
 

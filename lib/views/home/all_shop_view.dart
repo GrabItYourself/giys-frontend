@@ -1,16 +1,8 @@
-import 'dart:convert';
-import 'dart:developer';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giys_frontend/config/route.dart';
-import 'package:giys_frontend/controllers/auth.dart';
 import 'package:giys_frontend/controllers/shops.dart';
-import 'package:giys_frontend/models/shop.dart';
-import 'package:giys_frontend/views/home/shop_menu_view.dart';
 import 'package:giys_frontend/widget/scaffold.dart';
-import 'package:http/http.dart' as http;
 
 class AllShopView extends StatelessWidget {
   AllShopView({super.key});
@@ -46,7 +38,12 @@ class AllShopView extends StatelessWidget {
                     );
                   },
                 ),
-              )
+              ),
+              TextButton(
+                  onPressed: () async {
+                    shopController.getAllShop();
+                  },
+                  child: const Text("Resend"))
             ]);
           }),
         )));

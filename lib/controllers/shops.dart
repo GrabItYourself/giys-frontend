@@ -14,15 +14,14 @@ class ShopController extends GetxController {
   void onInit() async {
     super.onInit();
     try {
-      final shopListData = await getAllShop();
-      shopList.value = shopListData.shops;
+      await getAllShop();
     } catch (err) {
       Get.toNamed(RoutePath.loginPath);
       return Future.error(err);
     }
   }
 
-  Future<AllShopsResponse> getAllShop() async {
+  getAllShop() async {
     final response = await Requests.get(
       '${Config.getServerUrl()}/api/v1/shops/',
       headers: {
@@ -31,6 +30,7 @@ class ShopController extends GetxController {
     );
     log(response.toString());
     response.raiseForStatus();
-    return AllShopsResponse.fromJson(response.json());
+    final data = AllShopsResponse.fromJson(response.json());
+    shopList.value = data.shops;
   }
 }
