@@ -58,11 +58,6 @@ class ShopCreateController extends GetxController {
   }
 
   Future<void> submitForm() async {
-    if (imagePickerController.imagePath.value.isEmpty) {
-      Get.snackbar('Error', 'Please fill all the fields');
-      return;
-    }
-
     final image = File(imagePickerController.imagePath.value);
     final imageBytes = image.readAsBytesSync();
     String imageBase64 = base64.encode(imageBytes);
