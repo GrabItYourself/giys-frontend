@@ -10,7 +10,7 @@ import '../config/route.dart';
 import 'auth.dart';
 import 'image_picker.dart';
 
-class CreateShopController extends GetxController {
+class ShopCreateController extends GetxController {
   final authController = Get.find<AuthController>();
   final imagePickerController = Get.put(ImagePickerController());
 

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:giys_frontend/widget/image_picker.dart';
 import 'package:giys_frontend/widget/scaffold.dart';
 
-import '../controllers/create_shop.dart';
+import '../controllers/shop_create.dart';
 
 class CreateShopView extends StatelessWidget {
   const CreateShopView({super.key});
@@ -22,7 +22,7 @@ class CreateShopView extends StatelessWidget {
 }
 
 class CreateShopForm extends StatelessWidget {
-  final createShopController = Get.find<CreateShopController>();
+  final createShopController = Get.find<ShopCreateController>();
   final _loginFormKey = GlobalKey<FormState>();
 
   CreateShopForm({super.key});

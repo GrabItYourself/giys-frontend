@@ -5,11 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:giys_frontend/controllers/create_shop.dart';
-import 'package:giys_frontend/controllers/image_picker.dart';
+import 'package:giys_frontend/controllers/shop_create.dart';
 import 'package:giys_frontend/middlewares/admin_binding.dart';
 import 'package:giys_frontend/middlewares/user_middleware.dart';
-import 'package:giys_frontend/views/create_shop_view.dart';
+import 'package:giys_frontend/views/shop_create_view.dart';
 import 'package:giys_frontend/views/edit_menu_view.dart';
 import 'package:giys_frontend/views/edit_shop_view.dart';
 import 'package:giys_frontend/views/login_view.dart';
@@ -68,12 +67,12 @@ class MyApp extends StatelessWidget {
             name: RoutePath.shopCreatePath,
             page: () => const CreateShopView(),
             binding: BindingsBuilder(() {
-              Get.put(CreateShopController());
+              Get.put(ShopCreateController());
             }),
             middlewares: [AdminMiddleware()]),
         GetPage(
             name: RoutePath.shopManagePath,
-            page: () => ShopManageView(),
+            page: () => const ShopManageView(),
             binding: BindingsBuilder(() {
               Get.put(ShopManageController());
             }),
