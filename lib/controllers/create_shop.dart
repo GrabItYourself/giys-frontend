@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:requests/requests.dart';
 
 import '../config/config.dart';
+import '../config/route.dart';
 import 'auth.dart';
 import 'image_picker.dart';
 
@@ -44,6 +45,18 @@ class CreateShopController extends GetxController {
     shopOwnerControllers.removeAt(index);
   }
 
+  void clearForm() {
+    shopNameController.clear();
+    shopDescriptionController.clear();
+    shopLocationController.clear();
+    shopContactController.clear();
+    bankAccountController.clear();
+    shopOwnerControllers.clear();
+    shopOwnerCounts.value = 1;
+    imagePickerController.imagePath.value = "";
+    createShopOwnerTextFormField();
+  }
+
   Future<void> submitForm() async {
     if (imagePickerController.imagePath.value.isEmpty) {
       Get.snackbar('Error', 'Please fill all the fields');
@@ -52,7 +65,7 @@ class CreateShopController extends GetxController {
 
     final image = File(imagePickerController.imagePath.value);
     final imageBytes = image.readAsBytesSync();
-    String imageBase64 = base64Encode(imageBytes);
+    String imageBase64 = base64.encode(imageBytes);
 
     try {
       final response = await Requests.post(
@@ -62,15 +75,18 @@ class CreateShopController extends GetxController {
           },
           json: {
             'name': shopNameController.text,
-            'image': imageBase64.substring(0, 100),
+            'image': imageBase64,
             'description': shopDescriptionController.text,
             'location': shopLocationController.text,
             'contact': shopContactController.text,
             'owner_emails': shopOwnerControllers.map((e) => e.text).toList(),
           });
       response.raiseForStatus();
-    } catch (err) {
-      return Future.error(err);
+      clearForm();
+      Get.toNamed(RoutePath.shopManagePath);
+    } on HTTPException catch (err) {
+      Get.snackbar("Cannot create shop", err.response.body);
+      return Future.error(err.response.body);
     }
   }
 }

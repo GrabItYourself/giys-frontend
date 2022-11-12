@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:get/get.dart';
-import 'package:giys_frontend/models/auth.dart';
+import 'package:giys_frontend/models/user.dart';
 import 'package:requests/requests.dart';
 
 import '../config/config.dart';
@@ -49,7 +49,7 @@ class AuthController extends GetxController {
     }
   }
 
-  _setStateFromMeResponse(MeResponse me) {
+  _setStateFromMeResponse(User me) {
     id.value = me.id;
     if (me.role == 'ADMIN') {
       role.value = Role.admin;
@@ -62,7 +62,7 @@ class AuthController extends GetxController {
     googleId.value = me.googleId;
   }
 
-  Future<MeResponse> getUserInfo() async {
+  Future<User> getUserInfo() async {
     final response = await Requests.get(
       '${Config.getServerUrl()}/api/v1/user/me',
       headers: {
@@ -70,7 +70,7 @@ class AuthController extends GetxController {
       },
     );
     response.raiseForStatus();
-    var me = MeResponse.fromJson(response.json());
+    var me = User.fromJson(response.json());
     _setStateFromMeResponse(me);
     return me;
   }
