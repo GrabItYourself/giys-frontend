@@ -5,8 +5,8 @@ import 'package:giys_frontend/widget/scaffold.dart';
 
 import '../controllers/shop_create.dart';
 
-class CreateShopView extends StatelessWidget {
-  const CreateShopView({super.key});
+class ShopCreateView extends StatelessWidget {
+  const ShopCreateView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,17 +15,17 @@ class CreateShopView extends StatelessWidget {
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(16),
-        child: SingleChildScrollView(child: CreateShopForm()),
+        child: SingleChildScrollView(child: ShopCreateForm()),
       )),
     );
   }
 }
 
-class CreateShopForm extends StatelessWidget {
+class ShopCreateForm extends StatelessWidget {
   final createShopController = Get.find<ShopCreateController>();
   final _loginFormKey = GlobalKey<FormState>();
 
-  CreateShopForm({super.key});
+  ShopCreateForm({super.key});
 
   @override
   Widget build(BuildContext context) {

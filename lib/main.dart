@@ -65,14 +65,14 @@ class MyApp extends StatelessWidget {
         // Admin related routes
         GetPage(
             name: RoutePath.shopCreatePath,
-            page: () => const CreateShopView(),
+            page: () => const ShopCreateView(),
             binding: BindingsBuilder(() {
               Get.put(ShopCreateController());
             }),
             middlewares: [AdminMiddleware()]),
         GetPage(
             name: RoutePath.shopManagePath,
-            page: () => const ShopManageView(),
+            page: () => ShopManageView(),
             binding: BindingsBuilder(() {
               Get.put(ShopManageController());
             }),

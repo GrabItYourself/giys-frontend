@@ -58,9 +58,12 @@ class ShopCreateController extends GetxController {
   }
 
   Future<void> submitForm() async {
-    final image = File(imagePickerController.imagePath.value);
-    final imageBytes = image.readAsBytesSync();
-    String imageBase64 = base64.encode(imageBytes);
+    String? imageBase64;
+    if (imagePickerController.imagePath.value.isNotEmpty) {
+      final imageFile = File(imagePickerController.imagePath.value);
+      final imageBytes = await imageFile.readAsBytes();
+      imageBase64 = base64Encode(imageBytes);
+    }
 
     try {
       final response = await Requests.post(

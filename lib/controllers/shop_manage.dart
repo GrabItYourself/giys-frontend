@@ -11,8 +11,12 @@ class ShopManageController extends GetxController {
 
   @override
   void onInit() async {
-    await getShopList();
     super.onInit();
+    await getShopList();
+  }
+
+  _clearShopList() {
+    shopList.clear();
   }
 
   Future<void> getShopList() async {
@@ -22,10 +26,13 @@ class ShopManageController extends GetxController {
         'Content-Type': 'application/json',
       },
     );
-    print(response.body);
     final data = json.decode(response.body);
-    shopList.value =
-        data["shops"].map<Shop>((shop) => Shop.fromJson(shop)).toList();
-    print(shopList);
+    if (shopList.isNotEmpty) {
+      _clearShopList();
+    }
+    for (final shop in data['shops']) {
+      shopList.add(Shop.fromJson(shop));
+    }
+    shopList.refresh();
   }
 }

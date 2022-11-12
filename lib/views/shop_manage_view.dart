@@ -4,23 +4,13 @@ import 'package:giys_frontend/config/route.dart';
 import 'package:giys_frontend/controllers/shop_manage.dart';
 import 'package:giys_frontend/widget/shop.dart';
 
+import '../models/shop.dart';
 import '../widget/scaffold.dart';
 
-class ShopManageView extends StatefulWidget {
-  const ShopManageView({super.key});
-
-  @override
-  State<ShopManageView> createState() => _ShopManageViewState();
-}
-
-class _ShopManageViewState extends State<ShopManageView> {
+class ShopManageView extends StatelessWidget {
   final shopListController = Get.find<ShopManageController>();
 
-  @override
-  void initState() {
-    super.initState();
-    _refresh();
-  }
+  ShopManageView({super.key});
 
   Future<void> _refresh() async {
     await shopListController.getShopList();
@@ -56,7 +46,20 @@ class _ShopManageViewState extends State<ShopManageView> {
                     ),
                   ],
                 ),
-                _ShopListView(),
+                // _ShopListView(
+                //   shopList: shopListController.shopList,
+                // ),
+                Obx(() => shopListController.shopList.isEmpty
+                    ? const Center(child: Text('No shop'))
+                    : ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: shopListController.shopList.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return ShopWidget(
+                              shop: shopListController.shopList[index]);
+                        },
+                      ))
               ],
             ),
           ),
@@ -66,29 +69,20 @@ class _ShopManageViewState extends State<ShopManageView> {
   }
 }
 
-class _ShopListView extends StatelessWidget {
-  final shopListController = Get.find<ShopManageController>();
+// class _ShopListView extends StatelessWidget {
+//   final RxList<Shop> shopList;
 
-  _ShopListView({super.key});
+//   const _ShopListView({super.key, required this.shopList});
 
-  @override
-  Widget build(BuildContext context) {
-    if (shopListController.shopList.isEmpty) {
-      return Container(
-        margin: const EdgeInsets.only(top: 20),
-        child: const Text("No Shop"),
-      );
-    }
+//   @override
+//   Widget build(BuildContext context) {
+//     if (shopList.isEmpty) {
+//       return Container(
+//         margin: const EdgeInsets.only(top: 20),
+//         child: const Text("No Shop"),
+//       );
+//     }
 
-    return Obx(() => ListView(
-          shrinkWrap: true,
-          children: shopListController.shopList
-              .map(
-                (shop) => ShopWidget(
-                  shop: shop,
-                ),
-              )
-              .toList(),
-        ));
-  }
-}
+//     // return Obx(() => );
+//   }
+// }
