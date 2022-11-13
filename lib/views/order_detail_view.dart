@@ -23,14 +23,14 @@ class OrderDetailView extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(10),
-                child: Text("${item.shopItemId}"),
+                child: Text(item.shopItem!.name),
               ),
-              (item.note.isEmpty)
+              (item.note?.isEmpty ?? true) // todo aksdjflas;d
                   ? const SizedBox.shrink()
                   : Padding(
                       padding: const EdgeInsets.all(10),
                       child: Text(
-                        item.note,
+                        item.note!,
                         style: const TextStyle(
                             color: Color.fromARGB(255, 125, 125, 125)),
                       ),
@@ -69,7 +69,7 @@ class OrderDetailView extends StatelessWidget {
                         width: 100,
                       ),
                       const SizedBox(width: 8),
-                      Text("SHOP ${orderDetailController.order.value.shopId}"),
+                      Text(orderDetailController.shop.value.name),
                       const Spacer(),
                       IconButton(
                         // TODO: navigate to shop

@@ -1,11 +1,11 @@
+import 'package:giys_frontend/models/shop_item.dart';
+
 class Order {
   int id;
   String userId;
   int shopId;
   String status;
   List<OrderItem> items;
-
-  //TODO: add shop
 
   Order({
     required this.id,
@@ -16,9 +16,11 @@ class Order {
   });
 
   factory Order.fromJson(Map<String, dynamic> json) {
-    final items = json['items'].map((item) => OrderItem.fromJson(item));
+    final items = (json['items'] as List)
+        .map((item) => OrderItem.fromJson(item))
+        .toList();
     return Order(
-      id: json['id'],
+      id: json['order_id'],
       userId: json['user_id'],
       shopId: json['shop_id'],
       status: json['status'],
@@ -30,14 +32,14 @@ class Order {
 class OrderItem {
   int shopItemId;
   int quantity;
-  String note;
-
-  //TODO: add shop item
+  String? note;
+  ShopItem? shopItem;
 
   OrderItem({
     required this.shopItemId,
     required this.quantity,
     required this.note,
+    this.shopItem,
   });
 
   factory OrderItem.fromJson(Map<String, dynamic> json) {
