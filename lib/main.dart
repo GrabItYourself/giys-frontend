@@ -60,19 +60,32 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: RoutePath.paymentMethodPath,
           page: () => PaymentMethodView(),
+          middlewares: [UserMiddleware()],
         ),
         GetPage(
           name: RoutePath.addPaymentMethodPath,
           page: () => AddPaymentMethodView(),
+          middlewares: [UserMiddleware()],
         ),
         GetPage(
             name: RoutePath.shopOwnerMenuPath,
             page: () => const MenuOwnerView(),
             middlewares: [UserMiddleware()]),
-        GetPage(name: RoutePath.ordersPath, page: () => OrdersView()),
-        GetPage(name: RoutePath.shopOrdersPath, page: () => ShopOrdersView()),
         GetPage(
-            name: RoutePath.orderDetailPath, page: (() => OrderDetailView())),
+          name: RoutePath.ordersPath,
+          page: () => OrdersView(),
+          middlewares: [UserMiddleware()],
+        ),
+        GetPage(
+          name: RoutePath.shopOrdersPath,
+          page: () => ShopOrdersView(),
+          middlewares: [UserMiddleware()],
+        ),
+        GetPage(
+          name: RoutePath.orderDetailPath,
+          page: (() => OrderDetailView()),
+          middlewares: [UserMiddleware()],
+        ),
         GetPage(
             name: RoutePath.editMenuPath,
             page: () => const EditMenuView(),
