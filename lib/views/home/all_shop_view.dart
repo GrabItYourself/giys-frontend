@@ -1,7 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giys_frontend/config/route.dart';
-import 'package:giys_frontend/controllers/shops.dart';
+import 'package:giys_frontend/controllers/shop_get.dart';
 import 'package:giys_frontend/widget/scaffold.dart';
 
 class AllShopView extends StatelessWidget {
@@ -22,8 +24,8 @@ class AllShopView extends StatelessWidget {
                     final shop = controller.shopList[index];
                     return ListTile(
                       leading: shop.image != null
-                          ? Image.network(
-                              shop.image!,
+                          ? Image.memory(
+                              base64Decode(shop.image),
                               fit: BoxFit.fitWidth,
                             )
                           : Image.network(
