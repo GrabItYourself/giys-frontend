@@ -61,6 +61,7 @@ class MyApp extends StatelessWidget {
             name: RoutePath.editShopPath,
             page: () => const EditShopView(),
             middlewares: [UserMiddleware()]),
+        GetPage(name: RoutePath.shopOwnerPath, page: () => ShopOwnerView()),
         GetPage(
           name: RoutePath.paymentMethodPath,
           page: () => PaymentMethodView(),
