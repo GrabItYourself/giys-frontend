@@ -1,3 +1,5 @@
+import 'user.dart';
+
 class Shop {
   final int id;
   final String name;
@@ -5,23 +7,30 @@ class Shop {
   final String? description;
   final String? location;
   final String? contact;
+  final List<User>? owners;
 
-  Shop(
-      {required this.id,
-      required this.name,
-      this.image,
-      this.description,
-      this.location,
-      this.contact});
+  Shop({
+    required this.id,
+    required this.name,
+    this.image,
+    this.description,
+    this.location,
+    this.contact,
+    this.owners,
+  });
 
   factory Shop.fromJson(Map<String, dynamic> json) {
     return Shop(
-        id: json['id'],
-        name: json['name'],
-        image: json['image'],
-        description: json['description'],
-        location: json['location'],
-        contact: json['contact']);
+      id: json['id'],
+      name: json['name'],
+      image: json['image'],
+      description: json['description'],
+      location: json['location'],
+      contact: json['contact'],
+      owners: json['owners'] != null
+          ? (json['owners'] as List).map((e) => User.fromJson(e)).toList()
+          : null,
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -32,6 +41,9 @@ class Shop {
     json['description'] = description;
     json['location'] = location;
     json['contact'] = contact;
+    if (owners != null) {
+      json['owners'] = owners?.map((v) => v.toJson()).toList();
+    }
     return json;
   }
 }
