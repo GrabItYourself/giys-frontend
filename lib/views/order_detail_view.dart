@@ -23,9 +23,10 @@ class OrderDetailView extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(10),
-                child: Text(item.shopItem!.name),
+                child:
+                    (item.shopItem == null) ? null : Text(item.shopItem!.name),
               ),
-              (item.note?.isEmpty ?? true)
+              (item.note == null || item.note!.isEmpty)
                   ? const SizedBox.shrink()
                   : Padding(
                       padding: const EdgeInsets.all(10),
@@ -59,8 +60,26 @@ class OrderDetailView extends StatelessWidget {
             () => Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                Padding(
+                    padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Order ID: ${orderDetailController.order.value.id}",
+                          style: const TextStyle(
+                              color: Color.fromARGB(255, 125, 125, 125)),
+                        ),
+                        const Spacer(),
+                        Text(
+                          orderDetailController.order.value.status,
+                          style: const TextStyle(
+                              color: Color.fromARGB(255, 125, 125, 125)),
+                        ),
+                      ],
+                    )),
                 Card(
-                  margin: const EdgeInsets.all(10),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   child: Row(
                     children: [
                       Image.network(
@@ -69,7 +88,7 @@ class OrderDetailView extends StatelessWidget {
                         width: 100,
                       ),
                       const SizedBox(width: 8),
-                      Text(orderDetailController.shop.value.name),
+                      Text(orderDetailController.order.value.shop!.name),
                       const Spacer(),
                       IconButton(
                         // TODO: navigate to shop
@@ -80,14 +99,16 @@ class OrderDetailView extends StatelessWidget {
                   ),
                 ),
                 const Padding(
-                  padding: EdgeInsets.only(top: 10, left: 10),
+                  padding: EdgeInsets.only(top: 5, left: 10),
                   child: Text(
                     "Order Details",
+                    style: TextStyle(color: Color.fromARGB(255, 125, 125, 125)),
                     textAlign: TextAlign.left,
                   ),
                 ),
                 Card(
-                  margin: const EdgeInsets.all(10),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   child: createOrderDetailTable(),
                 ),
                 const Spacer(),

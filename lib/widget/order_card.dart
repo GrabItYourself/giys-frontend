@@ -24,9 +24,12 @@ class OrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.toNamed(RoutePath.orderDetailPath
-          .replaceFirst(':shopId', order.shopId.toString())
-          .replaceFirst(':orderId', order.id.toString())),
+      onTap: () => Get.toNamed(
+        RoutePath.orderDetailPath,
+        arguments: {
+          'order': order,
+        },
+      ),
       child: Card(
         margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
         child: Row(
@@ -45,63 +48,65 @@ class OrderCard extends StatelessWidget {
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 8),
-                Text(order.status),
+                Text(
+                  "Order ID: ${order.id}",
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 125, 125, 125)),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  order.status,
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 125, 125, 125)),
+                ),
               ],
             ),
             const Spacer(),
             Column(
               children: [
                 if (isOwner && order.status == "READY") ...[
-                  Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: SizedBox(
-                      width: 120,
-                      child: ElevatedButton(
-                        onPressed: () => Get.dialog(
-                          OrderAlertDialog(
-                            onContinue: onComplete!,
-                            title: "Complete Order",
-                            content: "Would you like to complete this order?",
-                          ),
+                  SizedBox(
+                    width: 100,
+                    child: ElevatedButton(
+                      onPressed: () => Get.dialog(
+                        OrderAlertDialog(
+                          onContinue: onComplete!,
+                          title: "Complete Order",
+                          content: "Would you like to complete this order?",
                         ),
-                        child: const Text("Complete"),
                       ),
+                      child: const Text("Complete"),
                     ),
                   ),
                 ],
                 if (isOwner && order.status == "IN_QUEUE") ...[
-                  Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: SizedBox(
-                        width: 120,
-                        child: ElevatedButton(
-                          onPressed: () => Get.dialog(
-                            OrderAlertDialog(
-                              onContinue: onReady!,
-                              title: "Mark order as ready",
-                              content:
-                                  "Would you like to mark this order as ready?",
-                            ),
-                          ),
-                          child: const Text("Ready"),
+                  SizedBox(
+                    width: 100,
+                    child: ElevatedButton(
+                      onPressed: () => Get.dialog(
+                        OrderAlertDialog(
+                          onContinue: onReady!,
+                          title: "Mark order as ready",
+                          content:
+                              "Would you like to mark this order as ready?",
                         ),
-                      )),
+                      ),
+                      child: const Text("Ready"),
+                    ),
+                  ),
                 ],
                 if (order.status == "IN_QUEUE") ...[
-                  Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: SizedBox(
-                      width: 120,
-                      child: OutlinedButton(
-                        onPressed: () => Get.dialog(
-                          OrderAlertDialog(
-                            onContinue: onCancel,
-                            title: "Cancel Order",
-                            content: "Would you like to cancel this order?",
-                          ),
+                  SizedBox(
+                    width: 100,
+                    child: OutlinedButton(
+                      onPressed: () => Get.dialog(
+                        OrderAlertDialog(
+                          onContinue: onCancel,
+                          title: "Cancel Order",
+                          content: "Would you like to cancel this order?",
                         ),
-                        child: const Text("Cancel"),
                       ),
+                      child: const Text("Cancel"),
                     ),
                   ),
                 ],
