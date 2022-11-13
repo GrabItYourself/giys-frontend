@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:giys_frontend/views/create_shop_view.dart';
+import 'package:giys_frontend/controllers/shop_create.dart';
+import 'package:giys_frontend/middlewares/admin_binding.dart';
+import 'package:giys_frontend/middlewares/user_middleware.dart';
+import 'package:giys_frontend/views/shop_create_view.dart';
 import 'package:giys_frontend/views/edit_menu_view.dart';
 import 'package:giys_frontend/views/edit_shop_view.dart';
 import 'package:giys_frontend/views/login_view.dart';
-import 'package:giys_frontend/views/manage_shop_view.dart';
 import 'package:giys_frontend/views/menu_owner_view.dart';
 import 'package:giys_frontend/views/shop_owner_view.dart';
 import 'package:giys_frontend/config/route.dart';
@@ -18,7 +20,9 @@ import 'package:giys_frontend/views/settings_view.dart';
 import 'package:giys_frontend/views/payment_method_view.dart';
 import 'package:giys_frontend/views/add_payment_method_view.dart';
 import 'controllers/auth.dart';
+import 'controllers/shop_manage.dart';
 import 'views/home_view.dart';
+import 'views/shop_manage_view.dart';
 
 void main() async {
   await GetStorage.init();
@@ -31,24 +35,23 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  _handleAuthGaurd(Routing routing) async {
-    try {
-      if (RoutePath.protectedPaths.contains(routing.current)) {
-        final authController = Get.find<AuthController>();
-        await authController.getUserInfo();
-      }
-    } catch (err) {
-      Get.toNamed(RoutePath.loginPath);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       initialRoute: RoutePath.defaultPath,
+      theme: ThemeData(useMaterial3: true),
       getPages: [
         GetPage(name: RoutePath.defaultPath, page: () => const HomeView()),
         GetPage(name: RoutePath.loginPath, page: () => LoginView()),
+        // User related routes
+        GetPage(
+            name: RoutePath.shopOwnerPath,
+            page: () => ShopOwnerView(),
+            middlewares: [UserMiddleware()]),
+        GetPage(
+            name: RoutePath.editShopPath,
+            page: () => const EditShopView(),
+            middlewares: [UserMiddleware()]),
         GetPage(name: RoutePath.shopOwnerPath, page: () => ShopOwnerView()),
         GetPage(
           name: RoutePath.paymentMethodPath,
@@ -58,19 +61,34 @@ class MyApp extends StatelessWidget {
           name: RoutePath.addPaymentMethodPath,
           page: () => AddPaymentMethodView(),
         ),
-        GetPage(name: RoutePath.editShopPath, page: () => const EditShopView()),
         GetPage(
             name: RoutePath.shopOwnerMenuPath,
-            page: () => const MenuOwnerView()),
-        GetPage(name: RoutePath.editMenuPath, page: () => const EditMenuView()),
-        GetPage(name: RoutePath.settingsPath, page: () => const SettingsView()),
-        // Admin related
+            page: () => const MenuOwnerView(),
+            middlewares: [UserMiddleware()]),
         GetPage(
-            name: RoutePath.manageShopPath, page: () => const ManageShopView()),
+            name: RoutePath.editMenuPath,
+            page: () => const EditMenuView(),
+            middlewares: [UserMiddleware()]),
         GetPage(
-            name: RoutePath.createShopPath, page: () => const CreateShopView()),
+            name: RoutePath.settingsPath,
+            page: () => const SettingsView(),
+            middlewares: [UserMiddleware()]),
+        // Admin related routes
+        GetPage(
+            name: RoutePath.shopCreatePath,
+            page: () => const ShopCreateView(),
+            binding: BindingsBuilder(() {
+              Get.put(ShopCreateController());
+            }),
+            middlewares: [AdminMiddleware()]),
+        GetPage(
+            name: RoutePath.shopManagePath,
+            page: () => ShopManageView(),
+            binding: BindingsBuilder(() {
+              Get.put(ShopManageController());
+            }),
+            middlewares: [AdminMiddleware()]),
       ],
-      routingCallback: (routing) async => _handleAuthGaurd,
     );
   }
 }

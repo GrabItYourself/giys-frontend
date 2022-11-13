@@ -38,13 +38,12 @@ class MainDrawer extends StatelessWidget {
         children: <Widget>[
           DrawerHeader(
             decoration: const BoxDecoration(
-              color: Colors.blue,
+              color: Colors.white12,
             ),
             child: Center(
               child: Text(
                 Config.getAppName(),
                 style: const TextStyle(
-                  color: Colors.white,
                   fontSize: 24,
                 ),
               ),
