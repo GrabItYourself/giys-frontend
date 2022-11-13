@@ -11,4 +11,7 @@ class RoutePath {
 
   static const shopManagePath = '/shop/manage';
   static const shopCreatePath = '/shop/create';
+
+  static const paymentMethodPath = '/paymentMethods';
+  static const addPaymentMethodPath = '/paymentMethods/add';
 }

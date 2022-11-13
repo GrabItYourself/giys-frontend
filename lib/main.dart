@@ -17,6 +17,8 @@ import 'package:giys_frontend/views/shop_owner_view.dart';
 import 'package:giys_frontend/config/route.dart';
 import 'package:giys_frontend/views/settings_view.dart';
 
+import 'package:giys_frontend/views/payment_method_view.dart';
+import 'package:giys_frontend/views/add_payment_method_view.dart';
 import 'controllers/auth.dart';
 import 'controllers/shop_manage.dart';
 import 'views/home_view.dart';
@@ -50,6 +52,15 @@ class MyApp extends StatelessWidget {
             name: RoutePath.editShopPath,
             page: () => const EditShopView(),
             middlewares: [UserMiddleware()]),
+        GetPage(name: RoutePath.shopOwnerPath, page: () => ShopOwnerView()),
+        GetPage(
+          name: RoutePath.paymentMethodPath,
+          page: () => PaymentMethodView(),
+        ),
+        GetPage(
+          name: RoutePath.addPaymentMethodPath,
+          page: () => AddPaymentMethodView(),
+        ),
         GetPage(
             name: RoutePath.shopOwnerMenuPath,
             page: () => const MenuOwnerView(),

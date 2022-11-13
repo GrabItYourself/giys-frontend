@@ -40,6 +40,10 @@ class HomeView extends StatelessWidget {
                         title: const Text("Manage Shops"),
                         onTap: () => Get.toNamed(RoutePath.shopManagePath),
                       ),
+                      ListTile(
+                        title: const Text("Payment Methods"),
+                        onTap: () => Get.toNamed(RoutePath.paymentMethodPath),
+                      ),
                     ],
                   ),
                 )
