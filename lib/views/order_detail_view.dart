@@ -25,7 +25,7 @@ class OrderDetailView extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 child: Text(item.shopItem!.name),
               ),
-              (item.note?.isEmpty ?? true) // todo aksdjflas;d
+              (item.note?.isEmpty ?? true)
                   ? const SizedBox.shrink()
                   : Padding(
                       padding: const EdgeInsets.all(10),

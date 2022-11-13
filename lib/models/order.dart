@@ -1,3 +1,4 @@
+import 'package:giys_frontend/models/shop.dart';
 import 'package:giys_frontend/models/shop_item.dart';
 
 class Order {
@@ -7,12 +8,15 @@ class Order {
   String status;
   List<OrderItem> items;
 
+  Shop? shop;
+
   Order({
     required this.id,
     required this.userId,
     required this.shopId,
     required this.status,
     required this.items,
+    this.shop,
   });
 
   factory Order.fromJson(Map<String, dynamic> json) {
