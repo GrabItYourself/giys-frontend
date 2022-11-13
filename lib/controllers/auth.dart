@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:get/get.dart';
-import 'package:giys_frontend/config/route.dart';
-import 'package:giys_frontend/models/auth.dart';
+import 'package:giys_frontend/models/user.dart';
 import 'package:requests/requests.dart';
 
 import '../config/config.dart';
+import '../consts/role.dart';
 
 final googleAuthUrl = Uri.https('accounts.google.com', '/o/oauth2/v2/auth', {
   'response_type': 'code',
@@ -17,21 +17,9 @@ final googleAuthUrl = Uri.https('accounts.google.com', '/o/oauth2/v2/auth', {
 
 class AuthController extends GetxController {
   final id = ''.obs;
-  final role = ''.obs;
+  final role = Rx<Role?>(null);
   final email = ''.obs;
   final googleId = ''.obs;
-
-  @override
-  void onInit() async {
-    super.onInit();
-    try {
-      print("init");
-      await getUserInfo();
-    } catch (err) {
-      Get.toNamed(RoutePath.loginPath);
-      return Future.error(err);
-    }
-  }
 
   Future<void> authenticate() async {
     final result = await FlutterWebAuth.authenticate(
@@ -54,13 +42,27 @@ class AuthController extends GetxController {
           },
           queryParameters: queryParameters);
       response.raiseForStatus();
+      print(response.json());
       await getUserInfo();
     } catch (err) {
       return Future.error(err);
     }
   }
 
-  Future<MeResponse> getUserInfo() async {
+  _setStateFromMeResponse(User me) {
+    id.value = me.id;
+    if (me.role == 'ADMIN') {
+      role.value = Role.admin;
+    } else if (me.role == 'USER') {
+      role.value = Role.user;
+    } else {
+      role.value = null;
+    }
+    email.value = me.email;
+    googleId.value = me.googleId;
+  }
+
+  Future<User> getUserInfo() async {
     final response = await Requests.get(
       '${Config.getServerUrl()}/api/v1/user/me',
       headers: {
@@ -68,11 +70,8 @@ class AuthController extends GetxController {
       },
     );
     response.raiseForStatus();
-    var me = MeResponse.fromJson(response.json());
-    id.value = me.id;
-    role.value = me.role;
-    email.value = me.email;
-    googleId.value = me.googleId;
+    var me = User.fromJson(response.json());
+    _setStateFromMeResponse(me);
     return me;
   }
 }

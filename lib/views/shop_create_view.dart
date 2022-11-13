@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:giys_frontend/widget/image_picker.dart';
 import 'package:giys_frontend/widget/scaffold.dart';
 
-import '../controllers/create_shop.dart';
+import '../controllers/shop_create.dart';
 
-class CreateShopView extends StatelessWidget {
-  const CreateShopView({super.key});
+class ShopCreateView extends StatelessWidget {
+  const ShopCreateView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,17 +15,17 @@ class CreateShopView extends StatelessWidget {
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(16),
-        child: CreateShopForm(),
+        child: SingleChildScrollView(child: ShopCreateForm()),
       )),
     );
   }
 }
 
-class CreateShopForm extends StatelessWidget {
-  final createShopController = Get.put(CreateShopController());
+class ShopCreateForm extends StatelessWidget {
+  final createShopController = Get.find<ShopCreateController>();
   final _loginFormKey = GlobalKey<FormState>();
 
-  CreateShopForm({super.key});
+  ShopCreateForm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -54,22 +54,62 @@ class CreateShopForm extends StatelessWidget {
               validator: (value) =>
                   createShopController.required(value, "Contact is required")),
           TextFormField(
-              controller: createShopController.shopOwnerController,
-              decoration: const InputDecoration(labelText: "Owner"),
-              validator: (value) =>
-                  createShopController.required(value, "Owner is required")),
-          TextFormField(
               controller: createShopController.shopLocationController,
               decoration: const InputDecoration(labelText: "Location"),
               validator: (value) =>
                   createShopController.required(value, "Location is required")),
+          Obx(() => Container(
+                margin: const EdgeInsets.only(top: 20),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        const Text(
+                          "Shop Owners",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 24),
+                        ),
+                        IconButton(
+                            onPressed: createShopController
+                                .createShopOwnerTextFormField,
+                            icon: const Icon(Icons.add)),
+                      ],
+                    ),
+                    for (var index = 0;
+                        index <
+                            createShopController.shopOwnerControllers.length;
+                        index++)
+                      Row(
+                        children: [
+                          Flexible(
+                            child: TextFormField(
+                              controller: createShopController
+                                  .shopOwnerControllers[index],
+                              decoration: InputDecoration(
+                                labelText: 'Shop Owner ${index + 1}',
+                              ),
+                              validator: (value) => createShopController
+                                  .required(value, 'Shop Owner is required'),
+                            ),
+                          ),
+                          IconButton(
+                              onPressed: () => createShopController
+                                  .removeShopOwnerTextFormField(index),
+                              icon: const Icon(Icons.remove)),
+                        ],
+                      )
+                  ],
+                ),
+              )),
           Container(
             margin: const EdgeInsets.only(top: 20),
             child: Row(
               children: [
                 Expanded(
                   child: TextButton(
-                    child: const Text('Submit'),
+                    child: const Text(
+                      'Submit',
+                    ),
                     onPressed: createShopController.submitForm,
                   ),
                 ),
