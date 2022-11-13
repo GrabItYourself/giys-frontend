@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giys_frontend/config/route.dart';
@@ -66,8 +68,8 @@ class _ShopMenuViewState extends State<ShopMenuView> {
                       final shopItem = controller.shopItemsList[index];
                       return ListTile(
                         leading: shopItem.image != null
-                            ? Image.network(
-                                shopItem.image!,
+                            ? Image.memory(
+                                base64Decode(shopItem.image),
                                 fit: BoxFit.fitWidth,
                               )
                             : Image.network(
