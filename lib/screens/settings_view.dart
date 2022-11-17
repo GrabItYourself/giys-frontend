@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:giys_frontend/screens/payment_method_view.dart';
+import 'package:giys_frontend/views/payment_method_view.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
