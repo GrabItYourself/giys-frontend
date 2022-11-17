@@ -3,7 +3,6 @@ import 'package:giys_frontend/models/payment_method.dart';
 import 'package:requests/requests.dart';
 
 import '../config/config.dart';
-import '../config/route.dart';
 
 class PaymentMethodController extends GetxController {
   final paymentMethods = <PaymentMethod>[].obs;
@@ -11,16 +10,15 @@ class PaymentMethodController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    try {
-      await updateMyPaymentMethods();
-    } catch (err) {
-      Get.toNamed(RoutePath.loginPath);
-      return Future.error(err);
-    }
+    await updateMyPaymentMethods();
   }
 
   Future<void> updateMyPaymentMethods() async {
-    paymentMethods.value = await getMyPaymentMethods();
+    try {
+      paymentMethods.value = await getMyPaymentMethods();
+    } catch (err) {
+      Get.snackbar("Cannot get payment methods", "Please try again");
+    }
   }
 
   Future<List<PaymentMethod>> getMyPaymentMethods() async {
@@ -40,32 +38,40 @@ class PaymentMethodController extends GetxController {
   }
 
   Future<void> setDefaultPaymentMethods(int index) async {
-    final response = await Requests.patch(
-      '${Config.getServerUrl()}/api/v1/user/me/paymentMethods/${paymentMethods[index].id}/setDefault',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    );
-    response.raiseForStatus();
+    try {
+      final response = await Requests.patch(
+        '${Config.getServerUrl()}/api/v1/user/me/paymentMethods/${paymentMethods[index].id}/setDefault',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+      response.raiseForStatus();
 
-    for (var paymentMethod in paymentMethods) {
-      paymentMethod.isDefault = false;
+      for (var paymentMethod in paymentMethods) {
+        paymentMethod.isDefault = false;
+      }
+      paymentMethods[index].isDefault = true;
+      paymentMethods.refresh();
+    } catch (err) {
+      Get.snackbar("Cannot set default payment methods", "Please try again");
     }
-    paymentMethods[index].isDefault = true;
-    paymentMethods.refresh();
   }
 
   Future<void> addPaymentMethods(AddPaymentMethodRequest req) async {
-    final response = await Requests.post(
-      '${Config.getServerUrl()}/api/v1/user/me/paymentMethods',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      json: req.toJson(),
-    );
-    response.raiseForStatus();
+    try {
+      final response = await Requests.post(
+        '${Config.getServerUrl()}/api/v1/user/me/paymentMethods',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        json: req.toJson(),
+      );
+      response.raiseForStatus();
 
-    paymentMethods.add(PaymentMethod.fromJson(response.json()));
-    paymentMethods.refresh();
+      paymentMethods.add(PaymentMethod.fromJson(response.json()));
+      paymentMethods.refresh();
+    } catch (err) {
+      Get.snackbar("Cannot add new payment methods", "Please try again");
+    }
   }
 }
