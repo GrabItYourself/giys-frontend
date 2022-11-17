@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:giys_frontend/models/order.dart';
 import 'package:get/get.dart';
@@ -34,10 +36,14 @@ class OrderCard extends StatelessWidget {
         margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
         child: Row(
           children: [
-            Image.network(
-              "https://picsum.photos/200",
-              fit: BoxFit.cover,
+            Container(
               width: 100,
+              height: 100,
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              alignment: Alignment.center,
+              child: (order.shop!.image != null)
+                  ? Image.memory(base64.decode(order.shop!.image!))
+                  : const CircleAvatar(),
             ),
             const SizedBox(width: 8),
             Column(

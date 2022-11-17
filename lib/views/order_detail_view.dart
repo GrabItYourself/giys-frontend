@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giys_frontend/controllers/order_detail.dart';
@@ -82,10 +84,16 @@ class OrderDetailView extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   child: Row(
                     children: [
-                      Image.network(
-                        "https://picsum.photos/200",
-                        fit: BoxFit.cover,
+                      Container(
                         width: 100,
+                        height: 100,
+                        padding: const EdgeInsets.symmetric(vertical: 4.0),
+                        alignment: Alignment.center,
+                        child: (orderDetailController.order.value.shop!.image !=
+                                null)
+                            ? Image.memory(base64.decode(
+                                orderDetailController.order.value.shop!.image!))
+                            : const CircleAvatar(),
                       ),
                       const SizedBox(width: 8),
                       Text(orderDetailController.order.value.shop!.name),
