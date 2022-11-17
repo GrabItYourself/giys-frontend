@@ -38,13 +38,20 @@ class MyShopController extends GetxController {
     return ShopResponse.fromJson(response.json());
   }
 
-  updateShop(Shop input) {
-    shop(Shop(
-        id: input.id,
-        name: input.name,
-        image: input.image,
-        description: input.description,
-        location: input.location,
-        contact: input.contact));
+  // TODO get shop id from user credentials
+  updateShop() async {
+    try {
+      final shopData = await getMyShop(1);
+      shop.value = Shop(
+          id: shopData.shop.id,
+          name: shopData.shop.name,
+          image: shopData.shop.image,
+          description: shopData.shop.description,
+          location: shopData.shop.location,
+          contact: shopData.shop.contact);
+    } catch (err) {
+      Get.toNamed(RoutePath.loginPath);
+      return Future.error(err);
+    }
   }
 }
