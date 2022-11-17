@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
             name: RoutePath.shopOwnerMenuPath,
-            page: () => const MenuOwnerView(),
+            page: () => MenuOwnerView(),
             middlewares: [UserMiddleware()]),
         GetPage(
             name: RoutePath.editMenuPath,
