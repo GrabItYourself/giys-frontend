@@ -17,7 +17,6 @@ import 'package:giys_frontend/config/route.dart';
 import 'package:giys_frontend/views/order_detail_view.dart';
 import 'package:giys_frontend/views/shop_orders_view.dart';
 import 'package:giys_frontend/views/orders_view.dart';
-import 'package:giys_frontend/views/login_view.dart';
 import 'package:giys_frontend/views/settings_view.dart';
 
 import 'package:giys_frontend/views/payment_method_view.dart';
