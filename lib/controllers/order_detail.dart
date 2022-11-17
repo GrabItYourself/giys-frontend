@@ -12,8 +12,11 @@ class OrderDetailController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-
-    await getOrderDetails();
+    try {
+      await getOrderDetails();
+    } catch (err) {
+      Get.snackbar("Cannot get order details", "Please try again");
+    }
   }
 
   Future<void> getOrderDetails() async {

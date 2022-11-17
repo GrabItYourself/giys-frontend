@@ -28,7 +28,11 @@ class ShopOrderController extends GetxController {
   }
 
   Future<void> updateShopOrders() async {
-    orders.value = await getShopOrders(1);
+    try {
+      orders.value = await getShopOrders(1);
+    } catch (err) {
+      Get.snackbar("Cannot get shop order", "Please try again");
+    }
   }
 
   Future<List<Order>> getShopOrders(int shopId) async {
@@ -52,41 +56,53 @@ class ShopOrderController extends GetxController {
   }
 
   Future<void> cancelOrder(int index) async {
-    final response = await Requests.patch(
-      '${Config.getServerUrl()}/api/v1/shops/${orders[index].shopId}/orders/${orders[index].id}/cancel',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    );
-    response.raiseForStatus();
+    try {
+      final response = await Requests.patch(
+        '${Config.getServerUrl()}/api/v1/shops/${orders[index].shopId}/orders/${orders[index].id}/cancel',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+      response.raiseForStatus();
 
-    orders[index].status = response.json()["status"];
-    orders.refresh();
+      orders[index].status = response.json()["status"];
+      orders.refresh();
+    } catch (err) {
+      Get.snackbar("Cannot cancel order", "Please try again");
+    }
   }
 
   Future<void> readyOrder(int index) async {
-    final response = await Requests.patch(
-      '${Config.getServerUrl()}/api/v1/shops/${orders[index].shopId}/orders/${orders[index].id}/ready',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    );
-    response.raiseForStatus();
+    try {
+      final response = await Requests.patch(
+        '${Config.getServerUrl()}/api/v1/shops/${orders[index].shopId}/orders/${orders[index].id}/ready',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+      response.raiseForStatus();
 
-    orders[index].status = response.json()["status"];
-    orders.refresh();
+      orders[index].status = response.json()["status"];
+      orders.refresh();
+    } catch (err) {
+      Get.snackbar("Cannot ready order", "Please try again");
+    }
   }
 
   Future<void> completeOrder(int index) async {
-    final response = await Requests.patch(
-      '${Config.getServerUrl()}/api/v1/shops/${orders[index].shopId}/orders/${orders[index].id}/complete',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    );
-    response.raiseForStatus();
+    try {
+      final response = await Requests.patch(
+        '${Config.getServerUrl()}/api/v1/shops/${orders[index].shopId}/orders/${orders[index].id}/complete',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+      response.raiseForStatus();
 
-    orders[index].status = response.json()["status"];
-    orders.refresh();
+      orders[index].status = response.json()["status"];
+      orders.refresh();
+    } catch (err) {
+      Get.snackbar("Cannot complete order", "Please try again");
+    }
   }
 }

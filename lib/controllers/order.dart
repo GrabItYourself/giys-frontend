@@ -15,7 +15,11 @@ class OrderController extends GetxController {
   }
 
   Future<void> updateMyOrders() async {
-    orders.value = await getMyOrders();
+    try {
+      orders.value = await getMyOrders();
+    } catch (err) {
+      Get.snackbar("Cannot get orders", "Please try again");
+    }
   }
 
   Future<List<Order>> getMyOrders() async {
@@ -52,15 +56,19 @@ class OrderController extends GetxController {
   }
 
   Future<void> cancelOrder(int index) async {
-    final response = await Requests.patch(
-      '${Config.getServerUrl()}/api/v1/shops/${orders[index].shopId}/orders/${orders[index].id}/cancel',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    );
-    response.raiseForStatus();
+    try {
+      final response = await Requests.patch(
+        '${Config.getServerUrl()}/api/v1/shops/${orders[index].shopId}/orders/${orders[index].id}/cancel',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+      response.raiseForStatus();
 
-    orders[index].status = "CANCELED";
-    orders.refresh();
+      orders[index].status = response.json()["status"];
+      orders.refresh();
+    } catch (err) {
+      Get.snackbar("Cannot cancel order", "Please try again");
+    }
   }
 }
