@@ -20,7 +20,6 @@ class MainDrawer extends StatelessWidget {
     _RouteConfig("Order", RoutePath.ordersPath,
         const Icon(Icons.toc)), // TODO: find icons
     _RouteConfig("Setting", RoutePath.settingsPath, const Icon(Icons.settings)),
-    _RouteConfig("Login", RoutePath.loginPath, const Icon(Icons.login))
   ];
 
   _onListItemTab(String path) {

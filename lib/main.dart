@@ -11,7 +11,6 @@ import 'package:giys_frontend/middlewares/user_middleware.dart';
 import 'package:giys_frontend/views/shop_create_view.dart';
 import 'package:giys_frontend/views/edit_menu_view.dart';
 import 'package:giys_frontend/views/edit_shop_view.dart';
-import 'package:giys_frontend/views/login_view.dart';
 import 'package:giys_frontend/views/menu_owner_view.dart';
 import 'package:giys_frontend/views/shop_owner_view.dart';
 import 'package:giys_frontend/config/route.dart';
@@ -46,7 +45,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(useMaterial3: true),
       getPages: [
         GetPage(name: RoutePath.defaultPath, page: () => const HomeView()),
-        GetPage(name: RoutePath.loginPath, page: () => LoginView()),
         // User related routes
         GetPage(
             name: RoutePath.shopOwnerPath,
