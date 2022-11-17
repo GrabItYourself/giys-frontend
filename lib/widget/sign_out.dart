@@ -11,7 +11,7 @@ class SignOutWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+        padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
         decoration: BoxDecoration(
             border: Border.all(color: Colors.red),
             color: Colors.red[50],

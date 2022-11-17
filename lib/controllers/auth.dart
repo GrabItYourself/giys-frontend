@@ -21,6 +21,7 @@ class AuthController extends GetxController {
   final role = Rx<Role?>(null);
   final email = ''.obs;
   final googleId = ''.obs;
+  final isLoggedIn = false.obs;
 
   Future<void> authenticate() async {
     final result = await FlutterWebAuth.authenticate(
@@ -64,6 +65,7 @@ class AuthController extends GetxController {
       role.value = null;
       email.value = '';
       googleId.value = '';
+      isLoggedIn.value = false;
     } catch (err) {
       return Future.error(err);
     }
@@ -80,6 +82,7 @@ class AuthController extends GetxController {
     }
     email.value = me.email;
     googleId.value = me.googleId;
+    isLoggedIn.value = true;
   }
 
   Future<User> getUserInfo() async {
