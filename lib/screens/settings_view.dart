@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:giys_frontend/screens/payment_method_view.dart';
+
+import '../views/payment_method_view.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
@@ -20,7 +21,7 @@ class _SettingsViewState extends State<SettingsView> {
           TextButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const PaymentMethodView()));
+                    builder: (context) => PaymentMethodView()));
               },
               child: const Align(
                 alignment: Alignment.centerLeft,

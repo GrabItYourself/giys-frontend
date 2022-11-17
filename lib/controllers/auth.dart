@@ -6,6 +6,7 @@ import 'package:giys_frontend/models/user.dart';
 import 'package:requests/requests.dart';
 
 import '../config/config.dart';
+import '../config/route.dart';
 import '../consts/role.dart';
 
 final googleAuthUrl = Uri.https('accounts.google.com', '/o/oauth2/v2/auth', {
@@ -44,6 +45,25 @@ class AuthController extends GetxController {
       response.raiseForStatus();
       print(response.json());
       await getUserInfo();
+    } catch (err) {
+      return Future.error(err);
+    }
+  }
+
+  Future<void> signOut() async {
+    try {
+      // TODO: implement signOut API
+      // final response = await Requests.post(
+      //     '${Config.getServerUrl()}/api/v1/auth/signout',
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //     });
+      // response.raiseForStatus();
+      // print(response.json());
+      id.value = '';
+      role.value = null;
+      email.value = '';
+      googleId.value = '';
     } catch (err) {
       return Future.error(err);
     }
