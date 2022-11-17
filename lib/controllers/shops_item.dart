@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:giys_frontend/config/route.dart';
 import 'package:giys_frontend/models/shop_item.dart';
@@ -28,7 +26,8 @@ class ShopItemsController extends GetxController {
         'Content-Type': 'application/json',
       },
     );
-    log(response.toString());
+
+    print(response.json());
     response.raiseForStatus();
     final data = AllShopItemsResponse.fromJson(response.json());
     shopItemsList.value = data.items;

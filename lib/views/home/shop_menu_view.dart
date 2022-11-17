@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giys_frontend/config/route.dart';
+import 'package:giys_frontend/controllers/payment_method.dart';
 import 'package:giys_frontend/controllers/shops_item.dart';
+import 'package:giys_frontend/models/payment_method.dart';
 import 'package:giys_frontend/models/shop_item.dart';
 import 'package:giys_frontend/utilitties/generic_dialog.dart';
 import 'package:giys_frontend/widget/scaffold.dart';
@@ -19,13 +21,16 @@ class ShopMenuView extends StatefulWidget {
 }
 
 class _ShopMenuViewState extends State<ShopMenuView> {
-  final shopItemsController = Get.put(ShopItemsController());
+  late final ShopItemsController shopItemsController =
+      Get.put(ShopItemsController());
   late final List<ShopItem> shopItemsList;
   late final Map<ShopItem, int> shopCart = {};
   late final int shopId;
+
   @override
   void initState() {
     shopId = widget.shop.id;
+    shopItemsController.getAllShopItems(shopId);
     super.initState();
   }
 
@@ -35,8 +40,7 @@ class _ShopMenuViewState extends State<ShopMenuView> {
         title: "Shop Menu",
         body: SafeArea(child: GetX<ShopItemsController>(
           builder: (controller) {
-            controller.getAllShopItems(shopId);
-
+            print(shopId);
             return Column(
               children: [
                 widget.shop.image != null
@@ -49,17 +53,13 @@ class _ShopMenuViewState extends State<ShopMenuView> {
                         fit: BoxFit.fitWidth,
                       ),
                 Text(widget.shop.name),
-                Row(
-                  children: [
-                    Text(widget.shop.description ?? ""),
-                    TextButton(
-                      onPressed: () {
-                        Get.toNamed(RoutePath.shopDetailPath,
-                            arguments: widget.shop);
-                      },
-                      child: const Text("See More"),
-                    )
-                  ],
+                Text(widget.shop.description ?? ""),
+                TextButton(
+                  onPressed: () {
+                    Get.toNamed(RoutePath.shopDetailPath,
+                        arguments: widget.shop);
+                  },
+                  child: const Text("See More"),
                 ),
                 Expanded(
                   child: ListView.builder(
@@ -88,10 +88,10 @@ class _ShopMenuViewState extends State<ShopMenuView> {
                                   });
                                 },
                                 icon: const Icon(Icons.add)),
-                            Text(shopCart[shopItem].toString()),
+                            Text((shopCart[shopItem] ?? 0).toString()),
                             IconButton(
                                 onPressed: () {
-                                  if (shopCart[shopItem]! > 0) {
+                                  if ((shopCart[shopItem] ?? 0) > 0) {
                                     setState(() {
                                       shopCart[shopItem] =
                                           shopCart[shopItem]! - 1;
@@ -119,9 +119,17 @@ class _ShopMenuViewState extends State<ShopMenuView> {
                       );
                       if (order) {
                         //TODO check if user has credit card
-                        final bool userHasCreditCard = true;
-                        if (userHasCreditCard) {
+                        final PaymentMethodController paymentMethodController =
+                            Get.find();
+                        final List<PaymentMethod> paymentList =
+                            paymentMethodController.paymentMethods;
+                        PaymentMethod? defaultPayment =
+                            paymentList.firstWhereOrNull(
+                                (element) => element.isDefault == true);
+                        print(paymentMethodController.paymentMethods);
+                        if (defaultPayment != null) {
                           //TODO user has credit card, send order
+                          print("User has credit card");
                         } else {
                           await showGenericDialog(
                             context: context,

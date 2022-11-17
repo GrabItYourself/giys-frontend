@@ -45,7 +45,7 @@ class AllShopView extends StatelessWidget {
                   onPressed: () async {
                     shopController.getAllShop();
                   },
-                  child: const Text("Resend"))
+                  child: const Text("Resend")),
             ]);
           }),
         )));
