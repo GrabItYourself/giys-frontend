@@ -10,6 +10,12 @@ import '../config/route.dart';
 import 'auth.dart';
 import 'image_picker.dart';
 
+class ListItem {
+  String label;
+  String value;
+  ListItem(this.label, this.value);
+}
+
 class ShopCreateController extends GetxController {
   final authController = Get.find<AuthController>();
   final imagePickerController = Get.put(ImagePickerController());
@@ -23,6 +29,21 @@ class ShopCreateController extends GetxController {
   final shopContactController = TextEditingController();
   final bankAccountController = TextEditingController();
 
+  final bankAccountNameController = TextEditingController();
+  final bankAccountNumberController = TextEditingController();
+  final bankAccountBankController = "".obs;
+  final bankAccountTypeController = "".obs;
+
+  static List<ListItem> bankList = [
+    ListItem("Kasikornbank", "kbank"),
+    ListItem("Siam Commercial Bank", "scv"),
+  ];
+
+  static List<ListItem> typeList = [
+    ListItem("Individual", "individual"),
+    ListItem("Corporation", "corporation"),
+  ];
+
   @override
   void onInit() {
     createShopOwnerTextFormField();
@@ -35,6 +56,14 @@ class ShopCreateController extends GetxController {
       return errorMsg;
     }
     return null;
+  }
+
+  void setBankAccountBank(String? value) {
+    bankAccountBankController.value = value!;
+  }
+
+  void setBankAccountType(String? value) {
+    bankAccountTypeController.value = value!;
   }
 
   void createShopOwnerTextFormField() {
@@ -54,6 +83,12 @@ class ShopCreateController extends GetxController {
     shopOwnerControllers.clear();
     shopOwnerCounts.value = 1;
     imagePickerController.imagePath.value = "";
+
+    bankAccountNameController.clear();
+    bankAccountNumberController.clear();
+    bankAccountBankController.value = "";
+    bankAccountTypeController.value = "";
+
     createShopOwnerTextFormField();
   }
 
@@ -78,6 +113,12 @@ class ShopCreateController extends GetxController {
             'location': shopLocationController.text,
             'contact': shopContactController.text,
             'owner_emails': shopOwnerControllers.map((e) => e.text).toList(),
+            'bank_account': {
+              "name": bankAccountNameController.text,
+              "number": bankAccountNumberController.text,
+              "brand": bankAccountBankController.value,
+              "type": bankAccountTypeController.value,
+            }
           });
       response.raiseForStatus();
       clearForm();

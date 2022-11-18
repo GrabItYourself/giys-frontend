@@ -34,14 +34,12 @@ class AuthController extends GetxController {
     };
 
     try {
-      print("Future2");
       final response = await Requests.post(
           '${Config.getServerUrl()}/api/v1/auth/google/verify',
           headers: {
             'Content-Type': 'application/json',
           },
           queryParameters: queryParameters);
-      print("Future2 Done");
       response.raiseForStatus();
       print(response.json());
       await getUserInfo();
