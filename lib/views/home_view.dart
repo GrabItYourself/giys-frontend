@@ -16,10 +16,17 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     var userPages = [
       ListTile(
+        leading: const Icon(Icons.food_bank),
+        title: const Text("Shops"),
+        onTap: () => Get.toNamed(RoutePath.allShopPath),
+      ),
+      ListTile(
+        leading: const Icon(Icons.payment),
         title: const Text("Payment Methods"),
         onTap: () => Get.toNamed(RoutePath.paymentMethodPath),
       ),
       ListTile(
+        leading: const Icon(Icons.settings),
         title: const Text("Settings"),
         onTap: () => Get.toNamed(RoutePath.settingsPath),
       ),
@@ -27,21 +34,25 @@ class HomeView extends StatelessWidget {
 
     var shopPages = [
       ListTile(
+        leading: const Icon(Icons.food_bank),
         title: const Text("My Shop"),
         onTap: () => Get.toNamed(RoutePath.shopOwnerPath),
       ),
       ListTile(
-        title: const Text("Shop orders"),
+        leading: const Icon(Icons.list),
+        title: const Text("Shop Orders"),
         onTap: () => Get.toNamed(RoutePath.shopOrdersPath),
       )
     ];
 
     var adminPages = [
       ListTile(
+        leading: const Icon(Icons.add),
         title: const Text("Create Shop"),
         onTap: () => Get.toNamed(RoutePath.shopCreatePath),
       ),
       ListTile(
+        leading: const Icon(Icons.create),
         title: const Text("Manage Shops"),
         onTap: () => Get.toNamed(RoutePath.shopManagePath),
       ),
