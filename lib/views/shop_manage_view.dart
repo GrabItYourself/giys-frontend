@@ -68,21 +68,3 @@ class ShopManageView extends StatelessWidget {
     );
   }
 }
-
-// class _ShopListView extends StatelessWidget {
-//   final RxList<Shop> shopList;
-
-//   const _ShopListView({super.key, required this.shopList});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     if (shopList.isEmpty) {
-//       return Container(
-//         margin: const EdgeInsets.only(top: 20),
-//         child: const Text("No Shop"),
-//       );
-//     }
-
-//     // return Obx(() => );
-//   }
-// }
