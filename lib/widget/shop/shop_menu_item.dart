@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,18 +23,20 @@ class ShopMenuItem extends StatelessWidget {
         margin: const EdgeInsets.only(top: 8, bottom: 8),
         child: Row(
           children: [
-            Image.network(
-              image ?? "https://picsum.photos/200",
-              fit: BoxFit.cover,
-              width: 50,
-            ),
+            image != null
+                ? Image.memory(base64.decode(image!), fit: BoxFit.cover)
+                : Image.network(
+                    "https://picsum.photos/200",
+                    fit: BoxFit.cover,
+                    width: 50,
+                  ),
             const SizedBox(width: 8),
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(
                 name,
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              Text("${price.toString()}THB")
+              Text("${price.toString()} THB")
             ]),
             const Spacer(),
             IconButton(
