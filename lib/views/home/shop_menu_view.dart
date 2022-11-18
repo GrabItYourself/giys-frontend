@@ -6,6 +6,7 @@ import 'package:giys_frontend/config/route.dart';
 import 'package:giys_frontend/controllers/order_send.dart';
 import 'package:giys_frontend/controllers/payment_method.dart';
 import 'package:giys_frontend/controllers/shops_item.dart';
+import 'package:giys_frontend/models/order.dart';
 import 'package:giys_frontend/models/payment_method.dart';
 import 'package:giys_frontend/models/shop_item.dart';
 import 'package:giys_frontend/utilitties/generic_dialog.dart';
@@ -24,8 +25,8 @@ class ShopMenuView extends StatefulWidget {
 class _ShopMenuViewState extends State<ShopMenuView> {
   late final ShopItemsController shopItemsController =
       Get.put(ShopItemsController());
-  // final OrderSendController orderSendController =
-  //     Get.put(OrderSendController());
+  final OrderSendController orderSendController =
+      Get.put(OrderSendController());
   late final Map<ShopItem, int> shopCart = {};
   late final int shopId;
 
@@ -33,9 +34,6 @@ class _ShopMenuViewState extends State<ShopMenuView> {
   void initState() {
     shopId = widget.shop.id;
     shopItemsController.getAllShopItems(shopId);
-    for (ShopItem shopItem in shopItemsController.shopItemsList) {
-      shopCart[shopItem] = 0;
-    }
     super.initState();
   }
 
@@ -134,9 +132,17 @@ class _ShopMenuViewState extends State<ShopMenuView> {
                         print(paymentMethodController.paymentMethods);
                         if (defaultPayment != null) {
                           //TODO user has credit card, send order
-                          //convert shopCart to order
-                          // orderSendController.sendOrder(shopId, order);
+                          List<OrderItem> items = [];
+                          shopCart.forEach((key, value) {
+                            OrderItem itm = OrderItem(
+                                shopItemId: key.shopId,
+                                quantity: value,
+                                note: "");
+                            items.add(itm);
+                          });
+                          orderSendController.sendOrder(shopId, items);
                           print("User has credit card");
+                          print(items);
                         } else {
                           await showGenericDialog(
                             context: context,

@@ -19,12 +19,12 @@ class DefaultView extends StatefulWidget {
         icon: Icons.home,
         navigatorkey: _tab1navigatorKey),
     PersistentTabItem(
-        tab: const OrdersView(),
+        tab: OrdersView(),
         title: "Orders",
         icon: Icons.shop,
         navigatorkey: _tab2navigatorKey),
     PersistentTabItem(
-        tab: const ShopOrdersView(),
+        tab: ShopOrdersView(),
         title: "Shop Orders",
         icon: Icons.shop_2,
         navigatorkey: _tab3navigatorKey),
