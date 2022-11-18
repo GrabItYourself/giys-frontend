@@ -71,7 +71,7 @@ class HomeView extends StatelessWidget {
                     if (controller.isLoggedIn.value) {
                       pages.addAll(userPages);
                       // TODO: check if user is shop owner
-                      if (true) {
+                      if (controller.shopId.value != null) {
                         pages.addAll([
                           const DividerWithText(text: "Shop"),
                           ...shopPages
