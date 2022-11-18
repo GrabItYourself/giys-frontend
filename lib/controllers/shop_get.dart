@@ -16,7 +16,7 @@ class ShopController extends GetxController {
     try {
       await getAllShop();
     } catch (err) {
-      Get.toNamed(RoutePath.loginPath);
+      Get.toNamed(RoutePath.homePath);
       return Future.error(err);
     }
   }

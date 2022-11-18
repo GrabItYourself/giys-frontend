@@ -1,7 +1,6 @@
 class RoutePath {
   static const defaultPath = '/';
   static const homePath = '/home';
-  static const loginPath = '/login';
   static const paymentPath = '/payment';
   static const allShopPath = '/shops';
   static const shopMenuPath = '/shops/:shopId/menu';

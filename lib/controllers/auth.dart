@@ -6,6 +6,7 @@ import 'package:giys_frontend/models/user.dart';
 import 'package:requests/requests.dart';
 
 import '../config/config.dart';
+import '../config/route.dart';
 import '../consts/role.dart';
 
 final googleAuthUrl = Uri.https('accounts.google.com', '/o/oauth2/v2/auth', {
@@ -20,6 +21,7 @@ class AuthController extends GetxController {
   final role = Rx<Role?>(null);
   final email = ''.obs;
   final googleId = ''.obs;
+  final isLoggedIn = false.obs;
 
   Future<void> authenticate() async {
     final result = await FlutterWebAuth.authenticate(
@@ -34,19 +36,36 @@ class AuthController extends GetxController {
     };
 
     try {
-      print("Future2");
       final response = await Requests.post(
           '${Config.getServerUrl()}/api/v1/auth/google/verify',
           headers: {
             'Content-Type': 'application/json',
           },
           queryParameters: queryParameters);
-      print("Future2 Done");
       response.raiseForStatus();
       print(response.json());
       await getUserInfo();
     } catch (err) {
-      print("Future 2 failed");
+      return Future.error(err);
+    }
+  }
+
+  Future<void> signOut() async {
+    try {
+      // TODO: implement signOut API
+      // final response = await Requests.post(
+      //     '${Config.getServerUrl()}/api/v1/auth/signout',
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //     });
+      // response.raiseForStatus();
+      // print(response.json());
+      id.value = '';
+      role.value = null;
+      email.value = '';
+      googleId.value = '';
+      isLoggedIn.value = false;
+    } catch (err) {
       return Future.error(err);
     }
   }
@@ -62,6 +81,7 @@ class AuthController extends GetxController {
     }
     email.value = me.email;
     googleId.value = me.googleId;
+    isLoggedIn.value = true;
   }
 
   Future<User> getUserInfo() async {

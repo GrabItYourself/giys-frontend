@@ -21,7 +21,7 @@ class MyShopController extends GetxController {
           location: shopData.shop.location,
           contact: shopData.shop.contact);
     } catch (err) {
-      Get.toNamed(RoutePath.loginPath);
+      Get.toNamed(RoutePath.homePath);
       return Future.error(err);
     }
   }

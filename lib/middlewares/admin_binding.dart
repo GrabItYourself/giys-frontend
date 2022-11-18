@@ -11,8 +11,8 @@ class AdminMiddleware extends GetMiddleware {
   @override
   RouteSettings? redirect(String? route) {
     return authController.role.value == Role.admin ||
-            route == RoutePath.loginPath
+            route == RoutePath.homePath
         ? null
-        : const RouteSettings(name: RoutePath.loginPath);
+        : const RouteSettings(name: RoutePath.homePath);
   }
 }
