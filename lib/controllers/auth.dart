@@ -52,14 +52,12 @@ class AuthController extends GetxController {
 
   Future<void> signOut() async {
     try {
-      // TODO: implement signOut API
-      // final response = await Requests.post(
-      //     '${Config.getServerUrl()}/api/v1/auth/signout',
-      //     headers: {
-      //       'Content-Type': 'application/json',
-      //     });
-      // response.raiseForStatus();
-      // print(response.json());
+      final response = await Requests.post(
+          '${Config.getServerUrl()}/api/v1/auth/signout',
+          headers: {
+            'Content-Type': 'application/json',
+          });
+      response.raiseForStatus();
       id.value = '';
       role.value = null;
       email.value = '';
