@@ -1,17 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:giys_frontend/controllers/order.dart';
+import 'package:giys_frontend/widget/order_card.dart';
 
-class OrdersView extends StatefulWidget {
-  const OrdersView({super.key});
+import '../widget/scaffold.dart';
 
-  @override
-  State<OrdersView> createState() => _OrdersViewState();
-}
+class OrdersView extends StatelessWidget {
+  final orderController = Get.put(OrderController());
 
-class _OrdersViewState extends State<OrdersView> {
+  OrdersView({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: const Text("Orders")),
+    return MainScaffold(
+      title: "Orders",
+      body: SafeArea(
+        child: Center(
+          child: GetX<OrderController>(
+            builder: (controller) => RefreshIndicator(
+              onRefresh: controller.updateMyOrders,
+              child: ListView.builder(
+                itemCount: controller.orders.length,
+                itemBuilder: (context, index) => OrderCard(
+                  isOwner: false,
+                  order: controller.orders[index],
+                  onCancel: (() => controller.cancelOrder(index)),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

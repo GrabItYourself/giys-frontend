@@ -19,6 +19,10 @@ import 'package:giys_frontend/views/login_view.dart';
 import 'package:giys_frontend/views/menu_owner_view.dart';
 import 'package:giys_frontend/views/shop_owner_view.dart';
 import 'package:giys_frontend/config/route.dart';
+import 'package:giys_frontend/views/order_detail_view.dart';
+import 'package:giys_frontend/views/shop_orders_view.dart';
+import 'package:giys_frontend/views/orders_view.dart';
+import 'package:giys_frontend/views/login_view.dart';
 import 'package:giys_frontend/views/settings_view.dart';
 
 import 'package:giys_frontend/views/payment_method_view.dart';
@@ -67,15 +71,32 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: RoutePath.paymentMethodPath,
           page: () => PaymentMethodView(),
+          middlewares: [UserMiddleware()],
         ),
         GetPage(
           name: RoutePath.addPaymentMethodPath,
           page: () => AddPaymentMethodView(),
+          middlewares: [UserMiddleware()],
         ),
         GetPage(
             name: RoutePath.shopOwnerMenuPath,
             page: () => const MenuOwnerView(),
             middlewares: [UserMiddleware()]),
+        GetPage(
+          name: RoutePath.ordersPath,
+          page: () => OrdersView(),
+          middlewares: [UserMiddleware()],
+        ),
+        GetPage(
+          name: RoutePath.shopOrdersPath,
+          page: () => ShopOrdersView(),
+          middlewares: [UserMiddleware()],
+        ),
+        GetPage(
+          name: RoutePath.orderDetailPath,
+          page: (() => OrderDetailView()),
+          middlewares: [UserMiddleware()],
+        ),
         GetPage(
             name: RoutePath.editMenuPath,
             page: () => const EditMenuView(),
