@@ -2,6 +2,9 @@ class RoutePath {
   static const defaultPath = '/';
   static const homePath = '/home';
   static const paymentPath = '/payment';
+  static const allShopPath = '/shops';
+  static const shopMenuPath = '/shops/:shopId/menu';
+  static const shopDetailPath = '/shops/:shopId';
   static const shopOwnerPath = '/my-shop';
   static const shopOwnerMenuPath = '$shopOwnerPath/menu';
   static const editShopPath = '/edit/shop/:shopId';

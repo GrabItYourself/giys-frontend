@@ -27,7 +27,6 @@ class AuthController extends GetxController {
     final result = await FlutterWebAuth.authenticate(
         url: googleAuthUrl.toString(),
         callbackUrlScheme: Config.getCallbackUrlScheme());
-
     final code = Uri.parse(result).queryParameters['code'];
 
     // System value https://api.flutter.dev/flutter/package-platform_platform/Platform/operatingSystemValues-constant.html
