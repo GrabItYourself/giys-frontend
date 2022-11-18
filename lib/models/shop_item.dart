@@ -49,8 +49,10 @@ class AllShopItemsResponse {
 
   factory AllShopItemsResponse.fromJson(Map<String, dynamic> json) {
     List<ShopItem> itemsFromJson = [];
-    for (var shopItemJson in json['shops']) {
-      itemsFromJson.add(ShopItem.fromJson(shopItemJson));
+    if (json['items'] != null) {
+      for (var shopItemJson in json['items']) {
+        itemsFromJson.add(ShopItem.fromJson(shopItemJson));
+      }
     }
     return AllShopItemsResponse(items: itemsFromJson);
   }

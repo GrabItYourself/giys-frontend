@@ -25,7 +25,6 @@ class AuthController extends GetxController {
     final result = await FlutterWebAuth.authenticate(
         url: googleAuthUrl.toString(),
         callbackUrlScheme: Config.getCallbackUrlScheme());
-
     final code = Uri.parse(result).queryParameters['code'];
 
     // System value https://api.flutter.dev/flutter/package-platform_platform/Platform/operatingSystemValues-constant.html
@@ -35,16 +34,19 @@ class AuthController extends GetxController {
     };
 
     try {
+      print("Future2");
       final response = await Requests.post(
           '${Config.getServerUrl()}/api/v1/auth/google/verify',
           headers: {
             'Content-Type': 'application/json',
           },
           queryParameters: queryParameters);
+      print("Future2 Done");
       response.raiseForStatus();
       print(response.json());
       await getUserInfo();
     } catch (err) {
+      print("Future 2 failed");
       return Future.error(err);
     }
   }

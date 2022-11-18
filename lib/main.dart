@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,9 @@ import 'package:giys_frontend/middlewares/user_middleware.dart';
 import 'package:giys_frontend/views/shop_create_view.dart';
 import 'package:giys_frontend/views/edit_menu_view.dart';
 import 'package:giys_frontend/views/edit_shop_view.dart';
+import 'package:giys_frontend/views/home/all_shop_view.dart';
+import 'package:giys_frontend/views/home/shop_detail_view.dart';
+import 'package:giys_frontend/views/home/shop_menu_view.dart';
 import 'package:giys_frontend/views/login_view.dart';
 import 'package:giys_frontend/views/menu_owner_view.dart';
 import 'package:giys_frontend/views/shop_owner_view.dart';
@@ -29,6 +33,7 @@ import 'views/home_view.dart';
 import 'views/shop_manage_view.dart';
 
 void main() async {
+  HttpOverrides.global = MyHttpOverrides();
   await GetStorage.init();
   await Future.delayed(const Duration(seconds: 2));
   await dotenv.load(fileName: ".env");
@@ -47,6 +52,12 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: RoutePath.defaultPath, page: () => const HomeView()),
         GetPage(name: RoutePath.loginPath, page: () => LoginView()),
+        GetPage(name: RoutePath.shopDetailPath, page: () => ShopDetailView()),
+        GetPage(name: RoutePath.allShopPath, page: () => AllShopView()),
+        GetPage(
+          name: RoutePath.shopMenuPath,
+          page: () => ShopMenuView(),
+        ),
         // User related routes
         GetPage(
             name: RoutePath.shopOwnerPath,
@@ -111,5 +122,14 @@ class MyApp extends StatelessWidget {
             middlewares: [AdminMiddleware()]),
       ],
     );
+  }
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }
