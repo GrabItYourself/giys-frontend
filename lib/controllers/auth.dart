@@ -17,11 +17,12 @@ final googleAuthUrl = Uri.https('accounts.google.com', '/o/oauth2/v2/auth', {
 });
 
 class AuthController extends GetxController {
-  final id = ''.obs;
-  final role = Rx<Role?>(null);
-  final email = ''.obs;
-  final googleId = ''.obs;
-  final isLoggedIn = false.obs;
+  final id = RxnString();
+  final role = Rxn<Role>();
+  final email = RxnString();
+  final googleId = RxnString();
+  final shopId = RxnInt();
+  final isLoggedIn = RxBool(false);
 
   Future<void> authenticate() async {
     final result = await FlutterWebAuth.authenticate(
@@ -58,10 +59,11 @@ class AuthController extends GetxController {
             'Content-Type': 'application/json',
           });
       response.raiseForStatus();
-      id.value = '';
+      id.value = null;
       role.value = null;
-      email.value = '';
-      googleId.value = '';
+      email.value = null;
+      googleId.value = null;
+      shopId.value = null;
       isLoggedIn.value = false;
     } catch (err) {
       return Future.error(err);
@@ -79,6 +81,7 @@ class AuthController extends GetxController {
     }
     email.value = me.email;
     googleId.value = me.googleId;
+    shopId.value = me.shopId;
     isLoggedIn.value = true;
   }
 
