@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giys_frontend/config/route.dart';
+import 'package:giys_frontend/controllers/order_send.dart';
 import 'package:giys_frontend/controllers/payment_method.dart';
 import 'package:giys_frontend/controllers/shops_item.dart';
 import 'package:giys_frontend/models/payment_method.dart';
@@ -23,7 +24,8 @@ class ShopMenuView extends StatefulWidget {
 class _ShopMenuViewState extends State<ShopMenuView> {
   late final ShopItemsController shopItemsController =
       Get.put(ShopItemsController());
-  late final List<ShopItem> shopItemsList;
+  // final OrderSendController orderSendController =
+  //     Get.put(OrderSendController());
   late final Map<ShopItem, int> shopCart = {};
   late final int shopId;
 
@@ -31,6 +33,9 @@ class _ShopMenuViewState extends State<ShopMenuView> {
   void initState() {
     shopId = widget.shop.id;
     shopItemsController.getAllShopItems(shopId);
+    for (ShopItem shopItem in shopItemsController.shopItemsList) {
+      shopCart[shopItem] = 0;
+    }
     super.initState();
   }
 
@@ -107,8 +112,8 @@ class _ShopMenuViewState extends State<ShopMenuView> {
                 ),
                 TextButton(
                     onPressed: () async {
-                      final bool order;
-                      order = await showGenericDialog(
+                      final bool sendOrder;
+                      sendOrder = await showGenericDialog(
                         context: context,
                         title: "Confirm Order",
                         content: shopCart.toString(),
@@ -117,7 +122,7 @@ class _ShopMenuViewState extends State<ShopMenuView> {
                           "Cancel": false,
                         },
                       );
-                      if (order) {
+                      if (sendOrder) {
                         //TODO check if user has credit card
                         final PaymentMethodController paymentMethodController =
                             Get.find();
@@ -129,6 +134,8 @@ class _ShopMenuViewState extends State<ShopMenuView> {
                         print(paymentMethodController.paymentMethods);
                         if (defaultPayment != null) {
                           //TODO user has credit card, send order
+                          //convert shopCart to order
+                          // orderSendController.sendOrder(shopId, order);
                           print("User has credit card");
                         } else {
                           await showGenericDialog(
