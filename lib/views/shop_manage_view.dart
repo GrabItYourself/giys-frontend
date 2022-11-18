@@ -4,7 +4,6 @@ import 'package:giys_frontend/config/route.dart';
 import 'package:giys_frontend/controllers/shop_manage.dart';
 import 'package:giys_frontend/widget/shop.dart';
 
-import '../models/shop.dart';
 import '../widget/scaffold.dart';
 
 class ShopManageView extends StatelessWidget {

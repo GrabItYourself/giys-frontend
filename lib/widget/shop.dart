@@ -14,8 +14,14 @@ class ShopWidget extends StatelessWidget {
     required this.shop,
   });
 
+  _toManageEditShop() {
+    Get.offAndToNamed(RoutePath.toPath(RoutePath.shopManageEditPath, {
+      'shopId': shop.id.toString(),
+    }));
+  }
+
   _onTab() {
-    Get.toNamed(RoutePath.defaultPath, arguments: shop.id);
+    _toManageEditShop();
   }
 
   @override
@@ -35,8 +41,7 @@ class ShopWidget extends StatelessWidget {
         ),
       ),
       trailing: IconButton(
-          onPressed: () => Get.toNamed(
-              RoutePath.defaultPath), // TODO route to edit shop page,
+          onPressed: _toManageEditShop,
           icon: const Icon(
             Icons.edit,
           )),

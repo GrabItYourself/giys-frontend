@@ -17,7 +17,27 @@ class RoutePath {
 
   static const shopManagePath = '/shop/manage';
   static const shopCreatePath = '/shop/create';
+  static const shopManageEditPath = '/shop/manage/:shopId';
 
   static const paymentMethodPath = '/paymentMethods';
   static const addPaymentMethodPath = '/paymentMethods/add';
+
+  static toPath(String name, Map<String, String> data) {
+    var path = name;
+    var hasQueryParams = false;
+    for (var key in data.keys) {
+      if (path.contains(':$key')) {
+        path = path.replaceAll(':$key', data[key]!);
+      } else {
+        if (hasQueryParams == false) {
+          path += '?';
+          hasQueryParams = true;
+        } else {
+          path += '&';
+        }
+        path += '$key=${data[key]}';
+      }
+    }
+    return path;
+  }
 }
