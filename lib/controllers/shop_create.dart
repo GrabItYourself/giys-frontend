@@ -27,7 +27,6 @@ class ShopCreateController extends GetxController {
   final shopDescriptionController = TextEditingController();
   final shopLocationController = TextEditingController();
   final shopContactController = TextEditingController();
-  final bankAccountController = TextEditingController();
 
   final bankAccountNameController = TextEditingController();
   final bankAccountNumberController = TextEditingController();
@@ -79,7 +78,6 @@ class ShopCreateController extends GetxController {
     shopDescriptionController.clear();
     shopLocationController.clear();
     shopContactController.clear();
-    bankAccountController.clear();
     shopOwnerControllers.clear();
     shopOwnerCounts.value = 1;
     imagePickerController.imagePath.value = "";

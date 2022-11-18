@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:giys_frontend/widget/scaffold.dart';
 
@@ -58,6 +59,59 @@ class _ShopEditForm extends StatelessWidget {
               decoration: const InputDecoration(labelText: "Location"),
               validator: (value) => shopManageEditController.required(
                   value, "Location is required")),
+          Container(
+            margin: const EdgeInsets.only(top: 16),
+            child: Column(
+              children: [
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Bank Account",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                  ),
+                ),
+                TextFormField(
+                    controller:
+                        shopManageEditController.bankAccountNameController,
+                    decoration:
+                        const InputDecoration(labelText: "Bank account name"),
+                    validator: (value) => shopManageEditController.required(
+                        value, "Bank account name is required")),
+                TextFormField(
+                  controller:
+                      shopManageEditController.bankAccountNumberController,
+                  decoration:
+                      const InputDecoration(labelText: "Bank account number"),
+                  validator: (value) => shopManageEditController.required(
+                      value, "Bank account number is required"),
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    LengthLimitingTextInputFormatter(16),
+                  ],
+                ),
+                DropdownButtonFormField(
+                  items: ShopManageEditController.bankList
+                      .map((e) => DropdownMenuItem(
+                            value: e.value,
+                            child: Text(e.label),
+                          ))
+                      .toList(),
+                  onChanged: shopManageEditController.setBankAccountBank,
+                  hint: const Text("Select Bank"),
+                ),
+                DropdownButtonFormField(
+                  items: ShopManageEditController.typeList
+                      .map((e) => DropdownMenuItem(
+                            value: e.value,
+                            child: Text(e.label),
+                          ))
+                      .toList(),
+                  onChanged: shopManageEditController.setBankAccountType,
+                  hint: const Text("Select Type"),
+                )
+              ],
+            ),
+          ),
           Obx(() => Container(
                 margin: const EdgeInsets.only(top: 20),
                 child: Column(

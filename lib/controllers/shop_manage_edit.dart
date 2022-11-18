@@ -34,6 +34,21 @@ class ShopManageEditController extends GetxController {
 
   final shopId = "".obs;
 
+  final bankAccountNameController = TextEditingController();
+  final bankAccountNumberController = TextEditingController();
+  final bankAccountBankController = "".obs;
+  final bankAccountTypeController = "".obs;
+
+  static List<ListItem> bankList = [
+    ListItem("Kasikornbank", "kbank"),
+    ListItem("Siam Commercial Bank", "scv"),
+  ];
+
+  static List<ListItem> typeList = [
+    ListItem("Individual", "individual"),
+    ListItem("Corporation", "corporation"),
+  ];
+
   Future<void> pickImage() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
@@ -74,6 +89,14 @@ class ShopManageEditController extends GetxController {
     }
   }
 
+  void setBankAccountBank(String? value) {
+    bankAccountBankController.value = value!;
+  }
+
+  void setBankAccountType(String? value) {
+    bankAccountTypeController.value = value!;
+  }
+
   void removeShopOwnerTextFormField(int index) {
     shopOwnerControllers.removeAt(index);
   }
@@ -109,6 +132,13 @@ class ShopManageEditController extends GetxController {
       shopDescriptionController.text = shop.description ?? "";
       shopLocationController.text = shop.location ?? "";
       shopContactController.text = shop.contact ?? "";
+
+      if (shop.bankAccount != null) {
+        bankAccountNameController.text = shop.bankAccount!.name;
+        bankAccountNumberController.text = shop.bankAccount!.number;
+        bankAccountBankController.value = shop.bankAccount!.bank;
+        bankAccountTypeController.value = shop.bankAccount!.type;
+      }
 
       if (shop.owners == null) {
         clearShopOwnerTextFormField();
@@ -165,6 +195,12 @@ class ShopManageEditController extends GetxController {
           'location': shopLocationController.text,
           'contact': shopContactController.text,
           'owners': [], // This will not be used in backend
+          'bank_account': {
+            "name": bankAccountNameController.text,
+            "number": bankAccountNumberController.text,
+            "brand": bankAccountBankController.value,
+            "type": bankAccountTypeController.value,
+          }
         }
       };
       final response = await Requests.put(
