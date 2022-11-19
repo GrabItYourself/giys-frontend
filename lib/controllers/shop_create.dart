@@ -27,16 +27,15 @@ class ShopCreateController extends GetxController {
   final shopDescriptionController = TextEditingController();
   final shopLocationController = TextEditingController();
   final shopContactController = TextEditingController();
-  final bankAccountController = TextEditingController();
 
   final bankAccountNameController = TextEditingController();
   final bankAccountNumberController = TextEditingController();
-  final bankAccountBankController = "".obs;
+  final bankAccountBrandController = "".obs;
   final bankAccountTypeController = "".obs;
 
   static List<ListItem> bankList = [
     ListItem("Kasikornbank", "kbank"),
-    ListItem("Siam Commercial Bank", "scv"),
+    ListItem("Siam Commercial Bank", "scb"),
   ];
 
   static List<ListItem> typeList = [
@@ -59,7 +58,7 @@ class ShopCreateController extends GetxController {
   }
 
   void setBankAccountBank(String? value) {
-    bankAccountBankController.value = value!;
+    bankAccountBrandController.value = value!;
   }
 
   void setBankAccountType(String? value) {
@@ -79,14 +78,13 @@ class ShopCreateController extends GetxController {
     shopDescriptionController.clear();
     shopLocationController.clear();
     shopContactController.clear();
-    bankAccountController.clear();
     shopOwnerControllers.clear();
     shopOwnerCounts.value = 1;
     imagePickerController.imagePath.value = "";
 
     bankAccountNameController.clear();
     bankAccountNumberController.clear();
-    bankAccountBankController.value = "";
+    bankAccountBrandController.value = "";
     bankAccountTypeController.value = "";
 
     createShopOwnerTextFormField();
@@ -116,7 +114,7 @@ class ShopCreateController extends GetxController {
             'bank_account': {
               "name": bankAccountNameController.text,
               "number": bankAccountNumberController.text,
-              "brand": bankAccountBankController.value,
+              "brand": bankAccountBrandController.value,
               "type": bankAccountTypeController.value,
             }
           });
