@@ -2,22 +2,36 @@ import 'package:get/get.dart';
 import 'package:giys_frontend/models/order.dart';
 import 'package:giys_frontend/models/shop.dart';
 import 'package:requests/requests.dart';
-
+import 'auth.dart';
 import '../config/config.dart';
 
-// TODO: get my shop id
 class ShopOrderController extends GetxController {
+  final authController = Get.find<AuthController>();
   final orders = <Order>[].obs;
+  final shop = Shop(id: 0, name: '').obs;
 
   @override
   void onInit() async {
     super.onInit();
+    if (authController.shopId.value == null) {
+      Get.snackbar("You do not have any shop", "Please try again");
+      return;
+    }
+    await updateShop();
     await updateShopOrders();
   }
 
-  Future<Shop> getShop(int shopId) async {
+  Future<void> updateShop() async {
+    try {
+      shop.value = await getShop();
+    } catch (err) {
+      Get.snackbar("Cannot get shop", "Please try again");
+    }
+  }
+
+  Future<Shop> getShop() async {
     final response = await Requests.get(
-      '${Config.getServerUrl()}/api/v1/shops/$shopId',
+      '${Config.getServerUrl()}/api/v1/shops/${authController.shopId.value}',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -29,27 +43,31 @@ class ShopOrderController extends GetxController {
 
   Future<void> updateShopOrders() async {
     try {
-      orders.value = await getShopOrders(1);
+      orders.value = await getShopOrders();
     } catch (err) {
       Get.snackbar("Cannot get shop order", "Please try again");
     }
   }
 
-  Future<List<Order>> getShopOrders(int shopId) async {
+  Future<List<Order>> getShopOrders() async {
     final response = await Requests.get(
-      '${Config.getServerUrl()}/api/v1/shops/$shopId/orders',
+      '${Config.getServerUrl()}/api/v1/shops/${authController.shopId.value}/orders',
       headers: {
         'Content-Type': 'application/json',
       },
     );
     response.raiseForStatus();
+
+    if (response.json()["result"] == null) {
+      return <Order>[];
+    }
+
     final orders = (response.json()["result"] as List)
         .map((json) => Order.fromJson(json))
         .toList();
 
-    final shop = await getShop(shopId);
     for (var order in orders) {
-      order.shop = shop;
+      order.shop = shop.value;
     }
 
     return orders;

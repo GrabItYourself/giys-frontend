@@ -30,6 +30,11 @@ class OrderController extends GetxController {
       },
     );
     response.raiseForStatus();
+
+    if (response.json()["result"] == null) {
+      return <Order>[];
+    }
+
     final orders = (response.json()["result"] as List)
         .map((json) => Order.fromJson(json))
         .toList();
