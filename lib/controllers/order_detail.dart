@@ -14,8 +14,8 @@ class OrderDetailController extends GetxController {
     super.onInit();
     try {
       await getOrderDetails();
-    } catch (err) {
-      Get.snackbar("Cannot get order details", "Please try again");
+    } on HTTPException catch (err) {
+      Get.snackbar("Cannot get order details", err.response.body);
     }
   }
 

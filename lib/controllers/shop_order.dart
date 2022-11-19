@@ -24,8 +24,8 @@ class ShopOrderController extends GetxController {
   Future<void> updateShop() async {
     try {
       shop.value = await getShop();
-    } catch (err) {
-      Get.snackbar("Cannot get shop", "Please try again");
+    } on HTTPException catch (err) {
+      Get.snackbar("Cannot get shop", err.response.body);
     }
   }
 
@@ -44,8 +44,8 @@ class ShopOrderController extends GetxController {
   Future<void> updateShopOrders() async {
     try {
       orders.value = await getShopOrders();
-    } catch (err) {
-      Get.snackbar("Cannot get shop order", "Please try again");
+    } on HTTPException catch (err) {
+      Get.snackbar("Cannot get shop order", err.response.body);
     }
   }
 
@@ -85,8 +85,8 @@ class ShopOrderController extends GetxController {
 
       orders[index].status = response.json()["status"];
       orders.refresh();
-    } catch (err) {
-      Get.snackbar("Cannot cancel order", "Please try again");
+    } on HTTPException catch (err) {
+      Get.snackbar("Cannot cancel order", err.response.body);
     }
   }
 
@@ -102,8 +102,8 @@ class ShopOrderController extends GetxController {
 
       orders[index].status = response.json()["status"];
       orders.refresh();
-    } catch (err) {
-      Get.snackbar("Cannot ready order", "Please try again");
+    } on HTTPException catch (err) {
+      Get.snackbar("Cannot ready order", err.response.body);
     }
   }
 
@@ -119,8 +119,8 @@ class ShopOrderController extends GetxController {
 
       orders[index].status = response.json()["status"];
       orders.refresh();
-    } catch (err) {
-      Get.snackbar("Cannot complete order", "Please try again");
+    } on HTTPException catch (err) {
+      Get.snackbar("Cannot complete order", err.response.body);
     }
   }
 }
