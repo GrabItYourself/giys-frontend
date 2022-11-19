@@ -79,11 +79,10 @@ class CRUDItemController extends GetxController {
     if (mode.value != "EDIT") {
       throw Exception("Illegal Op: edit");
     }
-    String? imageBase64;
     if (imagePickerController.imagePath.value.isNotEmpty) {
       final imageFile = File(imagePickerController.imagePath.value);
       final imageBytes = await imageFile.readAsBytes();
-      imageBase64 = base64Encode(imageBytes);
+      imageBase64.value = base64Encode(imageBytes);
     }
 
     try {
@@ -95,7 +94,7 @@ class CRUDItemController extends GetxController {
           json: {
             'shop_id': shopId,
             'name': nameController.text,
-            'image': imageBase64,
+            'image': imageBase64.value,
             'price': priceController.text,
           });
       response.raiseForStatus();
