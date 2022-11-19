@@ -153,7 +153,7 @@ class OrderDetailView extends StatelessWidget {
                                   ),
                                   const Spacer(),
                                   Text(
-                                      "฿${orderDetailController.order.value.transaction!.amount}"),
+                                      "฿${orderDetailController.order.value.transaction!.amount ~/ 100}"),
                                 ],
                               ),
                             ),
