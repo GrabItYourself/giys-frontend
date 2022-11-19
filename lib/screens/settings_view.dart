@@ -20,7 +20,7 @@ class _SettingsViewState extends State<SettingsView> {
           TextButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const PaymentMethodView()));
+                    builder: (context) => PaymentMethodView()));
               },
               child: const Align(
                 alignment: Alignment.centerLeft,

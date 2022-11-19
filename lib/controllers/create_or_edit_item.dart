@@ -1,0 +1,110 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
+import 'package:giys_frontend/config/config.dart';
+import 'package:giys_frontend/controllers/auth.dart';
+import 'package:giys_frontend/controllers/image_picker.dart';
+import 'package:requests/requests.dart';
+
+class CreateOrEditItemController extends GetxController {
+  final authController = Get.find<AuthController>();
+  final imagePickerController = Get.put(ImagePickerController());
+  RxString imageBase64 = "".obs;
+  RxString mode = "".obs;
+  final nameController = TextEditingController();
+  final priceController = TextEditingController();
+
+  setMode(String mode) {
+    if (mode != "CREATE" || mode != "EDIT") {
+      throw Exception("Unsupported mode");
+    } else {
+      this.mode.value = mode;
+    }
+  }
+
+  Future<void> createItem(int shopId) async {
+    if (mode != "CREATE") {
+      throw Exception("Illegal Op: create");
+    }
+    String? imageBase64;
+    if (imagePickerController.imagePath.value.isNotEmpty) {
+      final imageFile = File(imagePickerController.imagePath.value);
+      final imageBytes = await imageFile.readAsBytes();
+      imageBase64 = base64Encode(imageBytes);
+    }
+
+    try {
+      final response = await Requests.post(
+          '${Config.getServerUrl()}/api/v1/shops/$shopId/items/',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          json: {
+            'shop_id': shopId,
+            'name': nameController.text,
+            'image': imageBase64,
+            'price': priceController.text,
+          });
+      response.raiseForStatus();
+      print(response);
+      clearForm();
+    } on HTTPException catch (err) {
+      Get.snackbar("Cannot add/edit item", err.response.body);
+      return Future.error(err.response.body);
+    } catch (err) {
+      return Future.error(err);
+    }
+  }
+
+  void clearForm() {
+    nameController.clear();
+    priceController.clear();
+
+    imagePickerController.imagePath.value = "";
+  }
+
+  setDefaultValue(String name, int price, String image) {
+    if (mode != "EDIT") {
+      throw Exception("Illegal Op: edit");
+    }
+    imageBase64.value = image;
+    nameController.value = TextEditingValue(text: name);
+    priceController.value = TextEditingValue(text: price.toString());
+  }
+
+  Future<void> editItem(int shopId, int itemId) async {
+    if (mode != "EDIT") {
+      throw Exception("Illegal Op: edit");
+    }
+    String? imageBase64;
+    if (imagePickerController.imagePath.value.isNotEmpty) {
+      final imageFile = File(imagePickerController.imagePath.value);
+      final imageBytes = await imageFile.readAsBytes();
+      imageBase64 = base64Encode(imageBytes);
+    }
+
+    try {
+      final response = await Requests.put(
+          '${Config.getServerUrl()}/api/v1/shops/$shopId/items/$itemId',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          json: {
+            'shop_id': shopId,
+            'name': nameController.text,
+            'image': imageBase64,
+            'price': priceController.text,
+          });
+      response.raiseForStatus();
+      print(response);
+      clearForm();
+    } on HTTPException catch (err) {
+      Get.snackbar("Cannot add/edit item", err.response.body);
+      return Future.error(err.response.body);
+    } catch (err) {
+      return Future.error(err);
+    }
+  }
+}

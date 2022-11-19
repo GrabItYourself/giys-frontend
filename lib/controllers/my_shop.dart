@@ -8,23 +8,23 @@ import '../models/shop.dart';
 class MyShopController extends GetxController {
   final shop = Shop(id: 0, name: '').obs;
 
-  @override
-  void onInit() async {
-    super.onInit();
-    try {
-      final shopData = await getMyShop(1);
-      shop.value = Shop(
-          id: shopData.shop.id,
-          name: shopData.shop.name,
-          image: shopData.shop.image,
-          description: shopData.shop.description,
-          location: shopData.shop.location,
-          contact: shopData.shop.contact);
-    } catch (err) {
-      Get.toNamed(RoutePath.loginPath);
-      return Future.error(err);
-    }
-  }
+  // @override
+  // void onInit() async {
+  //   super.onInit();
+  //   try {
+  //     final shopData = await getMyShop(1);
+  //     shop.value = Shop(
+  //         id: shopData.shop.id,
+  //         name: shopData.shop.name,
+  //         image: shopData.shop.image,
+  //         description: shopData.shop.description,
+  //         location: shopData.shop.location,
+  //         contact: shopData.shop.contact);
+  //   } catch (err) {
+  //     Get.toNamed(RoutePath.loginPath);
+  //     return Future.error(err);
+  //   }
+  // }
 
   // TODO get shop id from user credentials
   Future<ShopResponse> getMyShop(int id) async {
@@ -39,9 +39,9 @@ class MyShopController extends GetxController {
   }
 
   // TODO get shop id from user credentials
-  updateShop() async {
+  updateShop(int id) async {
     try {
-      final shopData = await getMyShop(1);
+      final shopData = await getMyShop(id);
       shop.value = Shop(
           id: shopData.shop.id,
           name: shopData.shop.name,

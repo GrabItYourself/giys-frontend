@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giys_frontend/models/shop.dart';
@@ -15,10 +17,7 @@ class ShopDetailView extends StatelessWidget {
         child: Column(
           children: [
             shop.image != null
-                ? Image.network(
-                    shop.image!,
-                    fit: BoxFit.fitWidth,
-                  )
+                ? Image.memory(base64.decode(shop.image!))
                 : Image.network(
                     "https://picsum.photos/200",
                     fit: BoxFit.fitWidth,

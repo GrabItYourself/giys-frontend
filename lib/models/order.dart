@@ -53,4 +53,12 @@ class OrderItem {
       note: json['note'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = {};
+    json['shop_item_id'] = shopItemId;
+    json['quantity'] = quantity;
+    json['note'] = note;
+    return json;
+  }
 }

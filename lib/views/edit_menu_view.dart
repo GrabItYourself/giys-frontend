@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giys_frontend/config/route.dart';
+import 'package:giys_frontend/controllers/create_or_edit_item.dart';
+import 'package:giys_frontend/models/shop_item.dart';
+import 'package:giys_frontend/widget/image_picker.dart';
 
 class EditMenuView extends StatelessWidget {
   const EditMenuView({super.key});
@@ -30,13 +33,34 @@ class EditMenuForm extends StatefulWidget {
 // TODO image form field
 class _EditMenuFormState extends State<StatefulWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final CreateOrEditItemController createOrEditItemController =
+      Get.put(CreateOrEditItemController());
+  var arg = Get.arguments;
+  late final ShopItem shopItem;
+  @override
+  void initState() {
+    createOrEditItemController.setMode(arg[2]);
+    if (arg[2] == "EDIT") {
+      shopItem = arg[1];
+      createOrEditItemController.setDefaultValue(
+          shopItem.name, shopItem.price, shopItem.image ?? "");
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Form(
         key: _formKey,
         child: Column(children: [
+          Obx(() => ImagePickerWidget(
+                pickImage:
+                    createOrEditItemController.imagePickerController.pickImage,
+                imagePath: createOrEditItemController
+                    .imagePickerController.imagePath.value,
+              )),
           TextFormField(
+            controller: createOrEditItemController.nameController,
             decoration: const InputDecoration(labelText: "Item Name"),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -46,6 +70,7 @@ class _EditMenuFormState extends State<StatefulWidget> {
             },
           ),
           TextFormField(
+              controller: createOrEditItemController.priceController,
               decoration: const InputDecoration(labelText: "Price"),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -72,6 +97,14 @@ class _EditMenuFormState extends State<StatefulWidget> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           // TODO send request
+                          String chosenMode =
+                              createOrEditItemController.mode.value;
+                          if (chosenMode == "CREATE") {
+                            createOrEditItemController.createItem(arg[0]);
+                          } else if (chosenMode == "EDIT") {
+                            createOrEditItemController.editItem(
+                                arg[0], shopItem.id);
+                          }
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text("Saving...")));
                         }

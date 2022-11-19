@@ -8,14 +8,18 @@ import 'package:requests/requests.dart';
 class OrderSendController extends GetxController {
   //TODO complete this
   sendOrder(int shopId, List<OrderItem> items) async {
-    final response = await Requests.get(
-      '${Config.getServerUrl()}/api/v1/shops/$shopId/orders',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      json: {"items": items},
-    );
-    log(response.toString());
-    response.raiseForStatus();
+    try {
+      final response = await Requests.post(
+        '${Config.getServerUrl()}/api/v1/shops/$shopId/orders',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        json: {"items": items},
+      );
+      print(response.body.toString());
+      response.raiseForStatus();
+    } catch (e) {
+      print("ERROR in order send");
+    }
   }
 }
