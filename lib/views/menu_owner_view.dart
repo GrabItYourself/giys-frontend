@@ -15,7 +15,8 @@ class MenuOwnerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: myMenuController.setShopId(int.parse(authController.id.value)),
+      future: myMenuController
+          .setShopId(int.parse(authController.shopId.toString())),
       builder: (context, snapshot) {
         return Scaffold(
           appBar: AppBar(
