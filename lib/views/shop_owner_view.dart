@@ -15,7 +15,8 @@ class ShopOwnerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: myShopController.updateShop(int.parse(authController.id.value)),
+      future: myShopController
+          .updateShop(int.parse(authController.shopId.toString())),
       builder: (context, snapshot) {
         return Scaffold(
           appBar: AppBar(title: const Text("My Shop")),
