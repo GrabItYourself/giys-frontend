@@ -14,16 +14,11 @@ class ShopWidget extends StatelessWidget {
     required this.shop,
   });
 
-  _onTab() {
-    Get.toNamed(RoutePath.defaultPath, arguments: shop.id);
-  }
-
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: GestureDetector(
         behavior: HitTestBehavior.translucent,
-        onTap: _onTab,
         child: Container(
           width: 48,
           height: 48,

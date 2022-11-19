@@ -25,7 +25,10 @@ class MenuOwnerView extends StatelessWidget {
               Padding(
                   padding: const EdgeInsets.only(right: 20.0),
                   child: GestureDetector(
-                    onTap: null,
+                    onTap: () => Get.toNamed(
+                        RoutePath.editMenuPath
+                            .replaceAll(':shopId', shopId.toString()),
+                        arguments: [shopId, null, "CREATE"]),
                     child: const Icon(Icons.add),
                   ))
             ],
@@ -41,43 +44,16 @@ class MenuOwnerView extends StatelessWidget {
                       child: Obx(() => ListView.builder(
                             itemCount: myMenuController.menuList.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return Row(
-                                children: [
-                                  ShopMenuItem(
-                                      name:
-                                          myMenuController.menuList[index].name,
-                                      price: myMenuController
-                                          .menuList[index].price,
-                                      image: myMenuController
-                                          .menuList[index].image),
-                                  IconButton(
-                                      onPressed: () => Get.toNamed(
-                                              RoutePath.editMenuPath
-                                                  .replaceAll(':shopId',
-                                                      shopId.toString())
-                                                  .replaceAll(
-                                                      ":shopItemId",
-                                                      myMenuController
-                                                          .menuList[index].id
-                                                          .toString()),
-                                              arguments: [
-                                                shopId,
-                                                myMenuController
-                                                    .menuList[index],
-                                                "EDIT"
-                                              ]),
-                                      icon: const Icon(Icons.edit))
-                                ],
+                              return ShopMenuItem(
+                                name: myMenuController.menuList[index].name,
+                                price: myMenuController.menuList[index].price,
+                                image: myMenuController.menuList[index].image,
+                                shopId: shopId,
+                                shopItem: myMenuController.menuList[index],
                               );
                             },
                           )),
                     ),
-                    TextButton(
-                        onPressed: () => Get.toNamed(
-                            RoutePath.editMenuPath
-                                .replaceAll(':shopId', shopId.toString()),
-                            arguments: [shopId, null, "CREATE"]),
-                        child: const Text("Add new item")),
                   ],
                 )),
           ),

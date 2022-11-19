@@ -28,7 +28,7 @@ class ShopController extends GetxController {
         'Content-Type': 'application/json',
       },
     );
-    log(response.toString());
+    print(response.toString());
     response.raiseForStatus();
     final data = AllShopsResponse.fromJson(response.json());
     shopList.value = data.shops;

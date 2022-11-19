@@ -8,7 +8,7 @@ import 'package:giys_frontend/controllers/auth.dart';
 import 'package:giys_frontend/controllers/image_picker.dart';
 import 'package:requests/requests.dart';
 
-class CreateOrEditItemController extends GetxController {
+class CRUDItemController extends GetxController {
   final authController = Get.find<AuthController>();
   final imagePickerController = Get.put(ImagePickerController());
   RxString imageBase64 = "".obs;
@@ -17,7 +17,8 @@ class CreateOrEditItemController extends GetxController {
   final priceController = TextEditingController();
 
   setMode(String mode) {
-    if (mode != "CREATE" || mode != "EDIT") {
+    print(mode);
+    if (mode != "CREATE" && mode != "EDIT") {
       throw Exception("Unsupported mode");
     } else {
       this.mode.value = mode;
@@ -25,7 +26,7 @@ class CreateOrEditItemController extends GetxController {
   }
 
   Future<void> createItem(int shopId) async {
-    if (mode != "CREATE") {
+    if (mode.value != "CREATE") {
       throw Exception("Illegal Op: create");
     }
     String? imageBase64;
@@ -66,7 +67,7 @@ class CreateOrEditItemController extends GetxController {
   }
 
   setDefaultValue(String name, int price, String image) {
-    if (mode != "EDIT") {
+    if (mode.value != "EDIT") {
       throw Exception("Illegal Op: edit");
     }
     imageBase64.value = image;
@@ -75,7 +76,7 @@ class CreateOrEditItemController extends GetxController {
   }
 
   Future<void> editItem(int shopId, int itemId) async {
-    if (mode != "EDIT") {
+    if (mode.value != "EDIT") {
       throw Exception("Illegal Op: edit");
     }
     String? imageBase64;
@@ -97,6 +98,26 @@ class CreateOrEditItemController extends GetxController {
             'image': imageBase64,
             'price': priceController.text,
           });
+      response.raiseForStatus();
+      print(response);
+      clearForm();
+    } on HTTPException catch (err) {
+      print(err);
+      Get.snackbar("Cannot add/edit item", err.response.body);
+      return Future.error(err.response.body);
+    } catch (err) {
+      return Future.error(err);
+    }
+  }
+
+  Future<void> deleteItem(int shopId, int itemId) async {
+    try {
+      final response = await Requests.delete(
+        '${Config.getServerUrl()}/api/v1/shops/$shopId/items/$itemId',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
       response.raiseForStatus();
       print(response);
       clearForm();

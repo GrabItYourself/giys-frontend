@@ -14,94 +14,88 @@ class ShopOwnerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: myShopController
-          .updateShop(int.parse(authController.shopId.toString())),
-      builder: (context, snapshot) {
-        return Scaffold(
-          appBar: AppBar(title: const Text("My Shop")),
-          body: SafeArea(
-              child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Obx(() => Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+    myShopController.updateShop(authController.shopId.value!);
+    return Scaffold(
+      appBar: AppBar(title: const Text("My Shop")),
+      body: SafeArea(
+          child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Obx(() => Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: myShopController.shop.value.image != null
+                            ? Image.memory(
+                                base64
+                                    .decode(myShopController.shop.value.image!),
+                                fit: BoxFit.cover)
+                            : const CircleAvatar(),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Expanded(
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Shop Name",
+                              style: TextStyle(
+                                  color: Colors.black.withOpacity(0.3))),
+                          Text(myShopController.shop.value.name),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Text("Description",
+                              style: TextStyle(
+                                  color: Colors.black.withOpacity(0.3))),
+                          Text(myShopController.shop.value.description ?? ""),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Text("Location",
+                              style: TextStyle(
+                                  color: Colors.black.withOpacity(0.3))),
+                          Text(myShopController.shop.value.location ?? ""),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Text("Contact",
+                              style: TextStyle(
+                                  color: Colors.black.withOpacity(0.3))),
+                          Text(myShopController.shop.value.contact ?? ""),
+                        ],
+                      )),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      //TODO if not owner do not show these
+                      Row(
                         children: [
                           Expanded(
-                            child: myShopController.shop.value.image != null
-                                ? Image.memory(
-                                    base64.decode(
-                                        myShopController.shop.value.image!),
-                                    fit: BoxFit.cover)
-                                : const CircleAvatar(),
+                            child: OutlinedButton.icon(
+                                onPressed: () => Get.toNamed(
+                                    RoutePath.editShopPath.replaceAll(
+                                        ':shopId',
+                                        myShopController.shop.value.id
+                                            .toString())),
+                                icon: const Icon(Icons.edit),
+                                label: const Text("Edit Details")),
                           ),
                           const SizedBox(
-                            height: 20,
+                            width: 8,
                           ),
                           Expanded(
-                              child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Shop Name",
-                                  style: TextStyle(
-                                      color: Colors.black.withOpacity(0.3))),
-                              Text(myShopController.shop.value.name),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              Text("Description",
-                                  style: TextStyle(
-                                      color: Colors.black.withOpacity(0.3))),
-                              Text(myShopController.shop.value.description ??
-                                  ""),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              Text("Location",
-                                  style: TextStyle(
-                                      color: Colors.black.withOpacity(0.3))),
-                              Text(myShopController.shop.value.location ?? ""),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              Text("Contact",
-                                  style: TextStyle(
-                                      color: Colors.black.withOpacity(0.3))),
-                              Text(myShopController.shop.value.contact ?? ""),
-                            ],
-                          )),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          //TODO if not owner do not show these
-                          Row(
-                            children: [
-                              Expanded(
-                                child: OutlinedButton.icon(
-                                    onPressed: () => Get.toNamed(
-                                        RoutePath.editShopPath.replaceAll(
-                                            ':shopId',
-                                            myShopController.shop.value.id
-                                                .toString())),
-                                    icon: const Icon(Icons.edit),
-                                    label: const Text("Edit Details")),
-                              ),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              Expanded(
-                                  child: OutlinedButton.icon(
-                                      onPressed: () => Get.toNamed(
-                                          RoutePath.shopOwnerMenuPath,
-                                          arguments:
-                                              myShopController.shop.value.id),
-                                      icon: const Icon(Icons.food_bank),
-                                      label: const Text("Edit Menu")))
-                            ],
-                          )
+                              child: OutlinedButton.icon(
+                                  onPressed: () => Get.toNamed(
+                                      RoutePath.shopOwnerMenuPath,
+                                      arguments:
+                                          myShopController.shop.value.id),
+                                  icon: const Icon(Icons.food_bank),
+                                  label: const Text("Edit Menu")))
                         ],
-                      )))),
-        );
-      },
+                      )
+                    ],
+                  )))),
     );
   }
 }

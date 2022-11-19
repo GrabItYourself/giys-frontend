@@ -33,7 +33,7 @@ import 'views/shop_manage_view.dart';
 void main() async {
   HttpOverrides.global = MyHttpOverrides();
   await GetStorage.init();
-  await Future.delayed(const Duration(seconds: 2));
+  await Future.delayed(const Duration(seconds: 3));
   await dotenv.load(fileName: ".env");
   Get.put(AuthController());
   runApp(const MyApp());
@@ -57,14 +57,13 @@ class MyApp extends StatelessWidget {
         ),
         // User related routes
         GetPage(
-            name: RoutePath.shopOwnerPath,
-            page: () => ShopOwnerView(),
-            middlewares: [UserMiddleware()]),
+          name: RoutePath.shopOwnerPath,
+          page: () => ShopOwnerView(),
+        ),
         GetPage(
             name: RoutePath.editShopPath,
             page: () => const EditShopView(),
             middlewares: [UserMiddleware()]),
-        GetPage(name: RoutePath.shopOwnerPath, page: () => ShopOwnerView()),
         GetPage(
           name: RoutePath.paymentMethodPath,
           page: () => PaymentMethodView(),
@@ -100,7 +99,7 @@ class MyApp extends StatelessWidget {
             middlewares: [UserMiddleware()]),
         GetPage(
             name: RoutePath.settingsPath,
-            page: () => const SettingsView(),
+            page: () => SettingsView(),
             middlewares: [UserMiddleware()]),
         // Admin related routes
         GetPage(

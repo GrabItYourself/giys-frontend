@@ -9,7 +9,7 @@ import 'package:giys_frontend/controllers/shops_item.dart';
 import 'package:giys_frontend/models/order.dart';
 import 'package:giys_frontend/models/payment_method.dart';
 import 'package:giys_frontend/models/shop_item.dart';
-import 'package:giys_frontend/utilitties/generic_dialog.dart';
+import 'package:giys_frontend/widget/generic_dialog.dart';
 import 'package:giys_frontend/widget/scaffold.dart';
 
 import '../../models/shop.dart';

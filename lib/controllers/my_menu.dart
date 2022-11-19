@@ -49,6 +49,7 @@ class MyMenuController extends GetxController {
             price: shopItemsData.items[i].price));
       }
     } catch (err) {
+      print(err);
       Get.snackbar("Cannot get shop menu", err.toString());
       return Future.error(err);
     }

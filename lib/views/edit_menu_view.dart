@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giys_frontend/config/route.dart';
-import 'package:giys_frontend/controllers/create_or_edit_item.dart';
+import 'package:giys_frontend/controllers/crud_item.dart';
 import 'package:giys_frontend/models/shop_item.dart';
 import 'package:giys_frontend/widget/image_picker.dart';
 
@@ -33,8 +33,8 @@ class EditMenuForm extends StatefulWidget {
 // TODO image form field
 class _EditMenuFormState extends State<StatefulWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final CreateOrEditItemController createOrEditItemController =
-      Get.put(CreateOrEditItemController());
+  final CRUDItemController createOrEditItemController =
+      Get.put(CRUDItemController());
   var arg = Get.arguments;
   late final ShopItem shopItem;
   @override

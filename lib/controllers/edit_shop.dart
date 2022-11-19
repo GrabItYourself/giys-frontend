@@ -40,7 +40,6 @@ class EditShopController extends GetxController {
       shopContactController.value =
           TextEditingValue(text: shopData.shop.contact ?? '');
     } catch (err) {
-      Get.toNamed(RoutePath.defaultPath);
       return Future.error(err);
     }
   }
@@ -107,7 +106,6 @@ class EditShopController extends GetxController {
       shopContactController.value =
           TextEditingValue(text: shopData.shop.contact ?? '');
     } catch (err) {
-      Get.toNamed(RoutePath.defaultPath);
       return Future.error(err);
     }
   }
