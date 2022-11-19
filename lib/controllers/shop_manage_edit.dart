@@ -36,12 +36,12 @@ class ShopManageEditController extends GetxController {
 
   final bankAccountNameController = TextEditingController();
   final bankAccountNumberController = TextEditingController();
-  final bankAccountBankController = "".obs;
+  final bankAccountBrandController = "".obs;
   final bankAccountTypeController = "".obs;
 
   static List<ListItem> bankList = [
     ListItem("Kasikornbank", "kbank"),
-    ListItem("Siam Commercial Bank", "scv"),
+    ListItem("Siam Commercial Bank", "scb"),
   ];
 
   static List<ListItem> typeList = [
@@ -90,7 +90,7 @@ class ShopManageEditController extends GetxController {
   }
 
   void setBankAccountBank(String? value) {
-    bankAccountBankController.value = value!;
+    bankAccountBrandController.value = value!;
   }
 
   void setBankAccountType(String? value) {
@@ -136,7 +136,7 @@ class ShopManageEditController extends GetxController {
       if (shop.bankAccount != null) {
         bankAccountNameController.text = shop.bankAccount!.name;
         bankAccountNumberController.text = shop.bankAccount!.number;
-        bankAccountBankController.value = shop.bankAccount!.bank;
+        bankAccountBrandController.value = shop.bankAccount!.brand;
         bankAccountTypeController.value = shop.bankAccount!.type;
       }
 
@@ -198,7 +198,7 @@ class ShopManageEditController extends GetxController {
           'bank_account': {
             "name": bankAccountNameController.text,
             "number": bankAccountNumberController.text,
-            "brand": bankAccountBankController.value,
+            "brand": bankAccountBrandController.value,
             "type": bankAccountTypeController.value,
           }
         }

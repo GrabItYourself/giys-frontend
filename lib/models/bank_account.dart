@@ -2,13 +2,13 @@ class BankAccount {
   String name;
   String number;
   String type;
-  String bank;
+  String brand;
 
   BankAccount({
     required this.name,
     required this.number,
     required this.type,
-    required this.bank,
+    required this.brand,
   });
 
   factory BankAccount.fromJson(Map<String, dynamic> json) {
@@ -16,7 +16,7 @@ class BankAccount {
       name: json['name'],
       number: json['number'],
       type: json['type'],
-      bank: json['bank'],
+      brand: json['brand'],
     );
   }
 }
