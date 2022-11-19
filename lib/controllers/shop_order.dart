@@ -2,22 +2,36 @@ import 'package:get/get.dart';
 import 'package:giys_frontend/models/order.dart';
 import 'package:giys_frontend/models/shop.dart';
 import 'package:requests/requests.dart';
-
+import 'auth.dart';
 import '../config/config.dart';
 
-// TODO: get my shop id
 class ShopOrderController extends GetxController {
+  final authController = Get.find<AuthController>();
   final orders = <Order>[].obs;
+  final shop = Shop(id: 0, name: '').obs;
 
   @override
   void onInit() async {
     super.onInit();
+    if (authController.shopId.value == null) {
+      Get.snackbar("You do not have any shop", "Please try again");
+      return;
+    }
+    await updateShop();
     await updateShopOrders();
   }
 
-  Future<Shop> getShop(int shopId) async {
+  Future<void> updateShop() async {
+    try {
+      shop.value = await getShop();
+    } on HTTPException catch (err) {
+      Get.snackbar("Cannot get shop", err.response.body);
+    }
+  }
+
+  Future<Shop> getShop() async {
     final response = await Requests.get(
-      '${Config.getServerUrl()}/api/v1/shops/$shopId',
+      '${Config.getServerUrl()}/api/v1/shops/${authController.shopId.value}',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -29,27 +43,31 @@ class ShopOrderController extends GetxController {
 
   Future<void> updateShopOrders() async {
     try {
-      orders.value = await getShopOrders(1);
-    } catch (err) {
-      Get.snackbar("Cannot get shop order", "Please try again");
+      orders.value = await getShopOrders();
+    } on HTTPException catch (err) {
+      Get.snackbar("Cannot get shop order", err.response.body);
     }
   }
 
-  Future<List<Order>> getShopOrders(int shopId) async {
+  Future<List<Order>> getShopOrders() async {
     final response = await Requests.get(
-      '${Config.getServerUrl()}/api/v1/shops/$shopId/orders',
+      '${Config.getServerUrl()}/api/v1/shops/${authController.shopId.value}/orders',
       headers: {
         'Content-Type': 'application/json',
       },
     );
     response.raiseForStatus();
+
+    if (response.json()["result"] == null) {
+      return <Order>[];
+    }
+
     final orders = (response.json()["result"] as List)
         .map((json) => Order.fromJson(json))
         .toList();
 
-    final shop = await getShop(shopId);
     for (var order in orders) {
-      order.shop = shop;
+      order.shop = shop.value;
     }
 
     return orders;
@@ -67,8 +85,8 @@ class ShopOrderController extends GetxController {
 
       orders[index].status = response.json()["status"];
       orders.refresh();
-    } catch (err) {
-      Get.snackbar("Cannot cancel order", "Please try again");
+    } on HTTPException catch (err) {
+      Get.snackbar("Cannot cancel order", err.response.body);
     }
   }
 
@@ -84,8 +102,8 @@ class ShopOrderController extends GetxController {
 
       orders[index].status = response.json()["status"];
       orders.refresh();
-    } catch (err) {
-      Get.snackbar("Cannot ready order", "Please try again");
+    } on HTTPException catch (err) {
+      Get.snackbar("Cannot ready order", err.response.body);
     }
   }
 
@@ -101,8 +119,8 @@ class ShopOrderController extends GetxController {
 
       orders[index].status = response.json()["status"];
       orders.refresh();
-    } catch (err) {
-      Get.snackbar("Cannot complete order", "Please try again");
+    } on HTTPException catch (err) {
+      Get.snackbar("Cannot complete order", err.response.body);
     }
   }
 }

@@ -17,8 +17,8 @@ class OrderController extends GetxController {
   Future<void> updateMyOrders() async {
     try {
       orders.value = await getMyOrders();
-    } catch (err) {
-      Get.snackbar("Cannot get orders", "Please try again");
+    } on HTTPException catch (err) {
+      Get.snackbar("Cannot get orders", err.response.body);
     }
   }
 
@@ -30,6 +30,11 @@ class OrderController extends GetxController {
       },
     );
     response.raiseForStatus();
+
+    if (response.json()["result"] == null) {
+      return <Order>[];
+    }
+
     final orders = (response.json()["result"] as List)
         .map((json) => Order.fromJson(json))
         .toList();
@@ -67,8 +72,8 @@ class OrderController extends GetxController {
 
       orders[index].status = response.json()["status"];
       orders.refresh();
-    } catch (err) {
-      Get.snackbar("Cannot cancel order", "Please try again");
+    } on HTTPException catch (err) {
+      Get.snackbar("Cannot cancel order", err.response.body);
     }
   }
 }
