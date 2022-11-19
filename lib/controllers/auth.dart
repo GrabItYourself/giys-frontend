@@ -6,6 +6,7 @@ import 'package:giys_frontend/models/user.dart';
 import 'package:requests/requests.dart';
 
 import '../config/config.dart';
+import '../config/route.dart';
 import '../consts/role.dart';
 
 final googleAuthUrl = Uri.https('accounts.google.com', '/o/oauth2/v2/auth', {
@@ -16,10 +17,12 @@ final googleAuthUrl = Uri.https('accounts.google.com', '/o/oauth2/v2/auth', {
 });
 
 class AuthController extends GetxController {
-  final id = ''.obs;
-  final role = Rx<Role?>(null);
-  final email = ''.obs;
-  final googleId = ''.obs;
+  final id = RxnString();
+  final role = Rxn<Role>();
+  final email = RxnString();
+  final googleId = RxnString();
+  final shopId = RxnInt();
+  final isLoggedIn = RxBool(false);
 
   Future<void> authenticate() async {
     final result = await FlutterWebAuth.authenticate(
@@ -34,19 +37,35 @@ class AuthController extends GetxController {
     };
 
     try {
-      print("Future2");
       final response = await Requests.post(
           '${Config.getServerUrl()}/api/v1/auth/google/verify',
           headers: {
             'Content-Type': 'application/json',
           },
           queryParameters: queryParameters);
-      print("Future2 Done");
       response.raiseForStatus();
       print(response.json());
       await getUserInfo();
     } catch (err) {
-      print("Future 2 failed");
+      return Future.error(err);
+    }
+  }
+
+  Future<void> signOut() async {
+    try {
+      final response = await Requests.post(
+          '${Config.getServerUrl()}/api/v1/auth/signout',
+          headers: {
+            'Content-Type': 'application/json',
+          });
+      response.raiseForStatus();
+      id.value = null;
+      role.value = null;
+      email.value = null;
+      googleId.value = null;
+      shopId.value = null;
+      isLoggedIn.value = false;
+    } catch (err) {
       return Future.error(err);
     }
   }
@@ -62,6 +81,8 @@ class AuthController extends GetxController {
     }
     email.value = me.email;
     googleId.value = me.googleId;
+    shopId.value = me.shopId;
+    isLoggedIn.value = true;
   }
 
   Future<User> getUserInfo() async {

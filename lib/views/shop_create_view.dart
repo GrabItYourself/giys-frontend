@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:giys_frontend/widget/image_picker.dart';
 import 'package:giys_frontend/widget/scaffold.dart';
@@ -22,7 +23,7 @@ class ShopCreateView extends StatelessWidget {
 }
 
 class ShopCreateForm extends StatelessWidget {
-  final createShopController = Get.find<ShopCreateController>();
+  final shopCreateController = Get.find<ShopCreateController>();
   final _loginFormKey = GlobalKey<FormState>();
 
   ShopCreateForm({super.key});
@@ -33,31 +34,82 @@ class ShopCreateForm extends StatelessWidget {
         key: _loginFormKey,
         child: Column(children: [
           Obx(() => ImagePickerWidget(
-                pickImage: createShopController.imagePickerController.pickImage,
+                pickImage: shopCreateController.imagePickerController.pickImage,
                 imagePath:
-                    createShopController.imagePickerController.imagePath.value,
+                    shopCreateController.imagePickerController.imagePath.value,
               )),
           TextFormField(
-            controller: createShopController.shopNameController,
+            controller: shopCreateController.shopNameController,
             decoration: const InputDecoration(labelText: "Shop name"),
             validator: (value) =>
-                createShopController.required(value, "Shop name is required"),
+                shopCreateController.required(value, "Shop name is required"),
           ),
           TextFormField(
-              controller: createShopController.shopDescriptionController,
+              controller: shopCreateController.shopDescriptionController,
               decoration: const InputDecoration(labelText: "Shop Description"),
-              validator: (value) => createShopController.required(
+              validator: (value) => shopCreateController.required(
                   value, "Shop description is required")),
           TextFormField(
-              controller: createShopController.shopContactController,
+              controller: shopCreateController.shopContactController,
               decoration: const InputDecoration(labelText: "Contact"),
               validator: (value) =>
-                  createShopController.required(value, "Contact is required")),
+                  shopCreateController.required(value, "Contact is required")),
           TextFormField(
-              controller: createShopController.shopLocationController,
+              controller: shopCreateController.shopLocationController,
               decoration: const InputDecoration(labelText: "Location"),
               validator: (value) =>
-                  createShopController.required(value, "Location is required")),
+                  shopCreateController.required(value, "Location is required")),
+          Container(
+            margin: const EdgeInsets.only(top: 16),
+            child: Column(
+              children: [
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Bank Account",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                  ),
+                ),
+                TextFormField(
+                    controller: shopCreateController.bankAccountNameController,
+                    decoration:
+                        const InputDecoration(labelText: "Bank account name"),
+                    validator: (value) => shopCreateController.required(
+                        value, "Bank account name is required")),
+                TextFormField(
+                  controller: shopCreateController.bankAccountNumberController,
+                  decoration:
+                      const InputDecoration(labelText: "Bank account number"),
+                  validator: (value) => shopCreateController.required(
+                      value, "Bank account number is required"),
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                    LengthLimitingTextInputFormatter(16),
+                  ],
+                ),
+                DropdownButtonFormField(
+                  items: ShopCreateController.bankList
+                      .map((e) => DropdownMenuItem(
+                            value: e.value,
+                            child: Text(e.label),
+                          ))
+                      .toList(),
+                  onChanged: shopCreateController.setBankAccountBank,
+                  hint: const Text("Select Bank"),
+                ),
+                DropdownButtonFormField(
+                  items: ShopCreateController.typeList
+                      .map((e) => DropdownMenuItem(
+                            value: e.value,
+                            child: Text(e.label),
+                          ))
+                      .toList(),
+                  onChanged: shopCreateController.setBankAccountType,
+                  hint: const Text("Select Type"),
+                )
+              ],
+            ),
+          ),
           Obx(() => Container(
                 margin: const EdgeInsets.only(top: 20),
                 child: Column(
@@ -70,30 +122,30 @@ class ShopCreateForm extends StatelessWidget {
                               fontWeight: FontWeight.bold, fontSize: 24),
                         ),
                         IconButton(
-                            onPressed: createShopController
+                            onPressed: shopCreateController
                                 .createShopOwnerTextFormField,
                             icon: const Icon(Icons.add)),
                       ],
                     ),
                     for (var index = 0;
                         index <
-                            createShopController.shopOwnerControllers.length;
+                            shopCreateController.shopOwnerControllers.length;
                         index++)
                       Row(
                         children: [
                           Flexible(
                             child: TextFormField(
-                              controller: createShopController
+                              controller: shopCreateController
                                   .shopOwnerControllers[index],
                               decoration: InputDecoration(
                                 labelText: 'Shop Owner ${index + 1}',
                               ),
-                              validator: (value) => createShopController
+                              validator: (value) => shopCreateController
                                   .required(value, 'Shop Owner is required'),
                             ),
                           ),
                           IconButton(
-                              onPressed: () => createShopController
+                              onPressed: () => shopCreateController
                                   .removeShopOwnerTextFormField(index),
                               icon: const Icon(Icons.remove)),
                         ],
@@ -110,7 +162,7 @@ class ShopCreateForm extends StatelessWidget {
                     child: const Text(
                       'Submit',
                     ),
-                    onPressed: createShopController.submitForm,
+                    onPressed: shopCreateController.submitForm,
                   ),
                 ),
               ],

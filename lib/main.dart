@@ -15,14 +15,12 @@ import 'package:giys_frontend/views/edit_shop_view.dart';
 import 'package:giys_frontend/views/home/all_shop_view.dart';
 import 'package:giys_frontend/views/home/shop_detail_view.dart';
 import 'package:giys_frontend/views/home/shop_menu_view.dart';
-import 'package:giys_frontend/views/login_view.dart';
 import 'package:giys_frontend/views/menu_owner_view.dart';
 import 'package:giys_frontend/views/shop_owner_view.dart';
 import 'package:giys_frontend/config/route.dart';
 import 'package:giys_frontend/views/order_detail_view.dart';
 import 'package:giys_frontend/views/shop_orders_view.dart';
 import 'package:giys_frontend/views/orders_view.dart';
-import 'package:giys_frontend/views/login_view.dart';
 import 'package:giys_frontend/views/settings_view.dart';
 
 import 'package:giys_frontend/views/payment_method_view.dart';
@@ -51,7 +49,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(useMaterial3: true),
       getPages: [
         GetPage(name: RoutePath.defaultPath, page: () => const HomeView()),
-        GetPage(name: RoutePath.loginPath, page: () => LoginView()),
         GetPage(name: RoutePath.shopDetailPath, page: () => ShopDetailView()),
         GetPage(name: RoutePath.allShopPath, page: () => AllShopView()),
         GetPage(
