@@ -8,22 +8,26 @@ import '../models/shop.dart';
 
 class ShopWidget extends StatelessWidget {
   final Shop shop;
+  final Function()? onDelete;
 
   const ShopWidget({
     super.key,
     required this.shop,
+    this.onDelete,
   });
 
-  _onTab() {
-    Get.toNamed(RoutePath.defaultPath, arguments: shop.id);
+  _toManageEditShop() {
+    Get.offNamed(RoutePath.toPath(RoutePath.shopManageEditPath, {
+      'shopId': shop.id.toString(),
+    }));
   }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: _toManageEditShop,
       leading: GestureDetector(
         behavior: HitTestBehavior.translucent,
-        onTap: _onTab,
         child: Container(
           width: 48,
           height: 48,
@@ -35,10 +39,9 @@ class ShopWidget extends StatelessWidget {
         ),
       ),
       trailing: IconButton(
-          onPressed: () => Get.toNamed(
-              RoutePath.defaultPath), // TODO route to edit shop page,
+          onPressed: onDelete,
           icon: const Icon(
-            Icons.edit,
+            Icons.delete,
           )),
       title: Text(shop.name),
       subtitle: Text(shop.description ?? ''),

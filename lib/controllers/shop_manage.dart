@@ -35,4 +35,20 @@ class ShopManageController extends GetxController {
     }
     shopList.refresh();
   }
+
+  Future<void> deleteShop(int shopId) async {
+    try {
+      await Requests.delete(
+        '${Config.getServerUrl()}/api/v1/shops/$shopId',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+      await getShopList();
+    } on HTTPException catch (err) {
+      Get.snackbar("Can't delete shop", err.response.body);
+      return Future.error(err.response.body);
+    }
+    return;
+  }
 }

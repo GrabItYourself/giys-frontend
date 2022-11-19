@@ -26,7 +26,7 @@ class MainDrawer extends StatelessWidget {
 
   _onListItemTab(String path) {
     drawerController.closeDrawer();
-    Get.toNamed(path);
+    Get.offAndToNamed(path);
   }
 
   MainDrawer({super.key});
