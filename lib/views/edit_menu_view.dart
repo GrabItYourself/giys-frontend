@@ -4,6 +4,7 @@ import 'package:giys_frontend/config/route.dart';
 import 'package:giys_frontend/controllers/crud_item.dart';
 import 'package:giys_frontend/models/shop_item.dart';
 import 'package:giys_frontend/widget/image_picker.dart';
+import 'package:giys_frontend/widget/image_picker_base64.dart';
 
 class EditMenuView extends StatelessWidget {
   const EditMenuView({super.key});
@@ -57,11 +58,9 @@ class _EditMenuFormState extends State<StatefulWidget> {
           child: Form(
               key: _formKey,
               child: Column(children: [
-                Obx(() => ImagePickerWidget(
-                      pickImage: createOrEditItemController
-                          .imagePickerController.pickImage,
-                      imagePath: createOrEditItemController
-                          .imagePickerController.imagePath.value,
+                Obx(() => ImagePickerBase64Widget(
+                      pickImage: createOrEditItemController.pickImage,
+                      imageBase64: createOrEditItemController.imageBase64.value,
                     )),
                 TextFormField(
                   controller: createOrEditItemController.nameController,

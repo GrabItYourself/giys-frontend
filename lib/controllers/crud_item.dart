@@ -7,16 +7,31 @@ import 'package:giys_frontend/config/config.dart';
 import 'package:giys_frontend/controllers/auth.dart';
 import 'package:giys_frontend/controllers/image_picker.dart';
 import 'package:giys_frontend/controllers/my_menu.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:requests/requests.dart';
 
 class CRUDItemController extends GetxController {
   final authController = Get.find<AuthController>();
   final myMenuController = Get.find<MyMenuController>();
   final imagePickerController = Get.put(ImagePickerController());
-  RxString imageBase64 = "".obs;
+  final imagePath = "".obs;
+  final imageBase64 = "".obs;
+  final _picker = ImagePicker();
   RxString mode = "".obs;
   final nameController = TextEditingController();
   final priceController = TextEditingController();
+
+  Future<void> pickImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      imagePath.value = pickedFile.path;
+      final imageFile = File(imagePath.value);
+      final imageBytes = await imageFile.readAsBytes();
+      imageBase64.value = base64Encode(imageBytes);
+    } else {
+      print('No image selected.');
+    }
+  }
 
   setMode(String mode) {
     print(mode);
@@ -31,26 +46,19 @@ class CRUDItemController extends GetxController {
     if (mode.value != "CREATE") {
       throw Exception("Illegal Op: create");
     }
-    if (imagePickerController.imagePath.value.isNotEmpty) {
-      final imageFile = File(imagePickerController.imagePath.value);
-      final imageBytes = await imageFile.readAsBytes();
-      imageBase64.value = base64Encode(imageBytes);
-    }
-    print(shopId);
-    print(nameController.text);
-    print(priceController.text);
     try {
+      var data = {
+        'shop_id': shopId,
+        'name': nameController.text,
+        'image': imageBase64.value != "" ? imageBase64.value : null,
+        'price': int.parse(priceController.text),
+      };
       final response = await Requests.post(
           '${Config.getServerUrl()}/api/v1/shops/$shopId/items/',
           headers: {
             'Content-Type': 'application/json',
           },
-          json: {
-            'shop_id': shopId,
-            'name': nameController.text,
-            'image': null,
-            'price': int.parse(priceController.text),
-          });
+          json: data);
       response.raiseForStatus();
       print(response);
       clearForm();
@@ -83,22 +91,21 @@ class CRUDItemController extends GetxController {
     if (mode.value != "EDIT") {
       throw Exception("Illegal Op: edit");
     }
-    if (imagePickerController.imagePath.value.isNotEmpty) {
-      final imageFile = File(imagePickerController.imagePath.value);
-      final imageBytes = await imageFile.readAsBytes();
-      imageBase64.value = base64Encode(imageBytes);
-    }
     try {
+      print("itemId");
       final response = await Requests.put(
           '${Config.getServerUrl()}/api/v1/shops/$shopId/items/$itemId',
           headers: {
             'Content-Type': 'application/json',
           },
           json: {
-            'shop_id': shopId,
-            'name': nameController.text,
-            'image': null,
-            'price': priceController.text,
+            'edited_item': {
+              'shop_id': shopId,
+              'id': itemId,
+              'name': nameController.text,
+              'image': imageBase64.value != "" ? imageBase64.value : null,
+              'price': int.parse(priceController.text),
+            }
           });
       response.raiseForStatus();
       print(response);

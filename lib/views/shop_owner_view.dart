@@ -68,7 +68,6 @@ class ShopOwnerView extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      //TODO if not owner do not show these
                       Row(
                         children: [
                           Expanded(
