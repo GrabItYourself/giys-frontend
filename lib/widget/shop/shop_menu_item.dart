@@ -26,7 +26,6 @@ class ShopMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO add add/edit/delete capabilities
     return Container(
         margin: const EdgeInsets.only(top: 8, bottom: 8),
         child: Row(

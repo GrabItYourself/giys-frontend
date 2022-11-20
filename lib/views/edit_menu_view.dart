@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:giys_frontend/config/route.dart';
 import 'package:giys_frontend/controllers/crud_item.dart';
 import 'package:giys_frontend/models/shop_item.dart';
-import 'package:giys_frontend/widget/image_picker.dart';
 import 'package:giys_frontend/widget/image_picker_base64.dart';
 
 class EditMenuView extends StatelessWidget {
@@ -31,7 +30,6 @@ class EditMenuForm extends StatefulWidget {
   }
 }
 
-// TODO image form field
 class _EditMenuFormState extends State<StatefulWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final CRUDItemController createOrEditItemController =
@@ -100,7 +98,6 @@ class _EditMenuFormState extends State<StatefulWidget> {
                         child: ElevatedButton.icon(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                // TODO send request
                                 String chosenMode =
                                     createOrEditItemController.mode.value;
                                 if (chosenMode == "CREATE") {

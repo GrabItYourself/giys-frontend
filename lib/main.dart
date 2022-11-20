@@ -61,6 +61,7 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: RoutePath.shopOwnerPath,
           page: () => ShopOwnerView(),
+          middlewares: [UserMiddleware()],
         ),
         GetPage(
             name: RoutePath.editShopPath,

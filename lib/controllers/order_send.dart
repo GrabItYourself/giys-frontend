@@ -6,7 +6,6 @@ import 'package:giys_frontend/models/order.dart';
 import 'package:requests/requests.dart';
 
 class OrderSendController extends GetxController {
-  //TODO complete this
   sendOrder(int shopId, List<OrderItem> items) async {
     try {
       final response = await Requests.post(
@@ -16,10 +15,9 @@ class OrderSendController extends GetxController {
         },
         json: {"items": items},
       );
-      print(response.body.toString());
       response.raiseForStatus();
     } catch (e) {
-      print("ERROR in order send");
+      print("ERROR in order send $e");
     }
   }
 }

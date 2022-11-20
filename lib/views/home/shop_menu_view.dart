@@ -123,8 +123,6 @@ class _ShopMenuViewState extends State<ShopMenuView> {
                         },
                       );
                       if (sendOrder) {
-                        //TODO check if user has credit card
-
                         final List<PaymentMethod> paymentList =
                             paymentMethodController.paymentMethods;
                         PaymentMethod? defaultPayment =

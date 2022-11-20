@@ -27,7 +27,6 @@ class MyShopController extends GetxController {
     }
   }
 
-  // TODO get shop id from user credentials
   Future<ShopResponse> getMyShop(int id) async {
     final response = await Requests.get(
       '${Config.getServerUrl()}/api/v1/shops/$id',
@@ -39,7 +38,6 @@ class MyShopController extends GetxController {
     return ShopResponse.fromJson(response.json());
   }
 
-  // TODO get shop id from user credentials
   updateShop(int id) async {
     try {
       final shopData = await getMyShop(id);

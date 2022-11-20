@@ -40,7 +40,6 @@ class MenuOwnerView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      //TODO add add/edit/delete capabilities
                       child: Obx(() => ListView.builder(
                             itemCount: myMenuController.menuList.length,
                             itemBuilder: (BuildContext context, int index) {

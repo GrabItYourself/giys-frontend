@@ -6,31 +6,29 @@ import 'package:get/get.dart';
 import 'package:giys_frontend/config/route.dart';
 import 'package:giys_frontend/controllers/auth.dart';
 import 'package:giys_frontend/controllers/my_shop.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:requests/requests.dart';
 import '../config/config.dart';
 import 'image_picker.dart';
 
 class EditShopController extends GetxController {
   final authController = Get.find<AuthController>();
-  final imagePickerController = Get.put(ImagePickerController());
+  final imagePath = "".obs;
+  final imageBase64 = "".obs;
+  final _picker = ImagePicker();
 
   final myShopController = Get.put(MyShopController());
-
-  RxInt shopId = 1.obs;
-  RxString imageBase64 = "".obs;
 
   final shopNameController = TextEditingController();
   final shopDescriptionController = TextEditingController();
   final shopLocationController = TextEditingController();
   final shopContactController = TextEditingController();
 
-  // TODO get shop id from user credentials
   @override
   void onInit() async {
     super.onInit();
     try {
       final shopData = await myShopController.getMyShop(1);
-      shopId.value = shopData.shop.id;
       imageBase64.value = shopData.shop.image ?? '';
       shopNameController.value = TextEditingValue(text: shopData.shop.name);
       shopDescriptionController.value =
@@ -41,6 +39,18 @@ class EditShopController extends GetxController {
           TextEditingValue(text: shopData.shop.contact ?? '');
     } catch (err) {
       return Future.error(err);
+    }
+  }
+
+  Future<void> pickImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      imagePath.value = pickedFile.path;
+      final imageFile = File(imagePath.value);
+      final imageBytes = await imageFile.readAsBytes();
+      imageBase64.value = base64Encode(imageBytes);
+    } else {
+      print('No image selected.');
     }
   }
 
@@ -56,28 +66,20 @@ class EditShopController extends GetxController {
     shopDescriptionController.clear();
     shopLocationController.clear();
     shopContactController.clear();
-    imagePickerController.imagePath.value = "";
   }
 
-  Future<void> submitForm() async {
-    if (imagePickerController.imagePath.value.isNotEmpty) {
-      final imageFile = File(imagePickerController.imagePath.value);
-      final imageBytes = await imageFile.readAsBytes();
-      imageBase64.value = base64Encode(imageBytes);
-    }
-
-    // TODO get shop id from user credentials
+  Future<void> submitForm(int shopId) async {
     try {
       final response = await Requests.put(
-          '${Config.getServerUrl()}/api/v1/shops/${1}',
+          '${Config.getServerUrl()}/api/v1/shops/$shopId',
           headers: {
             'Content-Type': 'application/json',
           },
           json: {
             'edited_shop': {
-              'id': shopId.value,
+              'id': shopId,
               'name': shopNameController.text,
-              'image': imageBase64.value,
+              'image': imageBase64.value != "" ? imageBase64.value : null,
               'description': shopDescriptionController.text,
               'location': shopLocationController.text,
               'contact': shopContactController.text,
@@ -92,11 +94,9 @@ class EditShopController extends GetxController {
     }
   }
 
-  // TODO get shop id from user credentials
-  getShopData() async {
+  getShopData(int shopId) async {
     try {
-      final shopData = await myShopController.getMyShop(1);
-      shopId.value = shopData.shop.id;
+      final shopData = await myShopController.getMyShop(shopId);
       imageBase64.value = shopData.shop.image ?? '';
       shopNameController.value = TextEditingValue(text: shopData.shop.name);
       shopDescriptionController.value =

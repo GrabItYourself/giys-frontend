@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:giys_frontend/config/config.dart';
 import 'package:giys_frontend/controllers/auth.dart';
-import 'package:giys_frontend/controllers/image_picker.dart';
 import 'package:giys_frontend/controllers/my_menu.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:requests/requests.dart';
@@ -13,7 +12,6 @@ import 'package:requests/requests.dart';
 class CRUDItemController extends GetxController {
   final authController = Get.find<AuthController>();
   final myMenuController = Get.find<MyMenuController>();
-  final imagePickerController = Get.put(ImagePickerController());
   final imagePath = "".obs;
   final imageBase64 = "".obs;
   final _picker = ImagePicker();
@@ -34,7 +32,6 @@ class CRUDItemController extends GetxController {
   }
 
   setMode(String mode) {
-    print(mode);
     if (mode != "CREATE" && mode != "EDIT") {
       throw Exception("Unsupported mode");
     } else {
@@ -60,7 +57,6 @@ class CRUDItemController extends GetxController {
           },
           json: data);
       response.raiseForStatus();
-      print(response);
       clearForm();
       myMenuController.setShopId(shopId);
     } on HTTPException catch (err) {
@@ -74,8 +70,6 @@ class CRUDItemController extends GetxController {
   void clearForm() {
     nameController.clear();
     priceController.clear();
-
-    imagePickerController.imagePath.value = "";
   }
 
   setDefaultValue(String name, int price, String image) {
@@ -92,7 +86,6 @@ class CRUDItemController extends GetxController {
       throw Exception("Illegal Op: edit");
     }
     try {
-      print("itemId");
       final response = await Requests.put(
           '${Config.getServerUrl()}/api/v1/shops/$shopId/items/$itemId',
           headers: {
@@ -108,11 +101,9 @@ class CRUDItemController extends GetxController {
             }
           });
       response.raiseForStatus();
-      print(response);
       clearForm();
       myMenuController.setShopId(shopId);
     } on HTTPException catch (err) {
-      print(err);
       Get.snackbar("Cannot add/edit item", err.response.body);
       return Future.error(err.response.body);
     } catch (err) {
@@ -129,7 +120,6 @@ class CRUDItemController extends GetxController {
         },
       );
       response.raiseForStatus();
-      print(response);
       clearForm();
       myMenuController.setShopId(shopId);
     } on HTTPException catch (err) {
