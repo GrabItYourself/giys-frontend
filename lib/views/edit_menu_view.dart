@@ -50,69 +50,77 @@ class _EditMenuFormState extends State<StatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-        key: _formKey,
-        child: Column(children: [
-          Obx(() => ImagePickerWidget(
-                pickImage:
-                    createOrEditItemController.imagePickerController.pickImage,
-                imagePath: createOrEditItemController
-                    .imagePickerController.imagePath.value,
-              )),
-          TextFormField(
-            controller: createOrEditItemController.nameController,
-            decoration: const InputDecoration(labelText: "Item Name"),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Item name is required';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-              controller: createOrEditItemController.priceController,
-              decoration: const InputDecoration(labelText: "Price"),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Price is required';
-                }
-                if (!value.isNumericOnly) {
-                  return 'Price has to be an integer';
-                }
-                return null;
-              }),
-          const Spacer(),
-          Row(
-            children: [
-              Expanded(
-                child: OutlinedButton(
-                    onPressed: () => Get.toNamed(RoutePath.shopOwnerMenuPath),
-                    child: const Text("Cancel")),
-              ),
-              const SizedBox(
-                width: 8,
-              ),
-              Expanded(
-                  child: ElevatedButton.icon(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          // TODO send request
-                          String chosenMode =
-                              createOrEditItemController.mode.value;
-                          if (chosenMode == "CREATE") {
-                            createOrEditItemController.createItem(arg[0]);
-                          } else if (chosenMode == "EDIT") {
-                            createOrEditItemController.editItem(
-                                arg[0], shopItem.id);
-                          }
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("Saving...")));
-                        }
-                      },
-                      icon: const Icon(Icons.save),
-                      label: const Text("Save"))),
-            ],
-          ),
-        ]));
+    return CustomScrollView(
+      slivers: [
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: Form(
+              key: _formKey,
+              child: Column(children: [
+                Obx(() => ImagePickerWidget(
+                      pickImage: createOrEditItemController
+                          .imagePickerController.pickImage,
+                      imagePath: createOrEditItemController
+                          .imagePickerController.imagePath.value,
+                    )),
+                TextFormField(
+                  controller: createOrEditItemController.nameController,
+                  decoration: const InputDecoration(labelText: "Item Name"),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Item name is required';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                    controller: createOrEditItemController.priceController,
+                    decoration: const InputDecoration(labelText: "Price"),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Price is required';
+                      }
+                      if (!value.isNumericOnly) {
+                        return 'Price has to be an integer';
+                      }
+                      return null;
+                    }),
+                const Spacer(),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                          onPressed: () =>
+                              Get.toNamed(RoutePath.shopOwnerMenuPath),
+                          child: const Text("Cancel")),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Expanded(
+                        child: ElevatedButton.icon(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                // TODO send request
+                                String chosenMode =
+                                    createOrEditItemController.mode.value;
+                                if (chosenMode == "CREATE") {
+                                  createOrEditItemController.createItem(arg[0]);
+                                } else if (chosenMode == "EDIT") {
+                                  createOrEditItemController.editItem(
+                                      arg[0], shopItem.id);
+                                }
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text("Saving...")));
+                              }
+                            },
+                            icon: const Icon(Icons.save),
+                            label: const Text("Save"))),
+                  ],
+                ),
+              ])),
+        )
+      ],
+    );
   }
 }

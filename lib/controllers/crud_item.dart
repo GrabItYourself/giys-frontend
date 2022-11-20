@@ -6,10 +6,12 @@ import 'package:get/get.dart';
 import 'package:giys_frontend/config/config.dart';
 import 'package:giys_frontend/controllers/auth.dart';
 import 'package:giys_frontend/controllers/image_picker.dart';
+import 'package:giys_frontend/controllers/my_menu.dart';
 import 'package:requests/requests.dart';
 
 class CRUDItemController extends GetxController {
   final authController = Get.find<AuthController>();
+  final myMenuController = Get.find<MyMenuController>();
   final imagePickerController = Get.put(ImagePickerController());
   RxString imageBase64 = "".obs;
   RxString mode = "".obs;
@@ -29,13 +31,14 @@ class CRUDItemController extends GetxController {
     if (mode.value != "CREATE") {
       throw Exception("Illegal Op: create");
     }
-    String? imageBase64;
     if (imagePickerController.imagePath.value.isNotEmpty) {
       final imageFile = File(imagePickerController.imagePath.value);
       final imageBytes = await imageFile.readAsBytes();
-      imageBase64 = base64Encode(imageBytes);
+      imageBase64.value = base64Encode(imageBytes);
     }
-
+    print(shopId);
+    print(nameController.text);
+    print(priceController.text);
     try {
       final response = await Requests.post(
           '${Config.getServerUrl()}/api/v1/shops/$shopId/items/',
@@ -45,12 +48,13 @@ class CRUDItemController extends GetxController {
           json: {
             'shop_id': shopId,
             'name': nameController.text,
-            'image': imageBase64,
-            'price': priceController.text,
+            'image': null,
+            'price': int.parse(priceController.text),
           });
       response.raiseForStatus();
       print(response);
       clearForm();
+      myMenuController.setShopId(shopId);
     } on HTTPException catch (err) {
       Get.snackbar("Cannot add/edit item", err.response.body);
       return Future.error(err.response.body);
@@ -84,7 +88,6 @@ class CRUDItemController extends GetxController {
       final imageBytes = await imageFile.readAsBytes();
       imageBase64.value = base64Encode(imageBytes);
     }
-
     try {
       final response = await Requests.put(
           '${Config.getServerUrl()}/api/v1/shops/$shopId/items/$itemId',
@@ -94,12 +97,13 @@ class CRUDItemController extends GetxController {
           json: {
             'shop_id': shopId,
             'name': nameController.text,
-            'image': imageBase64.value,
+            'image': null,
             'price': priceController.text,
           });
       response.raiseForStatus();
       print(response);
       clearForm();
+      myMenuController.setShopId(shopId);
     } on HTTPException catch (err) {
       print(err);
       Get.snackbar("Cannot add/edit item", err.response.body);
@@ -120,6 +124,7 @@ class CRUDItemController extends GetxController {
       response.raiseForStatus();
       print(response);
       clearForm();
+      myMenuController.setShopId(shopId);
     } on HTTPException catch (err) {
       Get.snackbar("Cannot add/edit item", err.response.body);
       return Future.error(err.response.body);
