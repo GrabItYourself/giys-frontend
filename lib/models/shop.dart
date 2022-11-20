@@ -1,3 +1,5 @@
+import 'package:giys_frontend/models/bank_account.dart';
+
 import 'user.dart';
 
 class Shop {
@@ -8,6 +10,7 @@ class Shop {
   final String? location;
   final String? contact;
   final List<User>? owners;
+  final BankAccount? bankAccount;
 
   Shop({
     required this.id,
@@ -17,20 +20,23 @@ class Shop {
     this.location,
     this.contact,
     this.owners,
+    this.bankAccount,
   });
 
   factory Shop.fromJson(Map<String, dynamic> json) {
     return Shop(
-      id: json['id'],
-      name: json['name'],
-      image: json['image'],
-      description: json['description'],
-      location: json['location'],
-      contact: json['contact'],
-      owners: json['owners'] != null
-          ? (json['owners'] as List).map((e) => User.fromJson(e)).toList()
-          : null,
-    );
+        id: json['id'],
+        name: json['name'],
+        image: json['image'],
+        description: json['description'],
+        location: json['location'],
+        contact: json['contact'],
+        owners: json['owners'] != null
+            ? (json['owners'] as List).map((e) => User.fromJson(e)).toList()
+            : null,
+        bankAccount: json['bank_account'] != null
+            ? BankAccount.fromJson(json['bank_account'])
+            : null);
   }
 
   Map<String, dynamic> toJson() {

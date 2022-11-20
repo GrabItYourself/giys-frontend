@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:giys_frontend/controllers/shop_create.dart';
+import 'package:giys_frontend/controllers/shop_manage_edit.dart';
 import 'package:giys_frontend/middlewares/admin_binding.dart';
 import 'package:giys_frontend/middlewares/user_middleware.dart';
 import 'package:giys_frontend/views/shop_create_view.dart';
@@ -16,6 +17,7 @@ import 'package:giys_frontend/views/home/all_shop_view.dart';
 import 'package:giys_frontend/views/home/shop_detail_view.dart';
 import 'package:giys_frontend/views/home/shop_menu_view.dart';
 import 'package:giys_frontend/views/menu_owner_view.dart';
+import 'package:giys_frontend/views/shop_manage_edit_view.dart';
 import 'package:giys_frontend/views/shop_owner_view.dart';
 import 'package:giys_frontend/config/route.dart';
 import 'package:giys_frontend/views/order_detail_view.dart';
@@ -109,11 +111,19 @@ class MyApp extends StatelessWidget {
               Get.put(ShopCreateController());
             }),
             middlewares: [AdminMiddleware()]),
+
         GetPage(
             name: RoutePath.shopManagePath,
             page: () => ShopManageView(),
             binding: BindingsBuilder(() {
               Get.put(ShopManageController());
+            }),
+            middlewares: [AdminMiddleware()]),
+        GetPage(
+            name: RoutePath.shopManageEditPath,
+            page: () => const ShopManageEditView(),
+            binding: BindingsBuilder(() {
+              Get.put(ShopManageEditController());
             }),
             middlewares: [AdminMiddleware()]),
       ],

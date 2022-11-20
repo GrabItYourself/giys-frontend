@@ -17,6 +17,7 @@ class MainDrawer extends StatelessWidget {
   final _routeConfigs = [
     _RouteConfig("Home", RoutePath.defaultPath, const Icon(Icons.home)),
     _RouteConfig("Shops", RoutePath.allShopPath, const Icon(Icons.food_bank)),
+    _RouteConfig("Orders", RoutePath.ordersPath, const Icon(Icons.list)),
     _RouteConfig("Payment Method", RoutePath.paymentMethodPath,
         const Icon(Icons.payment)),
     _RouteConfig(
@@ -25,7 +26,7 @@ class MainDrawer extends StatelessWidget {
 
   _onListItemTab(String path) {
     drawerController.closeDrawer();
-    Get.toNamed(path);
+    Get.offAndToNamed(path);
   }
 
   MainDrawer({super.key});

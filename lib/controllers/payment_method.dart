@@ -16,8 +16,8 @@ class PaymentMethodController extends GetxController {
   Future<void> updateMyPaymentMethods() async {
     try {
       paymentMethods.value = await getMyPaymentMethods();
-    } catch (err) {
-      Get.snackbar("Cannot get payment methods", "Please try again");
+    } on HTTPException catch (err) {
+      Get.snackbar("Cannot get payment methods", err.response.body);
     }
   }
 
@@ -52,8 +52,8 @@ class PaymentMethodController extends GetxController {
       }
       paymentMethods[index].isDefault = true;
       paymentMethods.refresh();
-    } catch (err) {
-      Get.snackbar("Cannot set default payment methods", "Please try again");
+    } on HTTPException catch (err) {
+      Get.snackbar("Cannot set default payment methods", err.response.body);
     }
   }
 
@@ -70,8 +70,8 @@ class PaymentMethodController extends GetxController {
 
       paymentMethods.add(PaymentMethod.fromJson(response.json()));
       paymentMethods.refresh();
-    } catch (err) {
-      Get.snackbar("Cannot add new payment methods", "Please try again");
+    } on HTTPException catch (err) {
+      Get.snackbar("Cannot add new payment methods", err.response.body);
     }
   }
 }

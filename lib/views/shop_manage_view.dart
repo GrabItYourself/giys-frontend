@@ -45,9 +45,6 @@ class ShopManageView extends StatelessWidget {
                     ),
                   ],
                 ),
-                // _ShopListView(
-                //   shopList: shopListController.shopList,
-                // ),
                 Obx(() => shopListController.shopList.isEmpty
                     ? const Center(child: Text('No shop'))
                     : ListView.builder(
@@ -55,8 +52,12 @@ class ShopManageView extends StatelessWidget {
                         itemCount: shopListController.shopList.length,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
+                          final shop = shopListController.shopList[index];
                           return ShopWidget(
-                              shop: shopListController.shopList[index]);
+                            shop: shop,
+                            onDelete: () =>
+                                shopListController.deleteShop(shop.id),
+                          );
                         },
                       ))
               ],

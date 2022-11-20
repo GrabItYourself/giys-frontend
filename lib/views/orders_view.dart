@@ -19,13 +19,22 @@ class OrdersView extends StatelessWidget {
           child: GetX<OrderController>(
             builder: (controller) => RefreshIndicator(
               onRefresh: controller.updateMyOrders,
-              child: ListView.builder(
-                itemCount: controller.orders.length,
-                itemBuilder: (context, index) => OrderCard(
-                  isOwner: false,
-                  order: controller.orders[index],
-                  onCancel: (() => controller.cancelOrder(index)),
-                ),
+              child: Stack(
+                children: [
+                  (controller.orders.isEmpty)
+                      ? const Center(
+                          child: Text("The list is empty"),
+                        )
+                      : const SizedBox.shrink(),
+                  ListView.builder(
+                    itemCount: controller.orders.length,
+                    itemBuilder: (context, index) => OrderCard(
+                      isOwner: false,
+                      order: controller.orders[index],
+                      onCancel: (() => controller.cancelOrder(index)),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
