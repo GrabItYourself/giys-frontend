@@ -113,10 +113,14 @@ class _ShopMenuViewState extends State<ShopMenuView> {
                 TextButton(
                     onPressed: () async {
                       final bool sendOrder;
+                      String shopCartStr = "";
+                      for (ShopItem s in shopCart.keys) {
+                        shopCartStr += "${s.name}: ${shopCart[s]} \n";
+                      }
                       sendOrder = await showGenericDialog(
                         context: context,
                         title: "Confirm Order",
-                        content: shopCart.toString(),
+                        content: shopCartStr,
                         optionsBuilder: () => {
                           "Order": true,
                           "Cancel": false,
