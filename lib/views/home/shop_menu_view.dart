@@ -54,8 +54,22 @@ class _ShopMenuViewState extends State<ShopMenuView> {
                         "https://picsum.photos/200",
                         fit: BoxFit.fitWidth,
                       ),
-                Text(widget.shop.name),
-                Text(widget.shop.description ?? ""),
+                const SizedBox(height: 20),
+                Text(
+                  widget.shop.name,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  widget.shop.description ?? "",
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 10),
                 TextButton(
                   onPressed: () {
                     Get.toNamed(RoutePath.shopDetailPath,
