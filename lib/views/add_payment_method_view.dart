@@ -35,7 +35,8 @@ class AddPaymentMethodView extends StatelessWidget {
                 child: Column(
                   children: [
                     TextFormField(
-                      onChanged: addPaymentMethodController.onCardNumberChange,
+                      controller:
+                          addPaymentMethodController.cardNumberController,
                       keyboardType: TextInputType.number,
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
@@ -51,7 +52,7 @@ class AddPaymentMethodView extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       child: TextFormField(
-                        onChanged: addPaymentMethodController.onNameChange,
+                        controller: addPaymentMethodController.nameController,
                         decoration: InputDecoration(
                           hintText: "Full name",
                           errorText:
@@ -63,7 +64,8 @@ class AddPaymentMethodView extends StatelessWidget {
                       children: [
                         Expanded(
                           child: TextFormField(
-                            onChanged: addPaymentMethodController.onCVVChange,
+                            controller:
+                                addPaymentMethodController.cvvController,
                             keyboardType: TextInputType.number,
                             inputFormatters: [
                               FilteringTextInputFormatter.digitsOnly,
@@ -79,8 +81,8 @@ class AddPaymentMethodView extends StatelessWidget {
                         const SizedBox(width: 16),
                         Expanded(
                           child: TextFormField(
-                            onChanged: addPaymentMethodController
-                                .onExpirationDateChange,
+                            controller: addPaymentMethodController
+                                .expirationDateController,
                             keyboardType: TextInputType.number,
                             inputFormatters: [
                               FilteringTextInputFormatter.digitsOnly,
