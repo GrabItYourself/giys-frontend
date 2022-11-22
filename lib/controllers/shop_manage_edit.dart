@@ -81,6 +81,17 @@ class ShopManageEditController extends GetxController {
     return null;
   }
 
+  String formatAccountNumber(String value) {
+    String temp = "";
+    for (int i = 0; i < value.length; i++) {
+      if (i % 4 == 0 && i != 0) {
+        temp += " ";
+      }
+      temp += value[i];
+    }
+    return temp;
+  }
+
   void createShopOwnerTextFormField(String? email) {
     if (email == null) {
       shopOwnerControllers.add(TextEditingController());
@@ -137,7 +148,8 @@ class ShopManageEditController extends GetxController {
 
       if (shop.bankAccount != null) {
         bankAccountNameController.text = shop.bankAccount!.name;
-        bankAccountNumberController.text = shop.bankAccount!.number;
+        bankAccountNumberController.text =
+            formatAccountNumber(shop.bankAccount!.number);
         bankAccountBrandController.value = shop.bankAccount!.brand;
         bankAccountTypeController.value = shop.bankAccount!.type;
       }
@@ -199,7 +211,7 @@ class ShopManageEditController extends GetxController {
           'owners': [], // This will not be used in backend
           'bank_account': {
             "name": bankAccountNameController.text,
-            "number": bankAccountNumberController.text,
+            "number": bankAccountNumberController.text.replaceAll(" ", ""),
             "brand": bankAccountBrandController.value,
             "type": bankAccountTypeController.value,
           }

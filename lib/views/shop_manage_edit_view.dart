@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:giys_frontend/widget/scaffold.dart';
 
 import '../controllers/shop_manage_edit.dart';
+import '../utilitties/payment_method_input_formatter.dart';
 import '../widget/image_picker_base64.dart';
 
 class ShopManageEditView extends StatelessWidget {
@@ -87,6 +88,7 @@ class _ShopEditForm extends StatelessWidget {
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                     LengthLimitingTextInputFormatter(16),
+                    CardNumberInputFormatter(),
                   ],
                 ),
                 DropdownButtonFormField(
