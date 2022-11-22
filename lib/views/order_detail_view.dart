@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giys_frontend/controllers/order_detail.dart';
+import 'package:giys_frontend/config/route.dart';
 
 import '../widget/scaffold.dart';
 
@@ -10,6 +12,14 @@ class OrderDetailView extends StatelessWidget {
   final orderDetailController = Get.put(OrderDetailController());
 
   OrderDetailView({super.key});
+
+  String formatCreatedAt() {
+    final dt = DateTime.fromMillisecondsSinceEpoch(
+            orderDetailController.order.value.transaction!.createdAt)
+        .toLocal();
+    final dateFormat = DateFormat("yyyy-MM-dd HH:mm");
+    return dateFormat.format(dt);
+  }
 
   Widget createOrderDetailTable() {
     List<TableRow> rows = orderDetailController.order.value.items
@@ -89,20 +99,14 @@ class OrderDetailView extends StatelessWidget {
                         height: 100,
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
                         alignment: Alignment.center,
-                        child: (orderDetailController.order.value.shop!.image !=
+                        child: (orderDetailController.order.value.shop?.image !=
                                 null)
                             ? Image.memory(base64.decode(
                                 orderDetailController.order.value.shop!.image!))
                             : const CircleAvatar(),
                       ),
                       const SizedBox(width: 8),
-                      Text(orderDetailController.order.value.shop!.name),
-                      const Spacer(),
-                      IconButton(
-                        // TODO: navigate to shop
-                        onPressed: () => print("to shop"),
-                        icon: const Icon(Icons.arrow_forward_ios),
-                      ),
+                      Text(orderDetailController.order.value.shop?.name ?? "")
                     ],
                   ),
                 ),
@@ -119,6 +123,58 @@ class OrderDetailView extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   child: createOrderDetailTable(),
                 ),
+                (orderDetailController.order.value.transaction == null)
+                    ? const SizedBox.shrink()
+                    : const Padding(
+                        padding: EdgeInsets.only(top: 5, left: 10),
+                        child: Text(
+                          "Transaction",
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 125, 125, 125)),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                (orderDetailController.order.value.transaction == null)
+                    ? const SizedBox.shrink()
+                    : Card(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Row(
+                                children: [
+                                  const Text(
+                                    "Total",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  Text(
+                                      "฿${orderDetailController.order.value.transaction!.amount ~/ 100}"),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Row(
+                                children: [
+                                  const Text(
+                                    "Created at",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  Text(formatCreatedAt()),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                 const Spacer(),
                 Padding(
                   padding: const EdgeInsets.all(10),

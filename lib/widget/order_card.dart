@@ -29,7 +29,8 @@ class OrderCard extends StatelessWidget {
       onTap: () => Get.toNamed(
         RoutePath.orderDetailPath,
         arguments: {
-          'order': order,
+          'order_id': order.id,
+          'shop_id': order.shopId,
         },
       ),
       child: Card(

@@ -9,6 +9,7 @@ class Order {
   List<OrderItem> items;
 
   Shop? shop;
+  Transaction? transaction;
 
   Order({
     required this.id,
@@ -17,18 +18,28 @@ class Order {
     required this.status,
     required this.items,
     this.shop,
+    this.transaction,
   });
 
   factory Order.fromJson(Map<String, dynamic> json) {
     final items = (json['items'] as List)
         .map((item) => OrderItem.fromJson(item))
         .toList();
+
+    Transaction? transaction;
+    if (json['payment_transaction'] != null) {
+      transaction = Transaction.fromJson(json['payment_transaction']);
+    } else {
+      transaction = null;
+    }
+
     return Order(
       id: json['order_id'],
       userId: json['user_id'],
       shopId: json['shop_id'],
       status: json['status'],
       items: items,
+      transaction: transaction,
     );
   }
 }
@@ -51,6 +62,23 @@ class OrderItem {
       shopItemId: json['shop_item_id'],
       quantity: json['quantity'],
       note: json['note'],
+    );
+  }
+}
+
+class Transaction {
+  int amount;
+  int createdAt;
+
+  Transaction({
+    required this.amount,
+    required this.createdAt,
+  });
+
+  factory Transaction.fromJson(Map<String, dynamic> json) {
+    return Transaction(
+      amount: json['amount'],
+      createdAt: json['created_at'],
     );
   }
 }
