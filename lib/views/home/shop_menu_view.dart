@@ -133,7 +133,7 @@ class _ShopMenuViewState extends State<ShopMenuView> {
                             paymentList.firstWhereOrNull(
                                 (element) => element.isDefault == true);
                         print(paymentMethodController.paymentMethods);
-                        if (defaultPayment != null) {
+                        if (defaultPayment == null) {
                           List<OrderItem> items = [];
                           shopCart.forEach((key, value) {
                             OrderItem itm = OrderItem(

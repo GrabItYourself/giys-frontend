@@ -35,12 +35,8 @@ class SettingsView extends StatelessWidget {
               },
             ),
             ListTile(
-              title: const Center(child: Text('Manage Shop')),
-              onTap: () => {Get.toNamed(RoutePath.shopManagePath)},
-            ),
-            ListTile(
               title: const Center(child: Text('Logout')),
-              onTap: () => {Get.snackbar("TODO LOGOUT", "LOGOUT")},
+              onTap: () => authController.signOut(),
             ),
           ],
         ));
