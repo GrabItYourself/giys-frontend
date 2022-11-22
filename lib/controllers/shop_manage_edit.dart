@@ -133,6 +133,8 @@ class ShopManageEditController extends GetxController {
       shopLocationController.text = shop.location ?? "";
       shopContactController.text = shop.contact ?? "";
 
+      imageBase64.value = shop.image ?? "";
+
       if (shop.bankAccount != null) {
         bankAccountNameController.text = shop.bankAccount!.name;
         bankAccountNumberController.text = shop.bankAccount!.number;
