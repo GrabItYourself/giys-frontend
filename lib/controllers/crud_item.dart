@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:giys_frontend/config/config.dart';
+import 'package:giys_frontend/config/route.dart';
 import 'package:giys_frontend/controllers/auth.dart';
 import 'package:giys_frontend/controllers/my_menu.dart';
 import 'package:image_picker/image_picker.dart';
@@ -59,6 +60,7 @@ class CRUDItemController extends GetxController {
       response.raiseForStatus();
       clearForm();
       myMenuController.setShopId(shopId);
+      Get.toNamed(RoutePath.shopOwnerMenuPath);
     } on HTTPException catch (err) {
       Get.snackbar("Cannot add/edit item", err.response.body);
       return Future.error(err.response.body);
@@ -103,6 +105,7 @@ class CRUDItemController extends GetxController {
       response.raiseForStatus();
       clearForm();
       myMenuController.setShopId(shopId);
+      Get.toNamed(RoutePath.shopOwnerMenuPath);
     } on HTTPException catch (err) {
       Get.snackbar("Cannot add/edit item", err.response.body);
       return Future.error(err.response.body);

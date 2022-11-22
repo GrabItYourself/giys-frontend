@@ -43,15 +43,13 @@ class _ShopMenuViewState extends State<ShopMenuView> {
   Widget build(BuildContext context) {
     return MainScaffold(
         title: "Shop Menu",
+        back: true,
         body: SafeArea(child: GetX<ShopItemsController>(
           builder: (controller) {
             return Column(
               children: [
                 widget.shop.image != null
-                    ? Image.network(
-                        widget.shop.image!,
-                        fit: BoxFit.fitWidth,
-                      )
+                    ? Image.memory(base64.decode(widget.shop.image as String))
                     : Image.network(
                         "https://picsum.photos/200",
                         fit: BoxFit.fitWidth,

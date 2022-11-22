@@ -7,7 +7,6 @@ import 'package:giys_frontend/widget/shop/shop_menu_item.dart';
 
 class MenuOwnerView extends StatelessWidget {
   final myMenuController = Get.put(MyMenuController());
-  final shopId = Get.arguments;
   final AuthController authController = Get.find<AuthController>();
 
   MenuOwnerView({super.key});
@@ -26,9 +25,9 @@ class MenuOwnerView extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 20.0),
                   child: GestureDetector(
                     onTap: () => Get.toNamed(
-                        RoutePath.editMenuPath
-                            .replaceAll(':shopId', shopId.toString()),
-                        arguments: [shopId, null, "CREATE"]),
+                        RoutePath.editMenuPath.replaceAll(
+                            ':shopId', authController.shopId.toString()),
+                        arguments: [authController.shopId, null, "CREATE"]),
                     child: const Icon(Icons.add),
                   ))
             ],
@@ -47,7 +46,7 @@ class MenuOwnerView extends StatelessWidget {
                                 name: myMenuController.menuList[index].name,
                                 price: myMenuController.menuList[index].price,
                                 image: myMenuController.menuList[index].image,
-                                shopId: shopId,
+                                shopId: authController.shopId.value as int,
                                 shopItem: myMenuController.menuList[index],
                               );
                             },

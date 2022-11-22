@@ -87,8 +87,7 @@ class _EditMenuFormState extends State<StatefulWidget> {
                   children: [
                     Expanded(
                       child: OutlinedButton(
-                          onPressed: () =>
-                              Get.toNamed(RoutePath.shopOwnerMenuPath),
+                          onPressed: () => Get.back(),
                           child: const Text("Cancel")),
                     ),
                     const SizedBox(

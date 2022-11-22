@@ -85,10 +85,8 @@ class ShopOwnerView extends StatelessWidget {
                           ),
                           Expanded(
                               child: OutlinedButton.icon(
-                                  onPressed: () => Get.toNamed(
-                                      RoutePath.shopOwnerMenuPath,
-                                      arguments:
-                                          myShopController.shop.value.id),
+                                  onPressed: () =>
+                                      Get.toNamed(RoutePath.shopOwnerMenuPath),
                                   icon: const Icon(Icons.food_bank),
                                   label: const Text("Edit Menu")))
                         ],

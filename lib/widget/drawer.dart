@@ -20,8 +20,6 @@ class MainDrawer extends StatelessWidget {
     _RouteConfig("Orders", RoutePath.ordersPath, const Icon(Icons.list)),
     _RouteConfig("Payment Method", RoutePath.paymentMethodPath,
         const Icon(Icons.payment)),
-    _RouteConfig(
-        "Settings", RoutePath.settingsPath, const Icon(Icons.settings)),
   ];
 
   _onListItemTab(String path) {

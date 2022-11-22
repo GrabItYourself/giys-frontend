@@ -26,6 +26,7 @@ class AddPaymentMethodView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MainScaffold(
       title: "Add New Card",
+      back: true,
       body: SafeArea(
         child: Center(
           child: Padding(
