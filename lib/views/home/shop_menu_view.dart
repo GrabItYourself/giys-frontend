@@ -131,7 +131,6 @@ class _ShopMenuViewState extends State<ShopMenuView> {
                         PaymentMethod? defaultPayment =
                             paymentList.firstWhereOrNull(
                                 (element) => element.isDefault == true);
-                        print(paymentMethodController.paymentMethods);
                         if (defaultPayment != null) {
                           List<OrderItem> items = [];
                           shopCart.forEach((key, value) {
@@ -139,7 +138,12 @@ class _ShopMenuViewState extends State<ShopMenuView> {
                                 shopItemId: key.id, quantity: value, note: "");
                             items.add(itm);
                           });
-                          orderSendController.sendOrder(shopId, items);
+                          final response = await orderSendController.sendOrder(
+                              shopId, items);
+                          Get.toNamed(RoutePath.orderDetailPath, arguments: {
+                            'order_id': response["order_id"],
+                            'shop_id': response["shop_id"],
+                          });
                         } else {
                           await showGenericDialog(
                             context: context,

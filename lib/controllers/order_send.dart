@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:get/get.dart';
@@ -16,8 +17,12 @@ class OrderSendController extends GetxController {
         json: {"items": items},
       );
       response.raiseForStatus();
-    } catch (e) {
-      print("ERROR in order send $e");
+      return json.decode(response.body);
+    } on HTTPException catch (err) {
+      Get.snackbar("Cannot add/edit item", err.response.body);
+      printError(info: err.response.body);
+    } catch (err) {
+      return Future.error(err);
     }
   }
 }

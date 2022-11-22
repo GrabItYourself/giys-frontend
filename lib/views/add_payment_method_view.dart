@@ -37,9 +37,8 @@ class AddPaymentMethodView extends StatelessWidget {
                     TextFormField(
                       controller:
                           addPaymentMethodController.cardNumberController,
-                      keyboardType: TextInputType.number,
                       inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
+                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                         LengthLimitingTextInputFormatter(16),
                         CardNumberInputFormatter(),
                       ],
@@ -66,9 +65,9 @@ class AddPaymentMethodView extends StatelessWidget {
                           child: TextFormField(
                             controller:
                                 addPaymentMethodController.cvvController,
-                            keyboardType: TextInputType.number,
                             inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'[0-9]')),
                               LengthLimitingTextInputFormatter(3),
                             ],
                             decoration: InputDecoration(
@@ -83,9 +82,9 @@ class AddPaymentMethodView extends StatelessWidget {
                           child: TextFormField(
                             controller: addPaymentMethodController
                                 .expirationDateController,
-                            keyboardType: TextInputType.number,
                             inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'[0-9]')),
                               LengthLimitingTextInputFormatter(4),
                               CardMonthInputFormatter(),
                             ],
