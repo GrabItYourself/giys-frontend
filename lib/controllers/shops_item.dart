@@ -26,8 +26,6 @@ class ShopItemsController extends GetxController {
         'Content-Type': 'application/json',
       },
     );
-
-    print(response.json());
     response.raiseForStatus();
     final data = AllShopItemsResponse.fromJson(response.json());
     shopItemsList.value = data.items;

@@ -9,7 +9,7 @@ import 'package:giys_frontend/controllers/shops_item.dart';
 import 'package:giys_frontend/models/order.dart';
 import 'package:giys_frontend/models/payment_method.dart';
 import 'package:giys_frontend/models/shop_item.dart';
-import 'package:giys_frontend/utilitties/generic_dialog.dart';
+import 'package:giys_frontend/widget/generic_dialog.dart';
 import 'package:giys_frontend/widget/scaffold.dart';
 
 import '../../models/shop.dart';
@@ -27,6 +27,8 @@ class _ShopMenuViewState extends State<ShopMenuView> {
       Get.put(ShopItemsController());
   final OrderSendController orderSendController =
       Get.put(OrderSendController());
+  final PaymentMethodController paymentMethodController =
+      Get.put(PaymentMethodController());
   late final Map<ShopItem, int> shopCart = {};
   late final int shopId;
 
@@ -111,19 +113,20 @@ class _ShopMenuViewState extends State<ShopMenuView> {
                 TextButton(
                     onPressed: () async {
                       final bool sendOrder;
+                      String shopCartStr = "";
+                      for (ShopItem s in shopCart.keys) {
+                        shopCartStr += "${s.name}: ${shopCart[s]} \n";
+                      }
                       sendOrder = await showGenericDialog(
                         context: context,
                         title: "Confirm Order",
-                        content: shopCart.toString(),
+                        content: shopCartStr,
                         optionsBuilder: () => {
                           "Order": true,
                           "Cancel": false,
                         },
                       );
                       if (sendOrder) {
-                        //TODO check if user has credit card
-                        final PaymentMethodController paymentMethodController =
-                            Get.find();
                         final List<PaymentMethod> paymentList =
                             paymentMethodController.paymentMethods;
                         PaymentMethod? defaultPayment =
@@ -131,18 +134,13 @@ class _ShopMenuViewState extends State<ShopMenuView> {
                                 (element) => element.isDefault == true);
                         print(paymentMethodController.paymentMethods);
                         if (defaultPayment != null) {
-                          //TODO user has credit card, send order
                           List<OrderItem> items = [];
                           shopCart.forEach((key, value) {
                             OrderItem itm = OrderItem(
-                                shopItemId: key.shopId,
-                                quantity: value,
-                                note: "");
+                                shopItemId: key.id, quantity: value, note: "");
                             items.add(itm);
                           });
                           orderSendController.sendOrder(shopId, items);
-                          print("User has credit card");
-                          print(items);
                         } else {
                           await showGenericDialog(
                             context: context,
