@@ -45,7 +45,6 @@ class _ShopMenuViewState extends State<ShopMenuView> {
         title: "Shop Menu",
         body: SafeArea(child: GetX<ShopItemsController>(
           builder: (controller) {
-            print(shopId);
             return Column(
               children: [
                 widget.shop.image != null
@@ -133,7 +132,7 @@ class _ShopMenuViewState extends State<ShopMenuView> {
                             paymentList.firstWhereOrNull(
                                 (element) => element.isDefault == true);
                         print(paymentMethodController.paymentMethods);
-                        if (defaultPayment == null) {
+                        if (defaultPayment != null) {
                           List<OrderItem> items = [];
                           shopCart.forEach((key, value) {
                             OrderItem itm = OrderItem(

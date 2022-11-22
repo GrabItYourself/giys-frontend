@@ -11,9 +11,7 @@ class ShopItemsController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    try {
-      await getAllShopItems(1);
-    } catch (err) {
+    try {} catch (err) {
       Get.toNamed(RoutePath.homePath);
       return Future.error(err);
     }
