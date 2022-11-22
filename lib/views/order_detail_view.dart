@@ -66,6 +66,7 @@ class OrderDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MainScaffold(
       title: "Order Details",
+      back: true,
       body: SafeArea(
         child: Center(
           child: Obx(

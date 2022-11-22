@@ -13,7 +13,8 @@ class AllShopView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MainScaffold(
-        title: "Home",
+        title: "Shops",
+        back: true,
         body: SafeArea(child: GetX<ShopController>(
           builder: ((controller) {
             return Column(children: [

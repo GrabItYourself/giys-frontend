@@ -17,6 +17,7 @@ class OrderController extends GetxController {
   Future<void> updateMyOrders() async {
     try {
       orders.value = await getMyOrders();
+      orders.refresh();
     } on HTTPException catch (err) {
       Get.snackbar("Cannot get orders", err.response.body);
     }
@@ -30,7 +31,6 @@ class OrderController extends GetxController {
       },
     );
     response.raiseForStatus();
-
     if (response.json()["result"] == null) {
       return <Order>[];
     }
@@ -39,25 +39,7 @@ class OrderController extends GetxController {
         .map((json) => Order.fromJson(json))
         .toList();
 
-    await Future.wait(orders.map((order) => updateShop(order)));
-
     return orders;
-  }
-
-  Future<void> updateShop(Order order) async {
-    order.shop = await getShop(order.shopId);
-  }
-
-  Future<Shop> getShop(int shopId) async {
-    final response = await Requests.get(
-      '${Config.getServerUrl()}/api/v1/shops/$shopId',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    );
-    response.raiseForStatus();
-
-    return Shop.fromJson(response.json()["shop"]);
   }
 
   Future<void> cancelOrder(int index) async {

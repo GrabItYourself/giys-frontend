@@ -8,7 +8,6 @@ import '../config/config.dart';
 class ShopOrderController extends GetxController {
   final authController = Get.find<AuthController>();
   final orders = <Order>[].obs;
-  final shop = Shop(id: 0, name: '').obs;
 
   @override
   void onInit() async {
@@ -17,28 +16,7 @@ class ShopOrderController extends GetxController {
       Get.snackbar("You do not have any shop", "Please try again");
       return;
     }
-    await updateShop();
     await updateShopOrders();
-  }
-
-  Future<void> updateShop() async {
-    try {
-      shop.value = await getShop();
-    } on HTTPException catch (err) {
-      Get.snackbar("Cannot get shop", err.response.body);
-    }
-  }
-
-  Future<Shop> getShop() async {
-    final response = await Requests.get(
-      '${Config.getServerUrl()}/api/v1/shops/${authController.shopId.value}',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    );
-    response.raiseForStatus();
-
-    return Shop.fromJson(response.json()["shop"]);
   }
 
   Future<void> updateShopOrders() async {
@@ -65,10 +43,6 @@ class ShopOrderController extends GetxController {
     final orders = (response.json()["result"] as List)
         .map((json) => Order.fromJson(json))
         .toList();
-
-    for (var order in orders) {
-      order.shop = shop.value;
-    }
 
     return orders;
   }

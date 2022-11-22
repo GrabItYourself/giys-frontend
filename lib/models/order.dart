@@ -39,6 +39,7 @@ class Order {
       shopId: json['shop_id'],
       status: json['status'],
       items: items,
+      shop: Shop.fromJson(json['shop']),
       transaction: transaction,
     );
   }
