@@ -8,15 +8,6 @@ import '../config/config.dart';
 class ShopItemsController extends GetxController {
   var shopItemsList = [].obs;
 
-  @override
-  void onInit() async {
-    super.onInit();
-    try {} catch (err) {
-      Get.toNamed(RoutePath.homePath);
-      return Future.error(err);
-    }
-  }
-
   getAllShopItems(int shopId) async {
     final response = await Requests.get(
       '${Config.getServerUrl()}/api/v1/shops/$shopId/items',
