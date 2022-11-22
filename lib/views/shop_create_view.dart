@@ -138,10 +138,11 @@ class ShopCreateForm extends StatelessWidget {
                               controller: shopCreateController
                                   .shopOwnerControllers[index],
                               decoration: InputDecoration(
-                                labelText: 'Shop Owner ${index + 1}',
+                                labelText: 'Shop owner email ${index + 1}',
                               ),
-                              validator: (value) => shopCreateController
-                                  .required(value, 'Shop Owner is required'),
+                              validator: (value) =>
+                                  shopCreateController.required(
+                                      value, 'Shop owner email is required'),
                             ),
                           ),
                           IconButton(

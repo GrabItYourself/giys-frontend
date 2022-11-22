@@ -1,42 +1,29 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giys_frontend/models/payment_method.dart';
 
 class AddPaymentMethodController extends GetxController {
   String cardNumber = '';
-  String cardNumberStr = '';
+  final cardNumberController = TextEditingController();
   final cardNumberErrorText = Rx<String?>(null);
 
   String name = '';
+  final nameController = TextEditingController();
   final nameErrorText = Rx<String?>(null);
 
   String cvv = '';
+  final cvvController = TextEditingController();
   final cvvErrorText = Rx<String?>(null);
 
   int expirationMonth = 0;
   int expirationYear = 0;
-  String expirationDateStr = '';
+  final expirationDateController = TextEditingController();
   final expirationDateErrorText = Rx<String?>(null);
-
-  void onCardNumberChange(String val) {
-    cardNumberStr = val;
-  }
-
-  void onNameChange(String val) {
-    name = val;
-  }
-
-  void onCVVChange(String val) {
-    cvv = val;
-  }
-
-  void onExpirationDateChange(String val) {
-    expirationDateStr = val;
-  }
 
   bool validate() {
     var valid = true;
 
-    cardNumber = cardNumberStr.replaceAll(" ", "");
+    cardNumber = cardNumberController.text.replaceAll(" ", "");
     if (cardNumber.isEmpty || cardNumber.length != 16) {
       cardNumberErrorText.value = 'Please enter valid card number';
       valid = false;
@@ -44,6 +31,7 @@ class AddPaymentMethodController extends GetxController {
       cardNumberErrorText.value = null;
     }
 
+    name = nameController.text;
     if (name.isEmpty) {
       nameErrorText.value = 'Please enter valid name';
       valid = false;
@@ -51,6 +39,7 @@ class AddPaymentMethodController extends GetxController {
       nameErrorText.value = null;
     }
 
+    cvv = cvvController.text;
     if (cvv.isEmpty || cvv.length < 3) {
       cvvErrorText.value = 'Please enter valid cvv';
       valid = false;
@@ -58,6 +47,7 @@ class AddPaymentMethodController extends GetxController {
       cvvErrorText.value = null;
     }
 
+    final expirationDateStr = expirationDateController.text;
     if (expirationDateStr.length < 5) {
       expirationDateErrorText.value = 'Please enter valid date';
       valid = false;

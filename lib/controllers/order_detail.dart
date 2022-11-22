@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:giys_frontend/models/order.dart';
+import 'package:giys_frontend/models/shop.dart';
 import 'package:giys_frontend/models/shop_item.dart';
 import 'package:requests/requests.dart';
 
@@ -19,11 +20,40 @@ class OrderDetailController extends GetxController {
     }
   }
 
+  Future<Order> getOrder(int shopId, int orderId) async {
+    final response = await Requests.get(
+      '${Config.getServerUrl()}/api/v1/shops/$shopId/orders/$orderId',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+    response.raiseForStatus();
+
+    return Order.fromJson(response.json());
+  }
+
+  Future<Shop> getShop(int shopId) async {
+    final response = await Requests.get(
+      '${Config.getServerUrl()}/api/v1/shops/$shopId',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+    response.raiseForStatus();
+
+    return Shop.fromJson(response.json()["shop"]);
+  }
+
   Future<void> getOrderDetails() async {
-    order.value = Get.arguments['order'] as Order;
-    await Future.wait(order.value.items
-        .map((orderItem) => updateShopItem(order.value.shopId, orderItem)));
-    order.refresh();
+    final orderDetails =
+        await getOrder(Get.arguments['shop_id'], Get.arguments['order_id']);
+
+    orderDetails.shop = await getShop(orderDetails.shopId);
+
+    await Future.wait(orderDetails.items
+        .map((orderItem) => updateShopItem(orderDetails.shopId, orderItem)));
+
+    order.value = orderDetails;
   }
 
   Future<void> updateShopItem(int shopId, OrderItem orderItem) async {
