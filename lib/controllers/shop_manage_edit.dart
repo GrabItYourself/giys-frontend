@@ -190,7 +190,7 @@ class ShopManageEditController extends GetxController {
         'edited_shop': {
           'id': int.parse(shopId.value),
           'name': shopNameController.text,
-          'image': imageBase64.value != "" ? imageBase64 : null,
+          'image': imageBase64.value != "" ? imageBase64.value : null,
           'description': shopDescriptionController.text,
           'location': shopLocationController.text,
           'contact': shopContactController.text,
