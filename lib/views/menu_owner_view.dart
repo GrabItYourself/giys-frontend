@@ -33,27 +33,31 @@ class MenuOwnerView extends StatelessWidget {
             ],
           ),
           body: SafeArea(
-            child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Obx(() => ListView.builder(
-                            itemCount: myMenuController.menuList.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return ShopMenuItem(
-                                name: myMenuController.menuList[index].name,
-                                price: myMenuController.menuList[index].price,
-                                image: myMenuController.menuList[index].image,
-                                shopId: authController.shopId.value as int,
-                                shopItem: myMenuController.menuList[index],
-                              );
-                            },
-                          )),
-                    ),
-                  ],
-                )),
+            child: RefreshIndicator(
+              onRefresh: () => myMenuController
+                  .getAllShopItems(int.parse(authController.shopId.toString())),
+              child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Obx(() => ListView.builder(
+                              itemCount: myMenuController.menuList.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return ShopMenuItem(
+                                  name: myMenuController.menuList[index].name,
+                                  price: myMenuController.menuList[index].price,
+                                  image: myMenuController.menuList[index].image,
+                                  shopId: authController.shopId.value as int,
+                                  shopItem: myMenuController.menuList[index],
+                                );
+                              },
+                            )),
+                      ),
+                    ],
+                  )),
+            ),
           ),
         );
       },
