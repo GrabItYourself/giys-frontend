@@ -17,7 +17,7 @@ class OrderSendController extends GetxController {
         json: {"items": items},
       );
       response.raiseForStatus();
-      return json.decode(response.body);
+      return response.json();
     } on HTTPException catch (err) {
       Get.snackbar("Cannot add/edit item", err.response.body);
       printError(info: err.response.body);

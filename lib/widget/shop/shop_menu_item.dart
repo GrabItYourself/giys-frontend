@@ -31,11 +31,19 @@ class ShopMenuItem extends StatelessWidget {
         child: Row(
           children: [
             image != null
-                ? Image.memory(base64.decode(image!), fit: BoxFit.cover)
-                : Image.network(
-                    "https://picsum.photos/200",
-                    fit: BoxFit.cover,
+                ? SizedBox(
                     width: 50,
+                    height: 50,
+                    child:
+                        Image.memory(base64.decode(image!), fit: BoxFit.cover))
+                : SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: DecoratedBox(
+                        decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.grey[500],
+                    )),
                   ),
             const SizedBox(width: 8),
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

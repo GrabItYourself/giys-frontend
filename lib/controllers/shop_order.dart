@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:giys_frontend/models/order.dart';
-import 'package:giys_frontend/models/shop.dart';
 import 'package:requests/requests.dart';
 import 'auth.dart';
 import '../config/config.dart';

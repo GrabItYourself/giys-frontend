@@ -50,9 +50,14 @@ class _ShopMenuViewState extends State<ShopMenuView> {
               children: [
                 widget.shop.image != null
                     ? Image.memory(base64.decode(widget.shop.image as String))
-                    : Image.network(
-                        "https://picsum.photos/200",
-                        fit: BoxFit.fitWidth,
+                    : SizedBox(
+                        width: 200,
+                        height: 200,
+                        child: DecoratedBox(
+                            decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.grey[300],
+                        )),
                       ),
                 const SizedBox(height: 20),
                 Text(
@@ -88,9 +93,14 @@ class _ShopMenuViewState extends State<ShopMenuView> {
                                 base64Decode(shopItem.image),
                                 fit: BoxFit.fitWidth,
                               )
-                            : Image.network(
-                                "https://picsum.photos/200",
-                                fit: BoxFit.fitWidth,
+                            : SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.grey[300],
+                                )),
                               ),
                         title: Text(shopItem.name),
                         subtitle: Text(shopItem.price.toString()),

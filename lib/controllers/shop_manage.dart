@@ -26,7 +26,7 @@ class ShopManageController extends GetxController {
         'Content-Type': 'application/json',
       },
     );
-    final data = json.decode(response.body);
+    final data = response.json();
     if (shopList.isNotEmpty) {
       _clearShopList();
     }

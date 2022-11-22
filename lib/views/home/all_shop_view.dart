@@ -29,9 +29,14 @@ class AllShopView extends StatelessWidget {
                               base64Decode(shop.image),
                               fit: BoxFit.fitWidth,
                             )
-                          : Image.network(
-                              "https://picsum.photos/200",
-                              fit: BoxFit.fitWidth,
+                          : SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.grey[300],
+                              )),
                             ),
                       title: Text(shop.name),
                       subtitle: Text(shop.description ?? ""),

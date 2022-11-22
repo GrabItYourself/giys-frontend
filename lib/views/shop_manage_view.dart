@@ -19,6 +19,7 @@ class ShopManageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MainScaffold(
       title: 'Manage Shops',
+      back: true,
       body: SingleChildScrollView(
         child: RefreshIndicator(
           onRefresh: _refresh,

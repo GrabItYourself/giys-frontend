@@ -27,7 +27,11 @@ class MenuOwnerView extends StatelessWidget {
                     onTap: () => Get.toNamed(
                         RoutePath.editMenuPath.replaceAll(
                             ':shopId', authController.shopId.toString()),
-                        arguments: [authController.shopId, null, "CREATE"]),
+                        arguments: [
+                          authController.shopId.value,
+                          null,
+                          "CREATE"
+                        ]),
                     child: const Icon(Icons.add),
                   ))
             ],

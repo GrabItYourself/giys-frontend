@@ -34,6 +34,7 @@ class MyMenuController extends GetxController {
       },
     );
     response.raiseForStatus();
+    print(response.json());
     return AllShopItemsResponse.fromJson(response.json());
   }
 
@@ -46,6 +47,7 @@ class MyMenuController extends GetxController {
             id: shopItemsData.items[i].id,
             shopId: shopItemsData.items[i].shopId,
             name: shopItemsData.items[i].name,
+            image: shopItemsData.items[i].image,
             price: shopItemsData.items[i].price));
       }
     } catch (err) {

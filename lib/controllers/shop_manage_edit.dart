@@ -136,7 +136,7 @@ class ShopManageEditController extends GetxController {
         },
       );
       response.raiseForStatus();
-      final data = json.decode(response.body);
+      final data = response.json();
       final shop = Shop.fromJson(data["shop"]);
 
       shopNameController.text = shop.name;

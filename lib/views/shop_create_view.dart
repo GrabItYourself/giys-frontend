@@ -13,6 +13,7 @@ class ShopCreateView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MainScaffold(
       title: "Create Shop",
+      back: true,
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(16),

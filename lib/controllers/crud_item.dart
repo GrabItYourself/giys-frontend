@@ -65,6 +65,8 @@ class CRUDItemController extends GetxController {
       Get.snackbar("Cannot add/edit item", err.response.body);
       return Future.error(err.response.body);
     } catch (err) {
+      Get.snackbar("Cannot add/edit item", err.toString());
+      print(err.toString());
       return Future.error(err);
     }
   }

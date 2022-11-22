@@ -14,6 +14,7 @@ class ShopOrdersView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MainScaffold(
       title: "Shop Orders",
+      back: true,
       body: SafeArea(
         child: Center(
           child: GetX<ShopOrderController>(

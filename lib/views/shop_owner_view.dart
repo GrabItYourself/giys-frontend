@@ -29,7 +29,15 @@ class ShopOwnerView extends StatelessWidget {
                                 base64
                                     .decode(myShopController.shop.value.image!),
                                 fit: BoxFit.cover)
-                            : const CircleAvatar(),
+                            : SizedBox(
+                                width: 300,
+                                height: 300,
+                                child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.grey[300],
+                                )),
+                              ),
                       ),
                       const SizedBox(
                         height: 20,
