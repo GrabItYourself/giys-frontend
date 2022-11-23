@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giys_frontend/controllers/edit_shop.dart';
+import 'package:giys_frontend/widget/image_picker_base64.dart';
 
 import '../widget/image_picker.dart';
 
@@ -35,9 +36,9 @@ class EditShopForm extends StatelessWidget {
     return Form(
         key: _formKey,
         child: Column(children: [
-          Obx(() => ImagePickerWidget(
+          Obx(() => ImagePickerBase64Widget(
                 pickImage: editShopController.pickImage,
-                imagePath: editShopController.imagePath.value,
+                imageBase64: editShopController.imageBase64.value,
               )),
           TextFormField(
             controller: editShopController.shopNameController,

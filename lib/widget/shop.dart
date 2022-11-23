@@ -17,7 +17,7 @@ class ShopWidget extends StatelessWidget {
   });
 
   _toManageEditShop() {
-    Get.offNamed(RoutePath.toPath(RoutePath.shopManageEditPath, {
+    Get.toNamed(RoutePath.toPath(RoutePath.shopManageEditPath, {
       'shopId': shop.id.toString(),
     }));
   }

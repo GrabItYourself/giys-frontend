@@ -84,7 +84,8 @@ class ShopOwnerView extends StatelessWidget {
                                     RoutePath.editShopPath.replaceAll(
                                         ':shopId',
                                         myShopController.shop.value.id
-                                            .toString())),
+                                            .toString()),
+                                    arguments: myShopController.shop.value.id),
                                 icon: const Icon(Icons.edit),
                                 label: const Text("Edit Details")),
                           ),

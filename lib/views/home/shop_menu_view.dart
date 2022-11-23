@@ -49,7 +49,11 @@ class _ShopMenuViewState extends State<ShopMenuView> {
             return Column(
               children: [
                 widget.shop.image != null
-                    ? Image.memory(base64.decode(widget.shop.image as String))
+                    ? SizedBox(
+                        width: 200,
+                        height: 200,
+                        child: Image.memory(
+                            base64.decode(widget.shop.image as String)))
                     : SizedBox(
                         width: 200,
                         height: 200,
